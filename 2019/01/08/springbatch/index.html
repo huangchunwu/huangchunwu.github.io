@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="批处理 SpringBatch Spring,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1、概念Spring Batch 是一款轻量级地适合企业级应用的批处理框架，值得注意的是，不同于其他调度框架，Spring Batch不提供调度功能。  2、批处理过程批处理可以分为以下几个步骤：  读取数据 按照业务处理数据 归档数据的过程   3、Spring Batch给我们提供了什么？ 统一的读写接口  丰富的任务处理方式 灵活的事务管理及并发处理  日志、监控、任务重启与跳过等特性">
+<meta name="keywords" content="批处理 SpringBatch Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBatch+MYSQL仓库批处理框架">
+<meta property="og:url" content="http://huangchunwu.github.io/2019/01/08/springbatch/index.html">
+<meta property="og:site_name" content="一代天骄&#39;s BLOG">
+<meta property="og:description" content="1、概念Spring Batch 是一款轻量级地适合企业级应用的批处理框架，值得注意的是，不同于其他调度框架，Spring Batch不提供调度功能。  2、批处理过程批处理可以分为以下几个步骤：  读取数据 按照业务处理数据 归档数据的过程   3、Spring Batch给我们提供了什么？ 统一的读写接口  丰富的任务处理方式 灵活的事务管理及并发处理  日志、监控、任务重启与跳过等特性">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.bookstack.cn/projects/SpringBatchReferenceCN/01_introduction/fig3-chunks.png">
+<meta property="og:updated_time" content="2019-01-11T12:53:25.446Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBatch+MYSQL仓库批处理框架">
+<meta name="twitter:description" content="1、概念Spring Batch 是一款轻量级地适合企业级应用的批处理框架，值得注意的是，不同于其他调度框架，Spring Batch不提供调度功能。  2、批处理过程批处理可以分为以下几个步骤：  读取数据 按照业务处理数据 归档数据的过程   3、Spring Batch给我们提供了什么？ 统一的读写接口  丰富的任务处理方式 灵活的事务管理及并发处理  日志、监控、任务重启与跳过等特性">
+<meta name="twitter:image" content="http://static.bookstack.cn/projects/SpringBatchReferenceCN/01_introduction/fig3-chunks.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huangchunwu.github.io/2019/01/08/springbatch/">
+
+
+
+
+
+  <title>SpringBatch+MYSQL仓库批处理框架 | 一代天骄's BLOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一代天骄's BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/01/08/springbatch/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一代天骄">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一代天骄's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SpringBatch+MYSQL仓库批处理框架</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-08T01:06:18+08:00">
+                2019-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/SpringBatch/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringBatch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1、概念"><a href="#1、概念" class="headerlink" title="1、概念"></a>1、概念</h3><p>Spring Batch 是一款轻量级地适合企业级应用的批处理框架，值得注意的是，不同于其他调度框架，Spring Batch不提供调度功能。</p>
+<hr>
+<h3 id="2、批处理过程"><a href="#2、批处理过程" class="headerlink" title="2、批处理过程"></a>2、批处理过程</h3><p>批处理可以分为以下几个步骤：</p>
+<ol>
+<li>读取数据</li>
+<li>按照业务处理数据</li>
+<li>归档数据的过程</li>
+</ol>
+<hr>
+<h3 id="3、Spring-Batch给我们提供了什么？"><a href="#3、Spring-Batch给我们提供了什么？" class="headerlink" title="3、Spring Batch给我们提供了什么？"></a>3、Spring Batch给我们提供了什么？</h3><ol>
+<li>统一的读写接口 </li>
+<li>丰富的任务处理方式</li>
+<li>灵活的事务管理及并发处理 </li>
+<li>日志、监控、任务重启与跳过等特性 </li>
+</ol>
+<hr>
+<h3 id="4、基础组件"><a href="#4、基础组件" class="headerlink" title="4、基础组件"></a>4、基础组件</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th style="text-align:right">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JobRepository</td>
+<td style="text-align:right">用于注册和存储Job的容器</td>
+</tr>
+<tr>
+<td>JobLauncher</td>
+<td style="text-align:right">用于启动Job</td>
+</tr>
+<tr>
+<td>Job</td>
+<td style="text-align:right">实际要执行的作业，包含一个或多个step</td>
+</tr>
+<tr>
+<td>step</td>
+<td style="text-align:right">步骤，批处理的步骤一般包含ItemReader, ItemProcessor, ItemWriter</td>
+</tr>
+<tr>
+<td>ItemReader</td>
+<td style="text-align:right">从给定的数据源读取item</td>
+</tr>
+<tr>
+<td>ItemProcessor</td>
+<td style="text-align:right">在item写入数据源之前进行数据整理</td>
+</tr>
+<tr>
+<td>ItemWriter</td>
+<td style="text-align:right">把Chunk中包含的item写入数据源。</td>
+</tr>
+<tr>
+<td>Chunk</td>
+<td style="text-align:right">数据块，给定数量的item集合，让item进行多次读和处理，当满足一定数量的时候再一次写入。</td>
+</tr>
+<tr>
+<td>TaskLet</td>
+<td style="text-align:right">子任务表， step的一个事务过程，包含重复执行，同步/异步规则等。</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="5、job-step-tasklet-和-chunk-关系"><a href="#5、job-step-tasklet-和-chunk-关系" class="headerlink" title="5、job, step, tasklet 和 chunk 关系"></a>5、job, step, tasklet 和 chunk 关系</h3><p>一个job对应至少一个step，一个step对应0或者1个TaskLet，一个taskLet对应0或者1个Chunk<br><img src="http://static.bookstack.cn/projects/SpringBatchReferenceCN/01_introduction/fig3-chunks.png" alt="我的头像"></p>
+<hr>
+<h3 id="6、实战：批处理ecxel插入数据库"><a href="#6、实战：批处理ecxel插入数据库" class="headerlink" title="6、实战：批处理ecxel插入数据库"></a>6、实战：批处理ecxel插入数据库</h3><h4 id="6-1：定义数据仓库"><a href="#6-1：定义数据仓库" class="headerlink" title="6.1：定义数据仓库"></a>6.1：定义数据仓库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 内存仓库  --&gt;</span><br><span class="line">  &lt;!--&lt;bean id=&quot;jobRepository&quot; class=&quot;org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean&quot;/&gt;--&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- 数据库仓库  --&gt;</span><br><span class="line">  &lt;batch:job-repository id=&quot;jobRepository&quot; data-source=&quot;dataRepDruidDataSource&quot;</span><br><span class="line">                        isolation-level-for-create=&quot;SERIALIZABLE&quot; transaction-manager=&quot;transactionManager&quot;</span><br><span class="line">                        table-prefix=&quot;BATCH_&quot; max-varchar-length=&quot;1000&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="6-2：定义启动器"><a href="#6-2：定义启动器" class="headerlink" title="6.2：定义启动器"></a>6.2：定义启动器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 作业调度器，用来启动job,引用作业仓库 --&gt;</span><br><span class="line">&lt;bean id=&quot;jobLauncher&quot;</span><br><span class="line">      class=&quot;org.springframework.batch.core.launch.support.SimpleJobLauncher&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;jobRepository&quot; ref=&quot;jobRepository&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="6-3：定义JOB"><a href="#6-3：定义JOB" class="headerlink" title="6.3：定义JOB"></a>6.3：定义JOB</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;batch:job id=&quot;userBatchJobName&quot; restartable=&quot;true&quot;&gt;</span><br><span class="line">    &lt;batch:step id=&quot;userStep&quot;&gt;</span><br><span class="line">        &lt;batch:tasklet allow-start-if-complete=&quot;false&quot;</span><br><span class="line">                       start-limit=&quot;1&quot; task-executor=&quot;taskExecutor&quot; throttle-limit=&quot;5&quot;&gt;</span><br><span class="line">            &lt;batch:chunk reader=&quot;userReader&quot; writer=&quot;userWriter&quot;</span><br><span class="line">                         processor=&quot;userProcessor&quot; commit-interval=&quot;5&quot; retry-limit=&quot;10&quot;&gt;</span><br><span class="line">                &lt;batch:retryable-exception-classes&gt;</span><br><span class="line">                    &lt;batch:include class=&quot;org.springframework.dao.DuplicateKeyException&quot;/&gt;</span><br><span class="line">                    &lt;batch:include class=&quot;java.sql.BatchUpdateException&quot;/&gt;</span><br><span class="line">                    &lt;batch:include class=&quot;java.sql.SQLException&quot;/&gt;</span><br><span class="line">                &lt;/batch:retryable-exception-classes&gt;</span><br><span class="line">            &lt;/batch:chunk&gt;</span><br><span class="line">        &lt;/batch:tasklet&gt;</span><br><span class="line">    &lt;/batch:step&gt;</span><br><span class="line">&lt;/batch:job&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean id=&quot;taskExecutor&quot;</span><br><span class="line">      class=&quot;org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor&quot;&gt;</span><br><span class="line">    &lt;!-- 线程池维护线程的最少数量 --&gt;</span><br><span class="line">    &lt;property name=&quot;corePoolSize&quot; value=&quot;100&quot;/&gt;</span><br><span class="line">    &lt;!-- 线程池维护线程所允许的空闲时间 --&gt;</span><br><span class="line">    &lt;property name=&quot;keepAliveSeconds&quot; value=&quot;30000&quot;/&gt;</span><br><span class="line">    &lt;!-- 线程池维护线程的最大数量 --&gt;</span><br><span class="line">    &lt;property name=&quot;maxPoolSize&quot; value=&quot;300&quot;/&gt;</span><br><span class="line">    &lt;!-- 线程池所使用的缓冲队列 --&gt;</span><br><span class="line">    &lt;property name=&quot;queueCapacity&quot; value=&quot;100&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="6-4：定义ItemReader"><a href="#6-4：定义ItemReader" class="headerlink" title="6.4：定义ItemReader"></a>6.4：定义ItemReader</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> &lt;bean id=&quot;userReader&quot; class=&quot;org.springframework.batch.item.file.FlatFileItemReader&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;lineMapper&quot; ref=&quot;lineMapper&quot;/&gt;</span><br><span class="line">    &lt;property name=&quot;resource&quot; value=&quot;classpath:message/batch-data-source.csv&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 将每行映射成对象 --&gt;</span><br><span class="line">   &lt;bean id=&quot;lineMapper&quot; class=&quot;org.springframework.batch.item.file.mapping.DefaultLineMapper&quot;&gt;</span><br><span class="line">       &lt;property name=&quot;lineTokenizer&quot;&gt;</span><br><span class="line">           &lt;bean class=&quot;org.springframework.batch.item.file.transform.DelimitedLineTokenizer&quot;&gt;</span><br><span class="line">               &lt;property name=&quot;delimiter&quot; value=&quot;,&quot;/&gt;&lt;!-- 根据某种分隔符分割 --&gt;</span><br><span class="line">               &lt;property name=&quot;names&quot; value=&quot;id,name&quot; /&gt;</span><br><span class="line">           &lt;/bean&gt;</span><br><span class="line">       &lt;/property&gt;</span><br><span class="line">       &lt;property name=&quot;fieldSetMapper&quot;&gt;&lt;!-- 将拆分后的字段映射成对象 --&gt;</span><br><span class="line">           &lt;bean class=&quot;com.hcw.core.batch.UserFieldSetMapper&quot; /&gt;</span><br><span class="line">       &lt;/property&gt;</span><br><span class="line">   &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="6-5：定义ItemWriter"><a href="#6-5：定义ItemWriter" class="headerlink" title="6.5：定义ItemWriter"></a>6.5：定义ItemWriter</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> &lt;bean id=&quot;userWriter&quot; class=&quot;com.hcw.core.batch.MyBatchItemWriter&quot; scope=&quot;step&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;statementId&quot; value=&quot;com.hcw.core.batch.dao.UserToMapper.batchInsert&quot;/&gt;</span><br><span class="line">    &lt;property name=&quot;sqlSessionFactory&quot; ref=&quot;sqlSessionFactoryTo&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="6-6：定义ItemProcessor"><a href="#6-6：定义ItemProcessor" class="headerlink" title="6.6：定义ItemProcessor"></a>6.6：定义ItemProcessor</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;userProcessor&quot; class=&quot;com.hcw.core.batch.UserItemProcessor&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="6-7-定义jobRepository的数据源"><a href="#6-7-定义jobRepository的数据源" class="headerlink" title="6.7: 定义jobRepository的数据源"></a>6.7: 定义jobRepository的数据源</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">  &lt;bean id=&quot;dataRepDruidDataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span><br><span class="line">	  init-method=&quot;init&quot; destroy-method=&quot;close&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;url&quot; value=&quot;$&#123;jdbc.mysql.rep.connection.url&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;username&quot; value=&quot;$&#123;jdbc.mysql.rep.connection.username&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc.mysql.rep.connection.password&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;filters&quot; value=&quot;$&#123;jdbc.mysql.rep.connection.filters&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;maxActive&quot; value=&quot;$&#123;jdbc.mysql.rep.connection.maxActive&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;initialSize&quot; value=&quot;$&#123;jdbc.mysql.rep.connection.initialSize&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;maxWait&quot; value=&quot;$&#123;jdbc.mysql.rep.connection.maxWait&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;minIdle&quot; value=&quot;$&#123;jdbc.mysql.rep.connection.minIdle&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;timeBetweenEvictionRunsMillis&quot;</span><br><span class="line">			  value=&quot;$&#123;jdbc.mysql.rep.connection.timeBetweenEvictionRunsMillis&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;minEvictableIdleTimeMillis&quot;</span><br><span class="line">			  value=&quot;$&#123;jdbc.mysql.rep.connection.minEvictableIdleTimeMillis&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;validationQuery&quot;</span><br><span class="line">			  value=&quot;$&#123;jdbc.mysql.rep.connection.validationQuery&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;testWhileIdle&quot;</span><br><span class="line">			  value=&quot;$&#123;jdbc.mysql.rep.connection.testWhileIdle&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;testOnBorrow&quot; value=&quot;$&#123;jdbc.mysql.rep.connection.testOnBorrow&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;testOnReturn&quot; value=&quot;$&#123;jdbc.mysql.rep.connection.testOnReturn&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;poolPreparedStatements&quot;</span><br><span class="line">			  value=&quot;$&#123;jdbc.mysql.rep.connection.poolPreparedStatements&#125;&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;maxPoolPreparedStatementPerConnectionSize&quot;</span><br><span class="line">			  value=&quot;$&#123;jdbc.mysql.rep.connection.maxPoolPreparedStatementPerConnectionSize&#125;&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="6-8-启动JOB"><a href="#6-8-启动JOB" class="headerlink" title="6.8: 启动JOB"></a>6.8: 启动JOB</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">public class JobLauncherController &#123;</span><br><span class="line"></span><br><span class="line">    private static final String JOB_NAME = &quot;jobName&quot;;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private JobLauncher jobLauncher;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private JobRegistry jobRegistry;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(value = &quot;/executeJob&quot;, method = RequestMethod.GET)</span><br><span class="line">    public String launch(@RequestParam String jobName,</span><br><span class="line">                         HttpServletRequest request) throws Exception &#123;</span><br><span class="line">        JobParameters jobParameters = bulidParameters(request);</span><br><span class="line">        JobExecution result = jobLauncher.run(jobRegistry.getJob(jobName),</span><br><span class="line">                jobParameters);</span><br><span class="line">        ExitStatus es = result.getExitStatus();</span><br><span class="line">        return &quot;ok&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private JobParameters bulidParameters(HttpServletRequest request) &#123;</span><br><span class="line">        JobParametersBuilder builder = new JobParametersBuilder();</span><br><span class="line"></span><br><span class="line">        Enumeration&lt;String&gt; paramNames = request.getParameterNames();</span><br><span class="line">        while (paramNames.hasMoreElements()) &#123;</span><br><span class="line">            String paramName = paramNames.nextElement();</span><br><span class="line">            if (!JOB_NAME.equals(paramName)) &#123;</span><br><span class="line">                builder.addString(paramName, request.getParameter(paramName));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        builder.addLong(&quot;time&quot;, System.currentTimeMillis());</span><br><span class="line">        return builder.toJobParameters();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好了，万事俱备，访问<a href="http://127.0.0.1/executeJob?jobName=userBatchJobName，启动JOB" target="_blank" rel="noopener">http://127.0.0.1/executeJob?jobName=userBatchJobName，启动JOB</a></p>
+<hr>
+<h3 id="7、源码地址"><a href="#7、源码地址" class="headerlink" title="7、源码地址"></a>7、源码地址</h3><p><a href="https://github.com/huangchunwu/batch-framework" target="_blank" rel="noopener">batch-framework</a></p>
+<hr>
+<h3 id="8、参考资料"><a href="#8、参考资料" class="headerlink" title="8、参考资料"></a>8、参考资料</h3><p><a href="https://www.bookstack.cn/read/SpringBatchReferenceCN/README.md" target="_blank" rel="noopener">SpringBatch 中文文档</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="一代天骄 wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎订阅公众号</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/批处理-SpringBatch-Spring/" rel="tag"># 批处理 SpringBatch Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/01/summary/" rel="next" title="2018，这一年">
+                <i class="fa fa-chevron-left"></i> 2018，这一年
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTM5Mi8xNzkzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="一代天骄">
+            
+              <p class="site-author-name" itemprop="name">一代天骄</p>
+              <p class="site-description motion-element" itemprop="description">吾尝终日而思，不如须臾之所学</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/huangchunwu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:951123033@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/yi-dai-tian-jiao-57-86/activities" target="_blank" title="ZhiHu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>ZhiHu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、概念"><span class="nav-number">1.</span> <span class="nav-text">1、概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、批处理过程"><span class="nav-number">2.</span> <span class="nav-text">2、批处理过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Spring-Batch给我们提供了什么？"><span class="nav-number">3.</span> <span class="nav-text">3、Spring Batch给我们提供了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、基础组件"><span class="nav-number">4.</span> <span class="nav-text">4、基础组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、job-step-tasklet-和-chunk-关系"><span class="nav-number">5.</span> <span class="nav-text">5、job, step, tasklet 和 chunk 关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、实战：批处理ecxel插入数据库"><span class="nav-number">6.</span> <span class="nav-text">6、实战：批处理ecxel插入数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1：定义数据仓库"><span class="nav-number">6.1.</span> <span class="nav-text">6.1：定义数据仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2：定义启动器"><span class="nav-number">6.2.</span> <span class="nav-text">6.2：定义启动器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3：定义JOB"><span class="nav-number">6.3.</span> <span class="nav-text">6.3：定义JOB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-4：定义ItemReader"><span class="nav-number">6.4.</span> <span class="nav-text">6.4：定义ItemReader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-5：定义ItemWriter"><span class="nav-number">6.5.</span> <span class="nav-text">6.5：定义ItemWriter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-6：定义ItemProcessor"><span class="nav-number">6.6.</span> <span class="nav-text">6.6：定义ItemProcessor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-7-定义jobRepository的数据源"><span class="nav-number">6.7.</span> <span class="nav-text">6.7: 定义jobRepository的数据源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-8-启动JOB"><span class="nav-number">6.8.</span> <span class="nav-text">6.8: 启动JOB</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、源码地址"><span class="nav-number">7.</span> <span class="nav-text">7、源码地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、参考资料"><span class="nav-number">8.</span> <span class="nav-text">8、参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <span class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<span class="post-meta-divider">|</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一代天骄</span>
+
+  
+</span>
+<span class="post-meta-divider">|</span>
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+<span class="post-meta-divider">|</span>
+访问量  <span id="busuanzi_value_site_pv"></span>
+<span class="post-meta-divider">|</span>
+访问人数 <span id="busuanzi_value_site_uv"></span>人
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
