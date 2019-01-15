@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="软件设计原则,">
+  <meta name="keywords" content="缓存,Guava,">
 
 
 
@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="从事开发这么多年，陆陆续续开发了N个系统了。对软件设计原则，一直没有认真深入的探讨过，当熟读这些原则，结合项目，发现很多违背设计的地方，作为优秀的研发，应该早点跟三字经一样熟读这些原则才对啊。下面我结合最近的项目谈谈自己的见解。 开闭原则官方解释 对扩展是开放的，对修改是关闭的。简单地说，就是你要提供这样的函数方法或者类，你可以进行重载，复写，但是不需要修改。例如，刚开始，火车票电子票出票流程，我">
-<meta name="keywords" content="软件设计原则">
+<meta name="description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢，我想了下，因为谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无需重复造轮子，这也就是现在很多工作5年的人还不知道底层的原因之一。 我们常用的是redis可以实现分布式缓存，为">
+<meta name="keywords" content="缓存,Guava">
 <meta property="og:type" content="article">
-<meta property="og:title" content="结合项目，谈谈软件设计原则">
-<meta property="og:url" content="http://huangchunwu.github.io/2018/12/20/softdesign/index.html">
+<meta property="og:title" content="Guava Cache 学习记录">
+<meta property="og:url" content="http://huangchunwu.github.io/2019/01/15/guava-cache/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="从事开发这么多年，陆陆续续开发了N个系统了。对软件设计原则，一直没有认真深入的探讨过，当熟读这些原则，结合项目，发现很多违背设计的地方，作为优秀的研发，应该早点跟三字经一样熟读这些原则才对啊。下面我结合最近的项目谈谈自己的见解。 开闭原则官方解释 对扩展是开放的，对修改是关闭的。简单地说，就是你要提供这样的函数方法或者类，你可以进行重载，复写，但是不需要修改。例如，刚开始，火车票电子票出票流程，我">
+<meta property="og:description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢，我想了下，因为谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无需重复造轮子，这也就是现在很多工作5年的人还不知道底层的原因之一。 我们常用的是redis可以实现分布式缓存，为">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3666580-199028910dc13372.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-01-01T02:25:07.961Z">
+<meta property="og:updated_time" content="2019-01-15T15:33:53.456Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="结合项目，谈谈软件设计原则">
-<meta name="twitter:description" content="从事开发这么多年，陆陆续续开发了N个系统了。对软件设计原则，一直没有认真深入的探讨过，当熟读这些原则，结合项目，发现很多违背设计的地方，作为优秀的研发，应该早点跟三字经一样熟读这些原则才对啊。下面我结合最近的项目谈谈自己的见解。 开闭原则官方解释 对扩展是开放的，对修改是关闭的。简单地说，就是你要提供这样的函数方法或者类，你可以进行重载，复写，但是不需要修改。例如，刚开始，火车票电子票出票流程，我">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3666580-199028910dc13372.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="Guava Cache 学习记录">
+<meta name="twitter:description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢，我想了下，因为谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无需重复造轮子，这也就是现在很多工作5年的人还不知道底层的原因之一。 我们常用的是redis可以实现分布式缓存，为">
 
 
 
@@ -122,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://huangchunwu.github.io/2018/12/20/softdesign/">
+  <link rel="canonical" href="http://huangchunwu.github.io/2019/01/15/guava-cache/">
 
 
 
 
 
-  <title>结合项目，谈谈软件设计原则 | 一代天骄's BLOG</title>
+  <title>Guava Cache 学习记录 | 一代天骄's BLOG</title>
   
 
 
@@ -275,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2018/12/20/softdesign/">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/01/15/guava-cache/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一代天骄">
@@ -292,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">结合项目，谈谈软件设计原则</h1>
+          <h1 class="post-title" itemprop="name headline">Guava Cache 学习记录</h1>
         
 
         <div class="post-meta">
@@ -304,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-20T00:22:41+08:00">
-                2018-12-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-15T23:26:12+08:00">
+                2019-01-15
               </time>
             
 
@@ -327,8 +325,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/经验积累/" itemprop="url" rel="index">
-                    <span itemprop="name">经验积累</span>
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
                   </a>
                 </span>
 
@@ -359,7 +357,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  810字
+                  818字
                 </span>
               
 
@@ -375,7 +373,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2分钟
+                  3分钟
                 </span>
               
             </span>
@@ -396,14 +394,28 @@
       
 
       
-        <p>从事开发这么多年，陆陆续续开发了N个系统了。对软件设计原则，一直没有认真深入的探讨过，当熟读这些原则，结合项目，发现很多违背设计的地方，作为优秀的研发，应该早点跟三字经一样熟读这些原则才对啊。下面我结合最近的项目谈谈自己的见解。</p>
-<h2 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h2><p>官方解释 对扩展是开放的，对修改是关闭的。<br>简单地说，就是你要提供这样的函数方法或者类，你可以进行重载，复写，但是不需要修改。例如，刚开始，火车票电子票出票流程，我在controller层调用business层提供的出票方法。设计的时候，预测到后期还有其他票种，我抽象出一个IOccupyBusiness接口，里面就一个请求占位方法，实现该接口新建实现类EticketOccupyBusiness，在occupy（）写电子票的业务。<br>过了不久，产品提了一个配送票的出票需求，我只需要添加一个实现IOccupyBusiness的实现类DeliveryOccupyBusiness，在occupy（）写配送票的业务，我并没有修改已有类，和方法，复合了开闭原则。</p>
-<h2 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h2><p>客户端不应该依赖它不需要的接口；<br>一个类对另一个类的依赖应该建立在最小的接口上。<br>简单说，不要给调用方暴露它不需要调用的方法。<br>还拿上述的例子，如果遵循单一职责原则，请求占位，与占位反馈，可以设计成同个接口的不同方法。如果需求是这样的，配送票的占位是虚占，不需要耗时的请求12306实占，所以可以占位接口设计成同步反馈结果，则没有异步反馈的方法。那么配送票的实现类就多暴露出一个占位反馈的方法，不符合接口隔离原则，于是我又将占位接口，粒度细化了，分占位请求接口，占位反馈接口。这样，占位的实现类就不会实现多余的接口了。</p>
-<h2 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h2><p>官方定义：有且仅有一个让类变化的原因。<br>通俗地说，就是一个类只负责一个职责，比如上面我们谈到的，占位的类，不能同时有出票的功能。<br>单一职责与接口隔离原则有点类似，单一职责偏向于职能，接口隔离偏向于接口粒度。</p>
-<h2 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h2><p>官方定义：所以引用基类的地方必须透明的使用子类对象<br>通俗地说，就是子类可以扩展父类的功能，但不能改变父类的功能，即不能重载、复写父类的方法</p>
-<h2 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h2><p>官方定义：一个对象应该对其他对象保持最少的了解</p>
-<h2 id="依赖倒置原则"><a href="#依赖倒置原则" class="headerlink" title="依赖倒置原则"></a>依赖倒置原则</h2><p>官方定义 译文：<br>高层模块不应该依赖于低层模块，它们应该依赖于抽象。抽象不应该依赖于细节，细节应该依赖于抽象。</p>
-<p>基于以上学习，我在项目里面实现了这样类图<br><img src="https://upload-images.jianshu.io/upload_images/3666580-199028910dc13372.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="我的头像"></p>
+        <h2 id="为什么使用Guava-Cache"><a href="#为什么使用Guava-Cache" class="headerlink" title="为什么使用Guava Cache"></a>为什么使用Guava Cache</h2><p>guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢，我想了下，因为谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无需重复造轮子，这也就是现在很多工作5年的人还不知道底层的原因之一。</p>
+<p>我们常用的是redis可以实现分布式缓存，为什么推荐用guava cache呢<br>1、同时造成了业务系统 强依赖于网络和redis服务器的稳定性<br>2、网络请求的效率远远没有本地内存快。</p>
+<hr>
+<h2 id="哪些场景适合使用Guava-cache"><a href="#哪些场景适合使用Guava-cache" class="headerlink" title="哪些场景适合使用Guava cache"></a>哪些场景适合使用Guava cache</h2><p>通常缓存的用法，先请求本地缓存，如果本地缓存未命中，则去请求DB。<br>Guava cache 是本地缓存，所以适合数据量小的数据量的情况下使用。</p>
+<hr>
+<h2 id="Guava-cache特性"><a href="#Guava-cache特性" class="headerlink" title="Guava cache特性"></a>Guava cache特性</h2><p>1、缓存不会自动刷新，需满足2个条件，<code>过期了</code>，<code>有get请求</code></p>
+<p>2、Guava Cache的load方法不能返回null，否则抛异常，Guava Cache的get方法先在本地缓存中取，如果不存在，则会触发load方法。但load方法不能返回null。 </p>
+<hr>
+<h2 id="Guava-cache-有什么替代品"><a href="#Guava-cache-有什么替代品" class="headerlink" title="Guava cache 有什么替代品"></a>Guava cache 有什么替代品</h2><p>Caffeine 宣称拥有比 Guava Cache 高几倍的读写效率</p>
+<hr>
+<h2 id="Guava-cache使用步骤"><a href="#Guava-cache使用步骤" class="headerlink" title="Guava cache使用步骤"></a>Guava cache使用步骤</h2><h3 id="引入maven的POM"><a href="#引入maven的POM" class="headerlink" title="引入maven的POM"></a>引入maven的POM</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">       &lt;version&gt;19.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Guava-Cache初始化"><a href="#Guava-Cache初始化" class="headerlink" title="Guava Cache初始化"></a>Guava Cache初始化</h3><h4 id="Cache-Callable"><a href="#Cache-Callable" class="headerlink" title="Cache Callable"></a>Cache Callable</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">final static Cache&lt;Integer, String&gt; cache = CacheBuilder.newBuilder()</span><br><span class="line">           //设置cache的初始大小为10，要合理设置该值</span><br><span class="line">           .initialCapacity(10)</span><br><span class="line">           //设置并发数为5，即同一时间最多只能有5个线程往cache执行写入操作</span><br><span class="line">           .concurrencyLevel(5)</span><br><span class="line">           //设置cache中的数据在写入之后的存活时间为10秒</span><br><span class="line">           .expireAfterWrite(10, TimeUnit.SECONDS)</span><br><span class="line">           //构建cache实例</span><br><span class="line">           .build();</span><br></pre></td></tr></table></figure>
+<h4 id="LoadingCache"><a href="#LoadingCache" class="headerlink" title="LoadingCache"></a>LoadingCache</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">final static LoadingCache&lt;String, Integer&gt; cache = CacheBuilder.newBuilder()</span><br><span class="line">           .maximumSize(10)  //最多存放十个数据</span><br><span class="line">           .expireAfterWrite(10, TimeUnit.SECONDS)  //缓存200秒</span><br><span class="line">           .recordStats()   //开启 记录状态数据功能</span><br><span class="line">           .build(new CacheLoader&lt;String, Integer&gt;() &#123;</span><br><span class="line">               //数据加载，默认返回-1,也可以是查询操作，如从DB查询</span><br><span class="line">               @Override</span><br><span class="line">               public Integer load(String key) throws Exception &#123;</span><br><span class="line">                   return -1;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Guava-Cache常用方法"><a href="#Guava-Cache常用方法" class="headerlink" title="Guava Cache常用方法"></a>Guava Cache常用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/** </span><br><span class="line"> * 该接口的实现被认为是线程安全的，即可在多线程中调用 </span><br><span class="line"> * 通过被定义单例使用 </span><br><span class="line"> */  </span><br><span class="line">public interface Cache&lt;K, V&gt; &#123;  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 通过key获取缓存中的value，若不存在直接返回null </span><br><span class="line">   */  </span><br><span class="line">  V getIfPresent(Object key);  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 通过key获取缓存中的value，若不存在就通过valueLoader来加载该value </span><br><span class="line">   * 整个过程为 &quot;if cached, return; otherwise create, cache and return&quot; </span><br><span class="line">   * 注意valueLoader要么返回非null值，要么抛出异常，绝对不能返回null </span><br><span class="line">   */  </span><br><span class="line">  V get(K key, Callable&lt;? extends V&gt; valueLoader) throws ExecutionException;  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 添加缓存，若key存在，就覆盖旧值 </span><br><span class="line">   */  </span><br><span class="line">  void put(K key, V value);  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 删除该key关联的缓存 </span><br><span class="line">   */  </span><br><span class="line">  void invalidate(Object key);  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 删除所有缓存 </span><br><span class="line">   */  </span><br><span class="line">  void invalidateAll();  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 执行一些维护操作，包括清理缓存 </span><br><span class="line">   */  </span><br><span class="line">  void cleanUp();  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="缓存回收"><a href="#缓存回收" class="headerlink" title="缓存回收"></a>缓存回收</h2><p><code>基于容量回收</code> </p>
+<p>CacheBuilder.maximumSize(long)</p>
+<p><code>定时回收</code>   </p>
+<p>expireAfterAccess(long, TimeUnit)<br>expireAfterWrite(long, TimeUnit)</p>
+<p><code>基于引用回收</code> </p>
+<p>CacheBuilder.weakKeys()：使用弱引用存储键<br>               CacheBuilder.weakValues()：使用弱引用存储值<br>               CacheBuilder.softValues()：使用软引用存储值。</p>
+<hr>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://github.com/ben-manes/caffeine" target="_blank" rel="noopener">Caffeine github</a></p>
 
       
     </div>
@@ -429,7 +441,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/软件设计原则/" rel="tag"># 软件设计原则</a>
+            <a href="/tags/缓存/" rel="tag"># 缓存</a>
+          
+            <a href="/tags/Guava/" rel="tag"># Guava</a>
           
         </div>
       
@@ -442,8 +456,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/16/aop/" rel="next" title="spring声明式事务失效的分析过程">
-                <i class="fa fa-chevron-left"></i> spring声明式事务失效的分析过程
+              <a href="/2019/01/11/hexo-improve/" rel="next" title="hexo主题优化">
+                <i class="fa fa-chevron-left"></i> hexo主题优化
               </a>
             
           </div>
@@ -451,10 +465,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/01/summary/" rel="prev" title="2018，这一年">
-                2018，这一年 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -615,7 +625,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开闭原则"><span class="nav-number">1.</span> <span class="nav-text">开闭原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口隔离原则"><span class="nav-number">2.</span> <span class="nav-text">接口隔离原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单一职责原则"><span class="nav-number">3.</span> <span class="nav-text">单一职责原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#里氏替换原则"><span class="nav-number">4.</span> <span class="nav-text">里氏替换原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迪米特法则"><span class="nav-number">5.</span> <span class="nav-text">迪米特法则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖倒置原则"><span class="nav-number">6.</span> <span class="nav-text">依赖倒置原则</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用Guava-Cache"><span class="nav-number">1.</span> <span class="nav-text">为什么使用Guava Cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些场景适合使用Guava-cache"><span class="nav-number">2.</span> <span class="nav-text">哪些场景适合使用Guava cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache特性"><span class="nav-number">3.</span> <span class="nav-text">Guava cache特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache-有什么替代品"><span class="nav-number">4.</span> <span class="nav-text">Guava cache 有什么替代品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache使用步骤"><span class="nav-number">5.</span> <span class="nav-text">Guava cache使用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入maven的POM"><span class="nav-number">5.1.</span> <span class="nav-text">引入maven的POM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guava-Cache初始化"><span class="nav-number">5.2.</span> <span class="nav-text">Guava Cache初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cache-Callable"><span class="nav-number">5.2.1.</span> <span class="nav-text">Cache Callable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LoadingCache"><span class="nav-number">5.2.2.</span> <span class="nav-text">LoadingCache</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guava-Cache常用方法"><span class="nav-number">5.3.</span> <span class="nav-text">Guava Cache常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存回收"><span class="nav-number">6.</span> <span class="nav-text">缓存回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">7.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
 
           </div>
