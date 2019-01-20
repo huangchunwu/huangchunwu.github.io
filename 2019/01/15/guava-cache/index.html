@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无">
+<meta name="description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，">
 <meta name="keywords" content="缓存,Guava">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Guava Cache 学习记录">
 <meta property="og:url" content="http://huangchunwu.github.io/2019/01/15/guava-cache/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无">
+<meta property="og:description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-20T11:30:09.747Z">
+<meta property="og:updated_time" content="2019-01-20T12:15:52.639Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Guava Cache 学习记录">
-<meta name="twitter:description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无">
+<meta name="twitter:description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，">
 
 
 
@@ -357,7 +357,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.8k字
+                  1.7k字
                 </span>
               
 
@@ -394,8 +394,8 @@
       
 
       
-        <h2 id="为什么使用Guava-Cache"><a href="#为什么使用Guava-Cache" class="headerlink" title="为什么使用Guava Cache"></a>为什么使用Guava Cache</h2><p>guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：<br>1、设置缓存的过期时间,遵循LRU原则移除过期KEY<br>2、缓存的定期刷新<br>3、如何防止缓存穿透<br>如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无需重复造轮子。</p>
-<p>我们常用的是redis可以实现分布式缓存，为什么推荐用guava cache呢<br>1、同时造成了业务系统 强依赖于网络和redis服务器的稳定性<br>2、网络请求的效率远远没有本地内存快。</p>
+        <h2 id="为什么使用Guava-Cache"><a href="#为什么使用Guava-Cache" class="headerlink" title="为什么使用Guava Cache"></a>为什么使用Guava Cache</h2><p>guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：<br>1、设置缓存的过期时间,遵循LRU原则移除过期KEY<br>2、缓存的定期刷新<br>3、如何防止缓存穿透</p>
+<p>如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无需重复造轮子。</p>
 <p>我们常用的是redis可以实现分布式缓存，为什么推荐用guava cache呢<br>1、同时造成了业务系统 强依赖于网络和redis服务器的稳定性<br>2、网络请求的效率远远没有本地内存快。</p>
 <hr>
 <h2 id="哪些场景适合使用Guava-cache"><a href="#哪些场景适合使用Guava-cache" class="headerlink" title="哪些场景适合使用Guava cache"></a>哪些场景适合使用Guava cache</h2><p>通常缓存的用法，先请求本地缓存，如果本地缓存未命中，则去请求DB。<br>Guava cache 是本地缓存，所以适合数据量小的数据量的情况下使用。</p>
