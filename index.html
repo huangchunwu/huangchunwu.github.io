@@ -398,7 +398,7 @@
       
         
           
-          为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢，我想了下，因为谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无需重复造轮子
+          为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间2、缓存的定期刷新3、如何防止缓存穿透如果自己实现起来难度较大，谷歌开发
           ...
           <!--noindex-->
           <div class="post-button text-center">
