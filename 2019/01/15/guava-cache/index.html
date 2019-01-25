@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，">
+<meta name="description" content="为什么使用Guava Cache？guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现">
 <meta name="keywords" content="缓存,Guava">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Guava Cache 学习记录">
 <meta property="og:url" content="http://huangchunwu.github.io/2019/01/15/guava-cache/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，">
+<meta property="og:description" content="为什么使用Guava Cache？guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-20T12:15:52.639Z">
+<meta property="og:updated_time" content="2019-01-20T12:37:39.619Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Guava Cache 学习记录">
-<meta name="twitter:description" content="为什么使用Guava Cacheguava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，">
+<meta name="twitter:description" content="为什么使用Guava Cache？guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现">
 
 
 
@@ -394,7 +394,7 @@
       
 
       
-        <h2 id="为什么使用Guava-Cache"><a href="#为什么使用Guava-Cache" class="headerlink" title="为什么使用Guava Cache"></a>为什么使用Guava Cache</h2><p>guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：<br>1、设置缓存的过期时间,遵循LRU原则移除过期KEY<br>2、缓存的定期刷新<br>3、如何防止缓存穿透</p>
+        <h2 id="为什么使用Guava-Cache？"><a href="#为什么使用Guava-Cache？" class="headerlink" title="为什么使用Guava Cache？"></a>为什么使用Guava Cache？</h2><p>guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：<br>1、设置缓存的过期时间,遵循LRU原则移除过期KEY<br>2、缓存的定期刷新<br>3、如何防止缓存穿透</p>
 <p>如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无需重复造轮子。</p>
 <p>我们常用的是redis可以实现分布式缓存，为什么推荐用guava cache呢<br>1、同时造成了业务系统 强依赖于网络和redis服务器的稳定性<br>2、网络请求的效率远远没有本地内存快。</p>
 <hr>
@@ -478,6 +478,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/01/25/forkjoin/" rel="prev" title="并行计算框架forkJoin框架">
+                并行计算框架forkJoin框架 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -560,7 +564,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -571,7 +575,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -582,7 +586,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -637,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用Guava-Cache"><span class="nav-number">1.</span> <span class="nav-text">为什么使用Guava Cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些场景适合使用Guava-cache"><span class="nav-number">2.</span> <span class="nav-text">哪些场景适合使用Guava cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache特性"><span class="nav-number">3.</span> <span class="nav-text">Guava cache特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache-有什么替代品"><span class="nav-number">4.</span> <span class="nav-text">Guava cache 有什么替代品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache使用步骤"><span class="nav-number">5.</span> <span class="nav-text">Guava cache使用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入maven的POM"><span class="nav-number">5.1.</span> <span class="nav-text">引入maven的POM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guava-Cache初始化"><span class="nav-number">5.2.</span> <span class="nav-text">Guava Cache初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cache-Callable"><span class="nav-number">5.2.1.</span> <span class="nav-text">Cache Callable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LoadingCache"><span class="nav-number">5.2.2.</span> <span class="nav-text">LoadingCache</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guava-Cache常用方法"><span class="nav-number">5.3.</span> <span class="nav-text">Guava Cache常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存回收"><span class="nav-number">6.</span> <span class="nav-text">缓存回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存刷新"><span class="nav-number">7.</span> <span class="nav-text">缓存刷新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">8.</span> <span class="nav-text">附录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用Guava-Cache？"><span class="nav-number">1.</span> <span class="nav-text">为什么使用Guava Cache？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些场景适合使用Guava-cache"><span class="nav-number">2.</span> <span class="nav-text">哪些场景适合使用Guava cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache特性"><span class="nav-number">3.</span> <span class="nav-text">Guava cache特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache-有什么替代品"><span class="nav-number">4.</span> <span class="nav-text">Guava cache 有什么替代品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache使用步骤"><span class="nav-number">5.</span> <span class="nav-text">Guava cache使用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入maven的POM"><span class="nav-number">5.1.</span> <span class="nav-text">引入maven的POM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guava-Cache初始化"><span class="nav-number">5.2.</span> <span class="nav-text">Guava Cache初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cache-Callable"><span class="nav-number">5.2.1.</span> <span class="nav-text">Cache Callable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LoadingCache"><span class="nav-number">5.2.2.</span> <span class="nav-text">LoadingCache</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guava-Cache常用方法"><span class="nav-number">5.3.</span> <span class="nav-text">Guava Cache常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存回收"><span class="nav-number">6.</span> <span class="nav-text">缓存回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存刷新"><span class="nav-number">7.</span> <span class="nav-text">缓存刷新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">8.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
 
           </div>
