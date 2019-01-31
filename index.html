@@ -66,7 +66,7 @@
   
     
     
-    <link href="fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -462,7 +462,9 @@
 多核CPU服务器CPU密集的应用，并行计算的应用
 
 
-主要方法forkJoinTas
+主要方法forkJoinTask 抽象类不直接使用，直接使用以下子类提供的fork与join方法
+
+RecursiveAction
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -643,7 +645,7 @@
         
           
           为什么使用Guava Cache？guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透
-
+如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -827,7 +829,7 @@
 
 修改配置文件12# 开启字数统计word_count: true
 
-修改主题 swig 布局找到themes/next/layout/_macro/pos
+修改主题 swig 布局找到themes/next/layout/_macro/post.swig文件，修改【字数统计】，找到如下代码：123&lt;span title=&quot;&
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1018,6 +1020,13 @@
 
 Spring Batch给我们提供了什么？
 统一的读写接口 
+丰富的任务处理方式
+灵活的事务管理及并发处理 
+日志、监控、任务重启与跳过等特性 
+
+
+基础组件
+
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1198,7 +1207,9 @@ Spring Batch给我们提供了什么？
         
           
           引用习大大的祝贺词中的一句”岁月不居，时节如流”，18年就这样过去了，总结一下这年的收获。
-关于读书，多读比不读好这一年，很庆幸的是，我认识了很上进的同事，他对我的影响是让我开始认识到看书的重要性，开始学会在书里寻找价值与智慧。今年我看了32本书，我也不记得自己还记得几个句子，又或者对我带来多大的影
+关于读书，多读比不读好这一年，很庆幸的是，我认识了很上进的同事，他对我的影响是让我开始认识到看书的重要性，开始学会在书里寻找价值与智慧。今年我看了32本书，我也不记得自己还记得几个句子，又或者对我带来多大的影响，知乎上也有人提到“经常看书的人和不看书的人有什么区别”，我当时是这样回答的：
+
+从我身边的例子来
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1379,7 +1390,7 @@ Spring Batch给我们提供了什么？
         
           
           从事开发这么多年，陆陆续续开发了N个系统了。对软件设计原则，一直没有认真深入的探讨过，当熟读这些原则，结合项目，发现很多违背设计的地方，作为优秀的研发，应该早点跟三字经一样熟读这些原则才对啊。下面我结合最近的项目谈谈自己的见解。
-开闭原则官方解释 对扩展是开放的，对修改是关闭的。简单地说，就是你要提
+开闭原则官方解释 对扩展是开放的，对修改是关闭的。简单地说，就是你要提供这样的函数方法或者类，你可以进行重载，复写，但是不需要修改。例如，刚开始，火车票电子票出票流程，我
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1561,7 +1572,7 @@ Spring Batch给我们提供了什么？
           
           1. 问题的背景在途牛，庆幸的是遇到了几个很正面的人，我也是从阅读其中一位同事的博客才发现了spring声明式事务的这个坑，说实话，我平时开发很少用事务，因为不好控制粒度，事务也是高并发的绊脚石。
 
-2. 问题的现象为了理解方便，下面我用伪代码说明问题详细1234567891011121314151
+2. 问题的现象为了理解方便，下面我用伪代码说明问题详细12345678910111213141516Class exampleService&#123;    //不加事务，本身不需要事务介入   
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1742,7 +1753,8 @@ Spring Batch给我们提供了什么？
         
           
           日常时间大多数都在敲代码中，当周围环境比较纷杂吵闹，又或者内心比较杂乱烦躁的时候，我都会放上一小段音乐来平复一下自己，通常我会听一些轻音乐，我喜欢青山流水的旋律，或者简简单单的下雨的声音，个人觉得很适合敲代码的时候听。
-现在流行的歌手，参差不齐，商业化向导向的市场已经很难诞生出一个纯粹做音乐的人了，
+现在流行的歌手，参差不齐，商业化向导向的市场已经很难诞生出一个纯粹做音乐的人了，如果听音乐，我个人建议听像朴树、许巍这样的灵魂歌者，他们的音乐简简单单是自己某个阶段的内心表达。
+轻
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1926,8 +1938,8 @@ Spring Batch给我们提供了什么？
 
 前提条件：一台Android设备，并且ROOT
 
-12345susetprop service.adb.tcp.port 9999stop ad
-          ...
+12345susetprop service.adb.tcp.port 9999stop adbdstart adbdnetstat#看下adb端口是否打开
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/12/02/adb/#more" rel="contents">
@@ -2347,8 +2359,6 @@ Spring Batch给我们提供了什么？
   
 
 
-  
-
 
 
 
@@ -2387,11 +2397,6 @@ Spring Batch给我们提供了什么？
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
   
 
 
