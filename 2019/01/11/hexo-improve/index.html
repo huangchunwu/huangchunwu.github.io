@@ -105,18 +105,18 @@
 
 
 
-<meta name="description" content="安装文章计数插件WordCount第一步：在blog根目录下，执行以下命令1npm install hexo-wordcount --save  修改配置文件12# 开启字数统计word_count: true  修改主题 swig 布局找到themes/next/layout/_macro/post.swig文件，修改【字数统计】，找到如下代码：123&amp;lt;span title=&amp;quot;&amp;">
+<meta name="description" content="安装文章计数插件WordCount第一步：在blog根目录下，执行以下命令1npm install hexo-wordcount --save  第二步：修改配置文件12# 开启字数统计word_count: true  第三步：修改主题 swig 布局 找到themes/next/layout/_macro/post.swig文件，修改【字数统计】，找到如下代码：123&amp;lt;span titl">
 <meta name="keywords" content="hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo主题优化">
 <meta property="og:url" content="http://huangchunwu.github.io/2019/01/11/hexo-improve/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="安装文章计数插件WordCount第一步：在blog根目录下，执行以下命令1npm install hexo-wordcount --save  修改配置文件12# 开启字数统计word_count: true  修改主题 swig 布局找到themes/next/layout/_macro/post.swig文件，修改【字数统计】，找到如下代码：123&amp;lt;span title=&amp;quot;&amp;">
+<meta property="og:description" content="安装文章计数插件WordCount第一步：在blog根目录下，执行以下命令1npm install hexo-wordcount --save  第二步：修改配置文件12# 开启字数统计word_count: true  第三步：修改主题 swig 布局 找到themes/next/layout/_macro/post.swig文件，修改【字数统计】，找到如下代码：123&amp;lt;span titl">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-11T15:17:47.414Z">
+<meta property="og:updated_time" content="2019-02-02T06:12:59.791Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo主题优化">
-<meta name="twitter:description" content="安装文章计数插件WordCount第一步：在blog根目录下，执行以下命令1npm install hexo-wordcount --save  修改配置文件12# 开启字数统计word_count: true  修改主题 swig 布局找到themes/next/layout/_macro/post.swig文件，修改【字数统计】，找到如下代码：123&amp;lt;span title=&amp;quot;&amp;">
+<meta name="twitter:description" content="安装文章计数插件WordCount第一步：在blog根目录下，执行以下命令1npm install hexo-wordcount --save  第二步：修改配置文件12# 开启字数统计word_count: true  第三步：修改主题 swig 布局 找到themes/next/layout/_macro/post.swig文件，修改【字数统计】，找到如下代码：123&amp;lt;span titl">
 
 
 
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  143字
+                  226字
                 </span>
               
 
@@ -452,12 +452,16 @@
       
 
       
-        <h3 id="安装文章计数插件WordCount"><a href="#安装文章计数插件WordCount" class="headerlink" title="安装文章计数插件WordCount"></a>安装文章计数插件WordCount</h3><p>第一步：在blog根目录下，执行以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-wordcount --save</span><br></pre></td></tr></table></figure></p>
+        <h2 id="安装文章计数插件WordCount"><a href="#安装文章计数插件WordCount" class="headerlink" title="安装文章计数插件WordCount"></a>安装文章计数插件WordCount</h2><p>第一步：在blog根目录下，执行以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-wordcount --save</span><br></pre></td></tr></table></figure></p>
 <hr>
-<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 开启字数统计</span><br><span class="line">word_count: true</span><br></pre></td></tr></table></figure>
+<p>第二步：修改配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 开启字数统计</span><br><span class="line">word_count: true</span><br></pre></td></tr></table></figure></p>
 <hr>
-<h3 id="修改主题-swig-布局"><a href="#修改主题-swig-布局" class="headerlink" title="修改主题 swig 布局"></a>修改主题 swig 布局</h3><p>找到<code>themes/next/layout/_macro/post.swig</code>文件，修改【字数统计】，找到如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span title=&quot;&#123;&#123; __(&apos;post.wordcount&apos;) &#125;&#125;&quot;&gt;</span><br><span class="line">    &#123;&#123; wordcount(post.content) &#125;&#125;字</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure></p>
+<p>第三步：修改主题 swig 布局</p>
+<p>找到<code>themes/next/layout/_macro/post.swig</code>文件，修改【字数统计】，找到如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span title=&quot;&#123;&#123; __(&apos;post.wordcount&apos;) &#125;&#125;&quot;&gt;</span><br><span class="line">    &#123;&#123; wordcount(post.content) &#125;&#125;字</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure></p>
 <p>同理，我们修改【阅读时长】，修改后如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span title=&quot;&#123;&#123; __(&apos;post.min2read&apos;) &#125;&#125;&quot;&gt;</span><br><span class="line">    &#123;&#123; min2read(post.content) &#125;&#125; 分钟</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="增加站内搜索"><a href="#增加站内搜索" class="headerlink" title="增加站内搜索"></a>增加站内搜索</h2><p>第一步：在blog根目录下，执行以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure></p>
+<p>第二步：编辑站点配置文件，新增以下内容到任意位置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure></p>
+<p>第三步：接着修改主题配置文件_config.yml为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">local_search:</span><br><span class="line">enable: true</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -669,7 +673,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装文章计数插件WordCount"><span class="nav-number">1.</span> <span class="nav-text">安装文章计数插件WordCount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置文件"><span class="nav-number">2.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改主题-swig-布局"><span class="nav-number">3.</span> <span class="nav-text">修改主题 swig 布局</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装文章计数插件WordCount"><span class="nav-number">1.</span> <span class="nav-text">安装文章计数插件WordCount</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增加站内搜索"><span class="nav-number">2.</span> <span class="nav-text">增加站内搜索</span></a></li></ol></div>
             
 
           </div>
