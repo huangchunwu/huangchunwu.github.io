@@ -87,7 +87,7 @@
 
 
 
-  <meta name="keywords" content="一代天骄">
+  <meta name="keywords" content="并发,">
 
 
 
@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="日常开发使用，JUC工具类里面的exchanger使用场景不多，既然看到了就学了一下记一下。 定义exchanger 用于二个线程，规定一个交换点，当双方线程到达这个点后，相互交换数据的效果。 示例代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354">
-<meta name="keywords" content="一代天骄">
+<meta name="description" content="日常开发使用，JUC工具类里面的exchanger使用场景不多，既然看到了就学了一下记一下。 定义exchanger 用于二个线程，规定一个交换点，当双方线程到达这个点后，相互交换数据的效果。 应用用于2个线程交互数据使用；经典生产消费者 示例代码1234567891011121314151617181920212223242526272829303132333435363738394041424">
+<meta name="keywords" content="并发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JUC工具类之exchanger">
 <meta property="og:url" content="http://huangchunwu.github.io/2019/03/09/exchanger/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="日常开发使用，JUC工具类里面的exchanger使用场景不多，既然看到了就学了一下记一下。 定义exchanger 用于二个线程，规定一个交换点，当双方线程到达这个点后，相互交换数据的效果。 示例代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354">
+<meta property="og:description" content="日常开发使用，JUC工具类里面的exchanger使用场景不多，既然看到了就学了一下记一下。 定义exchanger 用于二个线程，规定一个交换点，当双方线程到达这个点后，相互交换数据的效果。 应用用于2个线程交互数据使用；经典生产消费者 示例代码1234567891011121314151617181920212223242526272829303132333435363738394041424">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-09T13:52:21.573Z">
+<meta property="og:updated_time" content="2019-03-09T14:00:01.238Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JUC工具类之exchanger">
-<meta name="twitter:description" content="日常开发使用，JUC工具类里面的exchanger使用场景不多，既然看到了就学了一下记一下。 定义exchanger 用于二个线程，规定一个交换点，当双方线程到达这个点后，相互交换数据的效果。 示例代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354">
+<meta name="twitter:description" content="日常开发使用，JUC工具类里面的exchanger使用场景不多，既然看到了就学了一下记一下。 定义exchanger 用于二个线程，规定一个交换点，当双方线程到达这个点后，相互交换数据的效果。 应用用于2个线程交互数据使用；经典生产消费者 示例代码1234567891011121314151617181920212223242526272829303132333435363738394041424">
 
 
 
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  262字
+                  283字
                 </span>
               
 
@@ -435,6 +435,7 @@
       
         <p>日常开发使用，JUC工具类里面的exchanger使用场景不多，既然看到了就学了一下记一下。</p>
 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>exchanger 用于二个线程，规定一个交换点，当双方线程到达这个点后，相互交换数据的效果。</p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>用于2个线程交互数据使用；经典生产消费者</p>
 <h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * java concurrent 包</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * 用于2个线程交互数据使用</span><br><span class="line"> * 规定一个交换点，当双方线程到达这个点后，相互交换数据</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * Created by huangchunwu on 2019/3/4.</span><br><span class="line"> */</span><br><span class="line">public class ExchangeTest &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void testExchange() &#123;</span><br><span class="line">        final Exchanger&lt;Integer&gt; exchanger = new Exchanger&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Runnable r1 = new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    System.out.print(Thread.currentThread().getName() + &quot;get &quot; + exchanger.exchange(2019));</span><br><span class="line">                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Runnable r2 = new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    System.out.print(Thread.currentThread().getName() + &quot;get &quot; + exchanger.exchange(2018));</span><br><span class="line">                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(r1);</span><br><span class="line">        t1.setName(&quot;A&quot;);</span><br><span class="line">        Thread t2 = new Thread(r2);</span><br><span class="line">        t2.setName(&quot;B&quot;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.currentThread().sleep(1000000);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://github.com/huangchunwu/own" target="_blank" rel="noopener">示例代码</a></p>
 
@@ -459,6 +460,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/并发/" rel="tag"># 并发</a>
+          
+        </div>
       
 
       
@@ -636,7 +643,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例代码"><span class="nav-number">2.</span> <span class="nav-text">示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">3.</span> <span class="nav-text">附录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用"><span class="nav-number">2.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例代码"><span class="nav-number">3.</span> <span class="nav-text">示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
 
           </div>
