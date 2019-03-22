@@ -858,10 +858,9 @@ Spring Batch给我们提供了什么？
 
       
         
-          
-          从事开发这么多年，陆陆续续开发了N个系统了。对软件设计原则，一直没有认真深入的探讨过，当熟读这些原则，结合项目，发现很多违背设计的地方，作为优秀的研发，应该早点跟三字经一样熟读这些原则才对啊。下面我结合最近的项目谈谈自己的见解。
-开闭原则官方解释 对扩展是开放的，对修改是关闭的。简单地说，就是你要提供这样的函数方法或者类，你可以进行重载，复写，但是不需要修改。例如，刚开始，火车票电子票出票流程，我
-          ...
+          <p>从事开发这么多年，陆陆续续开发了N个系统了。对软件设计原则，一直没有认真深入的探讨过，当熟读这些原则，结合项目，发现很多违背设计的地方，作为优秀的研发，应该早点跟三字经一样熟读这些原则才对啊。下面我结合最近的项目谈谈自己的见解。</p>
+<h2 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h2><p>官方解释 对扩展是开放的，对修改是关闭的。<br>简单地说，就是你要提供这样的函数方法或者类，你可以进行重载，复写，但是不需要修改。例如，刚开始，火车票电子票出票流程，我在controller层调用business层提供的出票方法。设计的时候，预测到后期还有其他票种，我抽象出一个IOccupyBusiness接口，里面就一个请求占位方法，实现该接口新建实现类EticketOccupyBusiness，在occupy（）写电子票的业务。<br>过了不久，产品提了一个配送票的出票需求，我只需要添加一个实现IOccupyBusiness的实现类DeliveryOccupyBusiness，在occupy（）写配送票的业务，我并没有修改已有类，和方法，复合了开闭原则。</p>
+<h2 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h2><p>客户端不应该依赖它不需要的接口；<br>一个类对另一个类的依赖应该建立在最小的接口上。<br>简单说，不要给调用方暴露它不需要调用的方法。<br>还拿上述的例子，如果遵循单一职责原则，请求占位，与占位反馈，可以设计成同个接口的不同方法。如果需求是这样的，配送票的占位是虚占，不需要耗时的请求12306实占，所以可以占位接口设计成同步反馈结果，则没有异步反馈的方法。那么配送票的实现类就多暴露出一个占位反馈的方法，不符合接口隔离原则，于是我又将占位接口，粒度细化了，分占位请求接口，占位反馈接口。这样，占位的实现类就不会实现多余的接口了。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/12/20/softdesign/#more" rel="contents">
@@ -1049,11 +1048,11 @@ Spring Batch给我们提供了什么？
 
       
         
-          
-          问题的背景在途牛，庆幸的是遇到了几个很正面的人，我也是从阅读其中一位同事的博客才发现了spring声明式事务的这个坑，说实话，我平时开发很少用事务，因为不好控制粒度，事务也是高并发的绊脚石。
-
-问题的现象为了理解方便，下面我用伪代码说明问题详细12345678910111213141516Class exampleService&#123;    //不加事务，本身不需要事务介入   public
-          ...
+          <h3 id="问题的背景"><a href="#问题的背景" class="headerlink" title="问题的背景"></a>问题的背景</h3><p>在途牛，庆幸的是遇到了几个很正面的人，我也是从阅读其中一位同事的博客才发现了spring声明式事务的这个坑，说实话，我平时开发很少用事务，因为不好控制粒度，事务也是高并发的绊脚石。</p>
+<hr>
+<h3 id="问题的现象"><a href="#问题的现象" class="headerlink" title="问题的现象"></a>问题的现象</h3><p>为了理解方便，下面我用伪代码说明问题详细<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Class exampleService&#123;</span><br><span class="line">    <span class="comment">//不加事务，本身不需要事务介入</span></span><br><span class="line">   public <span class="keyword">void</span> methodA（）&#123;</span><br><span class="line">      <span class="comment">//耗时操作</span></span><br><span class="line">      ······</span><br><span class="line">     <span class="comment">//调用B</span></span><br><span class="line">      methodB（）；</span><br><span class="line">      ······</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="comment">//声明了事务</span></span><br><span class="line">   @Transactional </span><br><span class="line">   public <span class="keyword">void</span> methodB（）&#123;</span><br><span class="line">      insert();</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"操作db失败"</span>)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行完代码后，现象是发现methodB的插入的数据没有回滚，像我一样不知道的同学就纳闷了，下面来具体分析下为啥出现事务无效的现象。</p>
+<hr>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/12/16/aop/#more" rel="contents">
