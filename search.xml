@@ -123,7 +123,7 @@
     
     
     <entry>
-      <title>Threadlocal如何防止内存泄漏</title>
+      <title>ThreadLocal如何防止内存泄漏</title>
       <link href="/2019/02/02/threadlocal/"/>
       <url>/2019/02/02/threadlocal/</url>
       
