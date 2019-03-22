@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="框架思想当业务系统遇到要处理大任务的时候，可以拆分成小任务来执行，最后将小任务的执行结果汇总，返回给大任务，简称为“分而治之”，jdk7提供了forkJoin框架，Hadoop提供了MapReduce。  适合场景 多核CPU服务器CPU密集的应用，并行计算的应用   主要方法forkJoinTask 抽象类不直接使用，直接使用以下子类提供的fork与join方法  RecursiveAction">
+<meta name="description" content="框架思想当业务系统遇到要处理大任务的时候，可以拆分成小任务来执行，最后将小任务的执行结果汇总，返回给大任务，简称为“分而治之”，jdk7提供了forkJoin框架，Hadoop提供了MapReduce。  适合场景 多核CPU服务器CPU密集的应用，并行计算的应用">
 <meta name="keywords" content="forkJoin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并行计算框架forkJoin框架">
 <meta property="og:url" content="http://huangchunwu.github.io/2019/01/25/forkjoin/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="框架思想当业务系统遇到要处理大任务的时候，可以拆分成小任务来执行，最后将小任务的执行结果汇总，返回给大任务，简称为“分而治之”，jdk7提供了forkJoin框架，Hadoop提供了MapReduce。  适合场景 多核CPU服务器CPU密集的应用，并行计算的应用   主要方法forkJoinTask 抽象类不直接使用，直接使用以下子类提供的fork与join方法  RecursiveAction">
+<meta property="og:description" content="框架思想当业务系统遇到要处理大任务的时候，可以拆分成小任务来执行，最后将小任务的执行结果汇总，返回给大任务，简称为“分而治之”，jdk7提供了forkJoin框架，Hadoop提供了MapReduce。  适合场景 多核CPU服务器CPU密集的应用，并行计算的应用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-25T13:10:03.380Z">
+<meta property="og:updated_time" content="2019-03-22T15:08:11.375Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="并行计算框架forkJoin框架">
-<meta name="twitter:description" content="框架思想当业务系统遇到要处理大任务的时候，可以拆分成小任务来执行，最后将小任务的执行结果汇总，返回给大任务，简称为“分而治之”，jdk7提供了forkJoin框架，Hadoop提供了MapReduce。  适合场景 多核CPU服务器CPU密集的应用，并行计算的应用   主要方法forkJoinTask 抽象类不直接使用，直接使用以下子类提供的fork与join方法  RecursiveAction">
+<meta name="twitter:description" content="框架思想当业务系统遇到要处理大任务的时候，可以拆分成小任务来执行，最后将小任务的执行结果汇总，返回给大任务，简称为“分而治之”，jdk7提供了forkJoin框架，Hadoop提供了MapReduce。  适合场景 多核CPU服务器CPU密集的应用，并行计算的应用">
 
 
 
@@ -461,6 +461,7 @@
 <p>多核CPU服务器<br>CPU密集的应用，<br>并行计算的应用</p>
 </blockquote>
 <hr>
+<a id="more"></a>
 <h2 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h2><h3 id="forkJoinTask-抽象类"><a href="#forkJoinTask-抽象类" class="headerlink" title="forkJoinTask 抽象类"></a>forkJoinTask 抽象类</h3><p>不直接使用，直接使用以下子类提供的fork与join方法</p>
 <blockquote>
 <p>RecursiveAction 无返回值<br>RecursiveTask 有返回值</p>
