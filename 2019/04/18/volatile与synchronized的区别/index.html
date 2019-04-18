@@ -87,7 +87,7 @@
 
 
 
-  <meta name="keywords" content="缓存,Guava,">
+  <meta name="keywords" content="volatile,synchronized,">
 
 
 
@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="为什么使用Guava Cache？guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现">
-<meta name="keywords" content="缓存,Guava">
+<meta name="description" content="前置知识JMM虚拟机线程内存模型:   每个线程，都是在自己的工作内存里面操作，想与另外一个线程共享变量值，需要将工作内存的变量刷到主内存，其他线程从主内存复制一份到工作线程来取值。 区别12volatile保证了线程之间的可见性和有序性,但不具备原子性。被volatile修饰的变量，线程每次取值都会从主内存复制到工作内存。 123synchronized 解释成JVM指令码 就是monitore">
+<meta name="keywords" content="volatile,synchronized">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Guava Cache 学习记录">
-<meta property="og:url" content="http://huangchunwu.github.io/2019/01/15/guava-cache/index.html">
+<meta property="og:title" content="volatile与synchronized的区别">
+<meta property="og:url" content="http://huangchunwu.github.io/2019/04/18/volatile与synchronized的区别/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="为什么使用Guava Cache？guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现">
+<meta property="og:description" content="前置知识JMM虚拟机线程内存模型:   每个线程，都是在自己的工作内存里面操作，想与另外一个线程共享变量值，需要将工作内存的变量刷到主内存，其他线程从主内存复制一份到工作线程来取值。 区别12volatile保证了线程之间的可见性和有序性,但不具备原子性。被volatile修饰的变量，线程每次取值都会从主内存复制到工作内存。 123synchronized 解释成JVM指令码 就是monitore">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-22T15:08:26.300Z">
+<meta property="og:updated_time" content="2019-04-18T15:43:39.061Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Guava Cache 学习记录">
-<meta name="twitter:description" content="为什么使用Guava Cache？guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现">
+<meta name="twitter:title" content="volatile与synchronized的区别">
+<meta name="twitter:description" content="前置知识JMM虚拟机线程内存模型:   每个线程，都是在自己的工作内存里面操作，想与另外一个线程共享变量值，需要将工作内存的变量刷到主内存，其他线程从主内存复制一份到工作线程来取值。 区别12volatile保证了线程之间的可见性和有序性,但不具备原子性。被volatile修饰的变量，线程每次取值都会从主内存复制到工作内存。 123synchronized 解释成JVM指令码 就是monitore">
 
 
 
@@ -139,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://huangchunwu.github.io/2019/01/15/guava-cache/">
+  <link rel="canonical" href="http://huangchunwu.github.io/2019/04/18/volatile与synchronized的区别/">
 
 
 
 
 
-  <title>Guava Cache 学习记录 | 一代天骄's BLOG</title>
+  <title>volatile与synchronized的区别 | 一代天骄's BLOG</title>
   
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/01/15/guava-cache/">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/18/volatile与synchronized的区别/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一代天骄">
@@ -341,7 +341,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Guava Cache 学习记录</h1>
+          <h1 class="post-title" itemprop="name headline">volatile与synchronized的区别</h1>
         
 
         <div class="post-meta">
@@ -353,8 +353,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-15T23:26:12+08:00">
-                2019-01-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-18T23:41:27+08:00">
+                2019-04-18
               </time>
             
 
@@ -376,8 +376,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/缓存/" itemprop="url" rel="index">
-                    <span itemprop="name">缓存</span>
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
                   </a>
                 </span>
 
@@ -394,8 +394,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/01/15/guava-cache/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/01/15/guava-cache/" itemprop="commentCount"></span>
+                <a href="/2019/04/18/volatile与synchronized的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/18/volatile与synchronized的区别/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -418,7 +418,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.7k字
+                  166字
                 </span>
               
 
@@ -434,7 +434,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  7分钟
+                  1分钟
                 </span>
               
             </span>
@@ -455,42 +455,10 @@
       
 
       
-        <h2 id="为什么使用Guava-Cache？"><a href="#为什么使用Guava-Cache？" class="headerlink" title="为什么使用Guava Cache？"></a>为什么使用Guava Cache？</h2><p>guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：<br>1、设置缓存的过期时间,遵循LRU原则移除过期KEY<br>2、缓存的定期刷新<br>3、如何防止缓存穿透</p>
-<p>如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无需重复造轮子。</p>
-<p>我们常用的是redis可以实现分布式缓存，为什么推荐用guava cache呢<br>1、同时造成了业务系统 强依赖于网络和redis服务器的稳定性<br>2、网络请求的效率远远没有本地内存快。</p>
+        <h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p>JMM虚拟机线程内存模型<br>:   每个线程，都是在自己的工作内存里面操作，想与另外一个线程共享变量值，需要将工作内存的变量刷到主内存，其他线程从主内存复制一份到工作线程来取值。</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">volatile</span><br><span class="line">保证了线程之间的可见性和有序性,但不具备原子性。被volatile修饰的变量，线程每次取值都会从主内存复制到工作内存。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized </span><br><span class="line">解释成JVM指令码 就是monitorenter 和 monitorexit控制线程同步</span><br><span class="line">保证了线程的可见性、有序性和原子性</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<hr>
-<h2 id="哪些场景适合使用Guava-cache"><a href="#哪些场景适合使用Guava-cache" class="headerlink" title="哪些场景适合使用Guava cache"></a>哪些场景适合使用Guava cache</h2><p>通常缓存的用法，先请求本地缓存，如果本地缓存未命中，则去请求DB。<br>Guava cache 是本地缓存，所以适合数据量小的数据量的情况下使用。</p>
-<hr>
-<h2 id="Guava-cache特性"><a href="#Guava-cache特性" class="headerlink" title="Guava cache特性"></a>Guava cache特性</h2><p>1、缓存不会自动刷新，需满足2个条件，<code>过期了</code>，<code>有get请求</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">static ListeningExecutorService executorService =</span><br><span class="line">           MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor());</span><br><span class="line"></span><br><span class="line">   // remove listener</span><br><span class="line">   static RemovalListener&lt;String, Integer&gt; removalListener = new RemovalListener&lt;String, Integer&gt;() &#123;</span><br><span class="line">       public void onRemoval(RemovalNotification&lt;String, Integer&gt; removal) &#123;</span><br><span class="line">           System.out.println(DateUtils.time() +&quot;cause:&quot; + removal.getCause() + &quot; key:&quot; + removal.getKey() + &quot; value:&quot;</span><br><span class="line">                   + removal.getValue());</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   final static LoadingCache&lt;String, Integer&gt; loadingCache = CacheBuilder.newBuilder()</span><br><span class="line">           .maximumSize(10)  //最多存放十个数据</span><br><span class="line">        // .expireAfterWrite(3, TimeUnit.SECONDS)  //缓存200秒</span><br><span class="line">           .refreshAfterWrite(1, TimeUnit.SECONDS)</span><br><span class="line">           .removalListener(removalListener)</span><br><span class="line">           .recordStats()   //开启 记录状态数据功能</span><br><span class="line">           .build(new CacheLoader&lt;String, Integer&gt;() &#123;</span><br><span class="line">               //数据加载，默认返回-1,也可以是查询操作，如从DB查询</span><br><span class="line">               @Override</span><br><span class="line">               public Integer load(String key) throws Exception &#123;</span><br><span class="line">                   System.out.println(DateUtils.time() + &quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;load&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;);</span><br><span class="line">                   return -1;</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               //有些键不需要刷新，并且我们希望刷新是异步完成的</span><br><span class="line">               @Override</span><br><span class="line">               public ListenableFuture&lt;Integer&gt; reload(final String key, final Integer oldValue) &#123;</span><br><span class="line">                   System.out.println(DateUtils.time() + &quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;reload&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;);</span><br><span class="line">                   // we need to load new values asynchronously, so that calls to read values from the cache don&apos;t block</span><br><span class="line">                   ListenableFuture&lt;Integer&gt; listenableFuture = executorService.submit(new Callable&lt;Integer&gt;() &#123;</span><br><span class="line">                       @Override</span><br><span class="line">                       public Integer call() throws Exception &#123;</span><br><span class="line">                           try &#123;</span><br><span class="line">                               Integer value = load(key);</span><br><span class="line">                               return value;</span><br><span class="line">                           &#125; catch (Exception ex) &#123;</span><br><span class="line">                               return oldValue;</span><br><span class="line">                           &#125; finally &#123;</span><br><span class="line">                           &#125;</span><br><span class="line">                       &#125;</span><br><span class="line">                   &#125;);</span><br><span class="line">                   return listenableFuture;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;);</span><br></pre></td></tr></table></figure></p>
-<p>执行结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Sun Jan 20 18:55:46 CST 2019&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;put&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><br><span class="line">Sun Jan 20 18:55:50 CST 2019&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;get&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><br><span class="line">Sun Jan 20 18:55:50 CST 2019&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;reload&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><br><span class="line">Sun Jan 20 18:55:50 CST 2019&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;load&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><br><span class="line">Sun Jan 20 19:11:37 CST 2019&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;cause:REPLACED key:1 value:1</span><br></pre></td></tr></table></figure></p>
-<p>由上述程序执行结果，可以看出，cache的key进行put后4S没有reload，第5S的时候get请求后，reload才开始。</p>
-<p>2、Guava Cache的load方法不能返回null，否则抛异常，Guava Cache的get方法先在本地缓存中取，如果不存在，则会触发load方法。但load方法不能返回null。 </p>
-<hr>
-<h2 id="Guava-cache-有什么替代品"><a href="#Guava-cache-有什么替代品" class="headerlink" title="Guava cache 有什么替代品"></a>Guava cache 有什么替代品</h2><p>Caffeine 宣称拥有比 Guava Cache 高几倍的读写效率</p>
-<hr>
-<h2 id="Guava-cache使用步骤"><a href="#Guava-cache使用步骤" class="headerlink" title="Guava cache使用步骤"></a>Guava cache使用步骤</h2><h3 id="引入maven的POM"><a href="#引入maven的POM" class="headerlink" title="引入maven的POM"></a>引入maven的POM</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">       &lt;version&gt;19.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="Guava-Cache初始化"><a href="#Guava-Cache初始化" class="headerlink" title="Guava Cache初始化"></a>Guava Cache初始化</h3><h4 id="Cache-Callable"><a href="#Cache-Callable" class="headerlink" title="Cache Callable"></a>Cache Callable</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">final static Cache&lt;Integer, String&gt; cache = CacheBuilder.newBuilder()</span><br><span class="line">           //设置cache的初始大小为10，要合理设置该值</span><br><span class="line">           .initialCapacity(10)</span><br><span class="line">           //设置并发数为5，即同一时间最多只能有5个线程往cache执行写入操作</span><br><span class="line">           .concurrencyLevel(5)</span><br><span class="line">           //设置cache中的数据在写入之后的存活时间为10秒</span><br><span class="line">           .expireAfterWrite(10, TimeUnit.SECONDS)</span><br><span class="line">           //构建cache实例</span><br><span class="line">           .build();</span><br></pre></td></tr></table></figure>
-<h4 id="LoadingCache"><a href="#LoadingCache" class="headerlink" title="LoadingCache"></a>LoadingCache</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">final static LoadingCache&lt;String, Integer&gt; cache = CacheBuilder.newBuilder()</span><br><span class="line">           .maximumSize(10)  //最多存放十个数据</span><br><span class="line">           .expireAfterWrite(10, TimeUnit.SECONDS)  //缓存200秒</span><br><span class="line">           .recordStats()   //开启 记录状态数据功能</span><br><span class="line">           .build(new CacheLoader&lt;String, Integer&gt;() &#123;</span><br><span class="line">               //数据加载，默认返回-1,也可以是查询操作，如从DB查询</span><br><span class="line">               @Override</span><br><span class="line">               public Integer load(String key) throws Exception &#123;</span><br><span class="line">                   return -1;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Guava-Cache常用方法"><a href="#Guava-Cache常用方法" class="headerlink" title="Guava Cache常用方法"></a>Guava Cache常用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/** </span><br><span class="line"> * 该接口的实现被认为是线程安全的，即可在多线程中调用 </span><br><span class="line"> * 通过被定义单例使用 </span><br><span class="line"> */  </span><br><span class="line">public interface Cache&lt;K, V&gt; &#123;  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 通过key获取缓存中的value，若不存在直接返回null </span><br><span class="line">   */  </span><br><span class="line">  V getIfPresent(Object key);  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 通过key获取缓存中的value，若不存在就通过valueLoader来加载该value </span><br><span class="line">   * 整个过程为 &quot;if cached, return; otherwise create, cache and return&quot; </span><br><span class="line">   * 注意valueLoader要么返回非null值，要么抛出异常，绝对不能返回null </span><br><span class="line">   */  </span><br><span class="line">  V get(K key, Callable&lt;? extends V&gt; valueLoader) throws ExecutionException;  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 添加缓存，若key存在，就覆盖旧值 </span><br><span class="line">   */  </span><br><span class="line">  void put(K key, V value);  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 删除该key关联的缓存 </span><br><span class="line">   */  </span><br><span class="line">  void invalidate(Object key);  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 删除所有缓存 </span><br><span class="line">   */  </span><br><span class="line">  void invalidateAll();  </span><br><span class="line"></span><br><span class="line">  /** </span><br><span class="line">   * 执行一些维护操作，包括清理缓存 </span><br><span class="line">   */  </span><br><span class="line">  void cleanUp();  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="缓存回收"><a href="#缓存回收" class="headerlink" title="缓存回收"></a>缓存回收</h2><p><code>基于容量回收</code> </p>
-<p>CacheBuilder.maximumSize(long)</p>
-<p><code>定时回收</code>   </p>
-<p>expireAfterAccess(long, TimeUnit) -&gt; KEY在一定时间内没有读写，则失效，下次读取直接load（）中取</p>
-<p>expireAfterWrite(long, TimeUnit) -&gt; 避免了缓存穿透的问题，保证了数据的实时性，牺牲的是性能，当数据expire的时候，大量get请求过来的时候，只有一个请求会去load（）数据，而没有更新完成之前，其他全部请求会被block（每个线程都要轮询的判断lock状态）</p>
-<p><code>基于引用回收</code> </p>
-<p>CacheBuilder.weakKeys()：使用弱引用存储键<br>               CacheBuilder.weakValues()：使用弱引用存储值<br>               CacheBuilder.softValues()：使用软引用存储值。</p>
-<hr>
-<h2 id="缓存刷新"><a href="#缓存刷新" class="headerlink" title="缓存刷新"></a>缓存刷新</h2><p>refreshAfterWrite(long, TimeUnit) -&gt; 机制是并非超时时间到就自动刷新，而是请求 get的时候才会触发refresh，默认refresh是同步请求新值，可以重新refresh方法改成异步。如果有大量并发请求的时候，只会有一个请求get-&gt;reload同步执行，其他线程返回旧值.</p>
-<ul>
-<li><p>弊端<br>吞吐量低的应用，在超过过期时间时，大量并发get请求时，大部分拿到的是很久前的旧值，导致数据脏读。</p>
-</li>
-<li><p>如何解决？<br>可以同时使用expireAfterWrite设置key过期时间，比如每2s刷新一次新值，设置expireAfterWrite为5s为过期时间，则当key值5s没有访问的话，则第5s的时候强制取load新值，解决了脏读问题，也同时避免了缓存穿透问题。</p>
-</li>
-</ul>
-<hr>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://github.com/ben-manes/caffeine" target="_blank" rel="noopener">Caffeine github</a><br><a href="https://github.com/huangchunwu/own" target="_blank" rel="noopener">示例代码</a></p>
-
       
     </div>
     
@@ -515,9 +483,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/缓存/" rel="tag"># 缓存</a>
+            <a href="/tags/volatile/" rel="tag"># volatile</a>
           
-            <a href="/tags/Guava/" rel="tag"># Guava</a>
+            <a href="/tags/synchronized/" rel="tag"># synchronized</a>
           
         </div>
       
@@ -530,8 +498,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/11/hexo-improve/" rel="next" title="hexo主题优化">
-                <i class="fa fa-chevron-left"></i> hexo主题优化
+              <a href="/2019/04/06/gc/" rel="next" title="垃圾回收器的选择">
+                <i class="fa fa-chevron-left"></i> 垃圾回收器的选择
               </a>
             
           </div>
@@ -539,10 +507,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/25/forkjoin/" rel="prev" title="并行计算框架forkJoin框架">
-                并行计算框架forkJoin框架 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -701,7 +665,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用Guava-Cache？"><span class="nav-number">1.</span> <span class="nav-text">为什么使用Guava Cache？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些场景适合使用Guava-cache"><span class="nav-number">2.</span> <span class="nav-text">哪些场景适合使用Guava cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache特性"><span class="nav-number">3.</span> <span class="nav-text">Guava cache特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache-有什么替代品"><span class="nav-number">4.</span> <span class="nav-text">Guava cache 有什么替代品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-cache使用步骤"><span class="nav-number">5.</span> <span class="nav-text">Guava cache使用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入maven的POM"><span class="nav-number">5.1.</span> <span class="nav-text">引入maven的POM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guava-Cache初始化"><span class="nav-number">5.2.</span> <span class="nav-text">Guava Cache初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cache-Callable"><span class="nav-number">5.2.1.</span> <span class="nav-text">Cache Callable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LoadingCache"><span class="nav-number">5.2.2.</span> <span class="nav-text">LoadingCache</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guava-Cache常用方法"><span class="nav-number">5.3.</span> <span class="nav-text">Guava Cache常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存回收"><span class="nav-number">6.</span> <span class="nav-text">缓存回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存刷新"><span class="nav-number">7.</span> <span class="nav-text">缓存刷新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">8.</span> <span class="nav-text">附录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前置知识"><span class="nav-number">1.</span> <span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区别"><span class="nav-number">2.</span> <span class="nav-text">区别</span></a></li></ol></div>
             
 
           </div>
