@@ -87,7 +87,7 @@
 
 
 
-  <meta name="keywords" content="SQL优化,">
+  <meta name="keywords" content="隔离级别,">
 
 
 
@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="SQL优化，离不开explain。这里记下explain的常用列，方便以后查询。 这里提2个关键关于查询效率的列  type列12345678|  ALL              |  全表扫描|  index            |  索引全扫描|  range            |  索引范围扫描，常用语&amp;lt;,&amp;lt;=,&amp;gt;=,between等操作|  ref">
-<meta name="keywords" content="SQL优化">
+<meta name="description" content="预备知识ACID是做什么的123456简而言之，解释为    原子性（atomicity）    一致性（consistency）    隔离性（isolation）    持久性（durability） 为保证数据库事务操作的正确性与可靠性，必须满足以上4个特性。  事务隔离级别跟ACID有啥关系上面ACID的4个特性中，其他三个都是针对单一事务，当出现并行事务的时候，就会存在以下几个问题：">
+<meta name="keywords" content="隔离级别">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL优化神器explain">
-<meta property="og:url" content="http://huangchunwu.github.io/2019/04/20/SQL优化神器explain/index.html">
+<meta property="og:title" content="mysql隔离级别">
+<meta property="og:url" content="http://huangchunwu.github.io/2019/04/25/mysql隔离级别/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="SQL优化，离不开explain。这里记下explain的常用列，方便以后查询。 这里提2个关键关于查询效率的列  type列12345678|  ALL              |  全表扫描|  index            |  索引全扫描|  range            |  索引范围扫描，常用语&amp;lt;,&amp;lt;=,&amp;gt;=,between等操作|  ref">
+<meta property="og:description" content="预备知识ACID是做什么的123456简而言之，解释为    原子性（atomicity）    一致性（consistency）    隔离性（isolation）    持久性（durability） 为保证数据库事务操作的正确性与可靠性，必须满足以上4个特性。  事务隔离级别跟ACID有啥关系上面ACID的4个特性中，其他三个都是针对单一事务，当出现并行事务的时候，就会存在以下几个问题：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-20T12:55:16.585Z">
+<meta property="og:updated_time" content="2019-04-25T14:30:27.989Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SQL优化神器explain">
-<meta name="twitter:description" content="SQL优化，离不开explain。这里记下explain的常用列，方便以后查询。 这里提2个关键关于查询效率的列  type列12345678|  ALL              |  全表扫描|  index            |  索引全扫描|  range            |  索引范围扫描，常用语&amp;lt;,&amp;lt;=,&amp;gt;=,between等操作|  ref">
+<meta name="twitter:title" content="mysql隔离级别">
+<meta name="twitter:description" content="预备知识ACID是做什么的123456简而言之，解释为    原子性（atomicity）    一致性（consistency）    隔离性（isolation）    持久性（durability） 为保证数据库事务操作的正确性与可靠性，必须满足以上4个特性。  事务隔离级别跟ACID有啥关系上面ACID的4个特性中，其他三个都是针对单一事务，当出现并行事务的时候，就会存在以下几个问题：">
 
 
 
@@ -139,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://huangchunwu.github.io/2019/04/20/SQL优化神器explain/">
+  <link rel="canonical" href="http://huangchunwu.github.io/2019/04/25/mysql隔离级别/">
 
 
 
 
 
-  <title>SQL优化神器explain | 一代天骄's BLOG</title>
+  <title>mysql隔离级别 | 一代天骄's BLOG</title>
   
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/20/SQL优化神器explain/">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/25/mysql隔离级别/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一代天骄">
@@ -341,7 +341,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SQL优化神器explain</h1>
+          <h1 class="post-title" itemprop="name headline">mysql隔离级别</h1>
         
 
         <div class="post-meta">
@@ -353,8 +353,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-20T20:20:06+08:00">
-                2019-04-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-25T22:27:57+08:00">
+                2019-04-25
               </time>
             
 
@@ -394,8 +394,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/04/20/SQL优化神器explain/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/20/SQL优化神器explain/" itemprop="commentCount"></span>
+                <a href="/2019/04/25/mysql隔离级别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/25/mysql隔离级别/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -418,7 +418,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  370字
+                  504字
                 </span>
               
 
@@ -455,15 +455,37 @@
       
 
       
-        <p>SQL优化，离不开explain。这里记下explain的常用列，方便以后查询。</p>
-<p>这里提2个关键关于查询效率的列</p>
+        <h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="ACID是做什么的"><a href="#ACID是做什么的" class="headerlink" title="ACID是做什么的"></a>ACID是做什么的</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">简而言之，解释为</span><br><span class="line"></span><br><span class="line">    原子性（atomicity）</span><br><span class="line">    一致性（consistency）</span><br><span class="line">    隔离性（isolation）</span><br><span class="line">    持久性（durability）</span><br></pre></td></tr></table></figure>
+<p><strong>为保证数据库事务操作的正确性与可靠性</strong>，必须满足以上4个特性。</p>
 <hr>
-<h3 id="type列"><a href="#type列" class="headerlink" title="type列"></a>type列</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">|  ALL              |  全表扫描</span><br><span class="line">|  index            |  索引全扫描</span><br><span class="line">|  range            |  索引范围扫描，常用语&lt;,&lt;=,&gt;=,between等操作</span><br><span class="line">|  ref                |  使用非唯一索引扫描或唯一索引前缀扫描，返回单条记录，常出现在关联查询中</span><br><span class="line">|  eq_ref           |  类似ref，区别在于使用的是唯一索引，使用主键的关联查询</span><br><span class="line">|  <span class="keyword">const</span>/system  |  匹配单条记录，系统会把匹配行中的其他列作为常数处理，如主键或唯一索引查询</span><br><span class="line">|  <span class="literal">null</span>                |  MySQL不访问任何表或索引，直接返回结果</span><br></pre></td></tr></table></figure>
-<p>sql效率从上到下逐渐增高</p>
+<h3 id="事务隔离级别跟ACID有啥关系"><a href="#事务隔离级别跟ACID有啥关系" class="headerlink" title="事务隔离级别跟ACID有啥关系"></a>事务隔离级别跟ACID有啥关系</h3><p>上面ACID的4个特性中，其他三个都是针对单一事务，当出现并行事务的时候，就会存在以下几个问题：</p>
+<ul>
+<li>脏读</li>
+<li>不可重复读</li>
+<li>幻读</li>
+</ul>
+<p>数据库是怎么解决这个问题的呢？<br>简而言之，加锁。数据库提供了自动锁的功能，只需要用户指定会话的事务隔离级别，数据库就会分析SQL然后给事务访问的资源加入合适的锁。</p>
+<p>事务隔离级别有以下</p>
+<ul>
+<li>读未提交(Read UnCommitted)</li>
+<li>读已提交(Read Commited，后面简称RC)</li>
+<li>可重复读(Repeatable Read，后面简称RR)</li>
+<li>序列化读(Serializable)</li>
+</ul>
 <hr>
-<a id="more"></a>
-<h3 id="Extra列"><a href="#Extra列" class="headerlink" title="Extra列"></a>Extra列</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">| Using index | 表示使用索引</span><br><span class="line"></span><br><span class="line">如果只有 Using index，说明他没有查询到数据表，只用索引表就完成了这个查询，这个叫覆盖索引。如果同时出现Using where，代表使用索引来查找读取记录，也是可以用到索引的，但是需要查询到数据表。</span><br><span class="line"></span><br><span class="line">| Using where | 表示条件查询</span><br><span class="line"></span><br><span class="line">不读取表的所有数据，或不是仅仅通过索引就可以获取所有需要的数据，则会出现 Using where。</span><br><span class="line"></span><br><span class="line">| Using filesort |  排序语句ORDER BY的时候，会出现该信息。  </span><br><span class="line"></span><br><span class="line">| Using temporary | 使用了临时表，多表联合查询，结果排序的场合。</span><br></pre></td></tr></table></figure>
-<p>sql效率从上到下逐渐增高</p>
+<h3 id="binlog的几种格式"><a href="#binlog的几种格式" class="headerlink" title="binlog的几种格式"></a>binlog的几种格式</h3><ul>
+<li>statement:记录的是修改SQL语句</li>
+<li>row：记录的是每行实际数据的变更 ，RC隔离级别下使用的binlog格式   </li>
+<li>mixed：statement和row模式的混合</li>
+</ul>
+<hr>
+<h2 id="MySQL事务默认隔离级别RR"><a href="#MySQL事务默认隔离级别RR" class="headerlink" title="MySQL事务默认隔离级别RR"></a>MySQL事务默认隔离级别RR</h2><p>我们知道，Oracal默认隔离级别是RC， Mysql默认隔离级别是RR，可不可以换成其他的？<br>数据库主从同步的方式是怎么样， 是通过binlog。<br>Mysql 5.0版本之前，binlog只支持STATEMENT这种格式。而这种格式<strong>在RC隔离级别下主从同步是有bug的。因此Mysql将RR作为默认的隔离级别！</strong></p>
+<hr>
+<h2 id="互联网项目中mysql应该选什么事务隔离级别？"><a href="#互联网项目中mysql应该选什么事务隔离级别？" class="headerlink" title="互联网项目中mysql应该选什么事务隔离级别？"></a>互联网项目中mysql应该选什么事务隔离级别？</h2><p>由上面我们知道了，mysql默认是可重复读的原因，那么我们可以升级Mysql到5,1即可以解决，<strong>互联网项目大部分用的是RC</strong>，为什么？</p>
+<ul>
+<li>可重复读存在GAP锁，死锁的概率相对读已提交大</li>
+<li>在RR隔离级别下，条件列未命中索引会锁表！而在RC隔离级别下，只锁行</li>
+</ul>
 
       
     </div>
@@ -489,7 +511,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SQL优化/" rel="tag"># SQL优化</a>
+            <a href="/tags/隔离级别/" rel="tag"># 隔离级别</a>
           
         </div>
       
@@ -502,8 +524,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/18/volatile与synchronized的区别/" rel="next" title="volatile与synchronized的区别">
-                <i class="fa fa-chevron-left"></i> volatile与synchronized的区别
+              <a href="/2019/04/20/SQL优化神器explain/" rel="next" title="SQL优化神器explain">
+                <i class="fa fa-chevron-left"></i> SQL优化神器explain
               </a>
             
           </div>
@@ -511,10 +533,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/25/mysql隔离级别/" rel="prev" title="mysql隔离级别">
-                mysql隔离级别 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -673,7 +691,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#type列"><span class="nav-number">1.</span> <span class="nav-text">type列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Extra列"><span class="nav-number">2.</span> <span class="nav-text">Extra列</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#预备知识"><span class="nav-number">1.</span> <span class="nav-text">预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACID是做什么的"><span class="nav-number">1.1.</span> <span class="nav-text">ACID是做什么的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务隔离级别跟ACID有啥关系"><span class="nav-number">1.2.</span> <span class="nav-text">事务隔离级别跟ACID有啥关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binlog的几种格式"><span class="nav-number">1.3.</span> <span class="nav-text">binlog的几种格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL事务默认隔离级别RR"><span class="nav-number">2.</span> <span class="nav-text">MySQL事务默认隔离级别RR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互联网项目中mysql应该选什么事务隔离级别？"><span class="nav-number">3.</span> <span class="nav-text">互联网项目中mysql应该选什么事务隔离级别？</span></a></li></ol></div>
             
 
           </div>
