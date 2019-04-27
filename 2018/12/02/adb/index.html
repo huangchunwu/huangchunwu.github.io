@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，李老板教了我新招，可以远程连接设备进行调试，即远程adb。  前提条件：一台Android设备，并且ROOT  12345susetprop service.adb.tcp.port 9999stop adbdstart adbdnetstat#看下adb端口是否打开">
+<meta name="description" content="最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，学会了新招，可以远程连接设备进行调试，即远程adb。  前提条件：一台Android设备，并且ROOT  12345susetprop service.adb.tcp.port 9999  #设置端口，默认是5555stop adbdstart adbdnetstat#看下adb端口是否打开 最后在终端执">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android开发调试远程连接设备">
 <meta property="og:url" content="http://huangchunwu.github.io/2018/12/02/adb/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，李老板教了我新招，可以远程连接设备进行调试，即远程adb。  前提条件：一台Android设备，并且ROOT  12345susetprop service.adb.tcp.port 9999stop adbdstart adbdnetstat#看下adb端口是否打开">
+<meta property="og:description" content="最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，学会了新招，可以远程连接设备进行调试，即远程adb。  前提条件：一台Android设备，并且ROOT  12345susetprop service.adb.tcp.port 9999  #设置端口，默认是5555stop adbdstart adbdnetstat#看下adb端口是否打开 最后在终端执">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-22T15:12:01.161Z">
+<meta property="og:updated_time" content="2019-04-27T02:53:58.526Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android开发调试远程连接设备">
-<meta name="twitter:description" content="最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，李老板教了我新招，可以远程连接设备进行调试，即远程adb。  前提条件：一台Android设备，并且ROOT  12345susetprop service.adb.tcp.port 9999stop adbdstart adbdnetstat#看下adb端口是否打开">
+<meta name="twitter:description" content="最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，学会了新招，可以远程连接设备进行调试，即远程adb。  前提条件：一台Android设备，并且ROOT  12345susetprop service.adb.tcp.port 9999  #设置端口，默认是5555stop adbdstart adbdnetstat#看下adb端口是否打开 最后在终端执">
 
 
 
@@ -418,7 +418,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  85字
+                  118字
                 </span>
               
 
@@ -455,11 +455,12 @@
       
 
       
-        <p>最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，李老板教了我新招，可以远程连接设备进行调试，即远程adb。</p>
+        <p>最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，学会了新招，可以远程连接设备进行调试，即远程adb。</p>
 <hr>
 <p>前提条件：一台Android设备，并且ROOT</p>
 <hr>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">su</span><br><span class="line">setprop service.adb.tcp.port <span class="number">9999</span></span><br><span class="line">stop adbd</span><br><span class="line">start adbd</span><br><span class="line">netstat<span class="comment">#看下adb端口是否打开</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">su</span><br><span class="line">setprop service.adb.tcp.port <span class="number">9999</span>  <span class="comment">#设置端口，默认是5555</span></span><br><span class="line">stop adbd</span><br><span class="line">start adbd</span><br><span class="line">netstat<span class="comment">#看下adb端口是否打开</span></span><br></pre></td></tr></table></figure>
+<p>最后在终端执行<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\AppData\Local\Android\Sdk\platform-tools&gt;adb connect <span class="number">192.168</span><span class="number">.2</span><span class="number">.104</span> <span class="number">9999</span>连接成功</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
       
     </div>
