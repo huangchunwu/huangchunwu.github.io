@@ -2,21 +2,14 @@
 
 
 
+  
 
 
-
-
-
-
-
-
-
-
-<html class="theme-next muse" lang="zh-CN">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -26,13 +19,9 @@
 
 
 
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
 
-
-
-  <meta name="google-site-verification" content="8oRV9qTp_p2ZpKMHp3sUXRtAEYdtfanHSWGHVppZSHo">
-
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -41,38 +30,28 @@
 
 
 
-  
-  
-  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
 
 
 
 
   
   
-  
-  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
 
   
-    
-    
   
-
   
-    
-      
-    
-
-    
-  
-
   
 
   
     
-      
-    
-
     
   
 
@@ -85,9 +64,27 @@
   
 
   
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
     
     
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|PT Serif:300,300italic,400,400italic,700,700italic|Caveat:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -95,90 +92,38 @@
 
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" href="/css/main.css?v=7.1.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png?v=7.1.0">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png?v=7.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png?v=7.1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="/img/safari-pinned-tab.svg?v=7.1.0" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
 
 
-  <link rel="manifest" href="/img/site.webmanifest">
-
-
-  <meta name="msapplication-config" content="/img/browserconfig.xml">
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
 
 
 
 
 
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.1.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":true,"dimmer":false},
-    back2top: true,
-    back2top_sidebar: false,
-    fancybox: true,
-    fastclick: false,
-    lazyload: true,
-    tabs: true,
-    motion: {"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
+  <meta name="keywords" content="线程池,">
 
 
 
-<script>
-if(window.location.hash){
-  var checkExist = setInterval(function() {
-    if ($(window.location.hash).length) {
-      $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
-      clearInterval(checkExist);
-    }
-  }, 100);
-}
-</script>
 
-<script>
-	function GetUrlRelativePath() {
-		var url = document.location.toString();
-		var arrUrl = url.split("//");
-		var start = arrUrl[1].indexOf("/");
-		var relUrl = arrUrl[1].substring(start);//stop省略，截取从start开始到结尾的所有字符
-		if(relUrl.indexOf("?") != -1){
-　　　　　　relUrl = relUrl.split("?")[0];
-		}
-		return relUrl;
-	}
-	var relUrl = GetUrlRelativePath()
-	if (relUrl.indexOf('/books/')>=0) {
-		document.write('<meta name="referrer" content="never" />');
-	}
-</script>
 
-  <meta name="description" content="为什么用线程池？ 节约省资源创建线程有损耗，销毁线程也有损耗 执行效率高充分利用多核CPU，并行处理。处理任务，不需要等待线程创建的过程立即执行。 管理线程线程是操作系统稀缺的资源，不可滥用。线程池可以做到统一分配，调优和监控。  线程池的实现原理任务请求过来，当前线程数小于核心线程池线程数，创建线程执行；当前线程数超过等于核心线程数，则放到队列等待空闲线程处理。当任务队列满了，则创建线程，执行任">
+
+
+
+
+
+<meta name="description" content="为什么用线程池？ 节约省资源创建线程有损耗，销毁线程也有损耗 执行效率高充分利用多核CPU，并行处理。处理任务，不需要等待线程创建的过程立即执行。 管理线程线程是操作系统稀缺的资源，不可滥用。线程池可以做到统一分配，调优和监控。  线程池的实现原理任务请求过来，当前线程数小于核心线程池线程数，创建线程执行；当前线程数超过等于核心线程数，则放到队列等待空闲线程处理。当任务队列满了，则创建线程，执行任">
 <meta name="keywords" content="线程池">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线程池容易被忽略的地方">
@@ -193,19 +138,37 @@ if(window.location.hash){
 
 
 
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
 
 
-  
-  
+
   <link rel="canonical" href="http://huangchunwu.github.io/2019/04/30/线程池容易被忽略的地方/">
 
 
 
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
+
 
   <title>线程池容易被忽略的地方 | 一代天骄's BLOG</title>
   
@@ -216,35 +179,6 @@ if(window.location.hash){
 
 
 
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
 
 </head>
 
@@ -260,7 +194,7 @@ if(window.location.hash){
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
+  <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
@@ -270,16 +204,13 @@ if(window.location.hash){
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
       
-        <h1 class="site-subtitle" itemprop="description">专注于Java、项目管理、软件架构</h1>
+        <p class="site-subtitle">专注于Java、项目管理、软件架构</p>
       
-    
-    
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
+    <button>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -287,114 +218,76 @@ if(window.location.hash){
   </div>
 </div>
 
-
-
 <nav class="site-nav">
+  
+
   
     <ul id="menu" class="menu">
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-    
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>文章归档</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-photos">
-
-    
-    
-    
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/photos" rel="section"><i class="menu-item-icon fa fa-fw fa-camera-retro"></i>光影留痕</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-books">
-
-    
-    
-    
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/books" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i>书破万卷</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-about">
-
-    
-    
-    
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
       
-    
 
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-heart"></i>关于班班</a>
-
-  </li>
-
-      
       
         <li class="menu-item menu-item-search">
           
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
         </li>
       
     </ul>
-  
-
-  
-    
-
   
 
   
@@ -409,7 +302,7 @@ if(window.location.hash){
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -423,20 +316,12 @@ if(window.location.hash){
 
 
 
-  
-
-
-
-</div>
+ </div>
     </header>
-
-    
-
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
           <div id="content" class="content">
             
 
@@ -449,8 +334,6 @@ if(window.location.hash){
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -460,8 +343,8 @@ if(window.location.hash){
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一代天骄">
-      <meta itemprop="description" content="专注于IT互联网，包括但不限于Go语言(golang)、Java、Android、Python、钉钉开发、项目管理、软件架构等">
-      <meta itemprop="image" content="/img/avatar.jpg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -473,37 +356,21 @@ if(window.location.hash){
 
         
         
-          <h2 class="post-title" itemprop="name headline">线程池容易被忽略的地方
-
-              
-            
-          </h2>
+          <h1 class="post-title" itemprop="name headline">线程池容易被忽略的地方</h1>
         
 
         <div class="post-meta">
-
-          
-          
-
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+         
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-30T14:30:24+08:00">
+                2019-04-30
+              </time>
+            
 
-              
-                
-              
-
-              <time title="创建时间：2019-04-30 14:30:24" itemprop="dateCreated datePublished" datetime="2019-04-30T14:30:24+08:00">2019-04-30</time>
             
 
             
@@ -518,10 +385,14 @@ if(window.location.hash){
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">专栏</span>
+                <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/并发/" itemprop="url" rel="index"><span itemprop="name">并发</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/并发/" itemprop="url" rel="index">
+                    <span itemprop="name">并发</span>
+                  </a>
+                </span>
 
                 
                 
@@ -531,15 +402,11 @@ if(window.location.hash){
 
           
             
-            
-              
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
                 <a href="/2019/04/30/线程池容易被忽略的地方/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count valine-comment-count" data-xid="/2019/04/30/线程池容易被忽略的地方/" itemprop="commentCount"></span>
                 </a>
@@ -549,24 +416,44 @@ if(window.location.hash){
 
           
           
-            <span id="/2019/04/30/线程池容易被忽略的地方/" class="leancloud_visitors" data-flag-title="线程池容易被忽略的地方">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
+             <span id="/2019/04/30/线程池容易被忽略的地方/" class="leancloud_visitors" data-flag-title="线程池容易被忽略的地方">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <span class="post-wordcount">
               
-                <span class="post-meta-item-text">阅读次数：</span>
+
               
-                <span class="leancloud-visitors-count"></span>
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  3分钟
+                </span>
+              
             </span>
           
 
           
-
-          
-
-          
-
+		  
         </div>
       </header>
     
@@ -608,51 +495,20 @@ if(window.location.hash){
 
       
     </div>
-
-    
-
     
     
     
 
-    
-
-    
-      
-    
     
       <div>
-        <div id="reward-container">
-  <div><p style="font-size:14px; color:#34495e; margin:0 0 5px 0;">赞赏一下吧～ 还可以关注公众号订阅最新内容</p></div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
-  </button>
-  <div id="qr" style="display: none;">
-
-    
-      
-      
-        
-      
-      <div style="display: inline-block">
-        <img src="/cloud/img/wechat_reward.jpg" alt="一代天骄 微信赞赏">
-        <p>微信赞赏</p>
-      </div>
-    
-      
-      
-        
-      
-      <div style="display: inline-block">
-        <img src="/cloud/img/wechat_platform.jpg" alt="一代天骄 微信公众号">
-        <p>微信公众号</p>
-      </div>
-    
-
-  </div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="一代天骄 wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎订阅公众号</div>
 </div>
 
       </div>
+    
+
     
 
     
@@ -661,7 +517,7 @@ if(window.location.hash){
       
         <div class="post-tags">
           
-            <a href="/tags/线程池/" rel="tag"><i class="fa fa-fw fa-tag"></i> 线程池</a>
+            <a href="/tags/线程池/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
           
         </div>
       
@@ -674,15 +530,15 @@ if(window.location.hash){
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/04/29/Redis-incr做接口访问频率的坑/" rel="next" title="Redis incr做接口访问频率的坑">
+                <i class="fa fa-chevron-left"></i> Redis incr做接口访问频率的坑
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/29/Redis-incr做接口访问频率的坑/" rel="next" title="Redis incr做接口访问频率的坑">
-                Redis incr做接口访问频率的坑 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -698,16 +554,22 @@ if(window.location.hash){
   </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
           </div>
           
 
+
+          
+
   
     <div class="comments" id="comments">
     </div>
-
   
 
 
@@ -725,207 +587,128 @@ if(window.location.hash){
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/img/avatar.jpg" alt="一代天骄">
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="一代天骄">
             
               <p class="site-author-name" itemprop="name">一代天骄</p>
-              <div class="site-description motion-element" itemprop="description">专注于IT互联网，包括但不限于Go语言(golang)、Java、Android、Python、钉钉开发、项目管理、软件架构等</div>
+              <p class="site-description motion-element" itemprop="description">专注于IT互联网，包括但不限于Go语言(golang)、Java、Android、Python、钉钉开发、项目管理、软件架构等</p>
           </div>
 
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">28</span>
-                    <span class="site-state-item-name">文章</span>
-                  </a>
-                </div>
-              
+          <nav class="site-state motion-element">
 
+            
+              <div class="site-state-item site-state-posts">
               
-                
-                
-                <div class="site-state-item site-state-categories">
-                  
-                    
-                      <a href="/categories/">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">13</span>
-                    <span class="site-state-item-name">专栏</span>
-                  </a>
-                </div>
+                <a href="/archives/">
               
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
 
+            
               
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                      <a href="/tags/">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">29</span>
-                    <span class="site-state-item-name">标签</span>
-                  </a>
-                </div>
               
-            </nav>
-          
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
-          
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
 
           
 
           
             <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/huangchunwu" title="  GitHub &rarr; https://github.com/huangchunwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>  GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://www.zhihu.com/people/yi-dai-tian-jiao-57-86/activities" title="  知乎 &rarr; https://www.zhihu.com/people/yi-dai-tian-jiao-57-86/activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-custom zhihu"></i>  知乎</a>
-                </span>
-              
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/huangchunwu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:951123033@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/yi-dai-tian-jiao-57-86/activities" target="_blank" title="ZhiHu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>ZhiHu</a>
+                  </span>
+                
             </div>
           
 
           
-
-          
           
 
           
-            
           
+
           
 
         </div>
-      </div>
+      </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么用线程池？"><span class="nav-number">1.</span> <span class="nav-text">为什么用线程池？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池的实现原理"><span class="nav-number">2.</span> <span class="nav-text">线程池的实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何优雅关闭线程池"><span class="nav-number">3.</span> <span class="nav-text">如何优雅关闭线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何合理配置线程池"><span class="nav-number">4.</span> <span class="nav-text">如何合理配置线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池监控"><span class="nav-number">5.</span> <span class="nav-text">线程池监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池的队列"><span class="nav-number">6.</span> <span class="nav-text">线程池的队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">7.</span> <span class="nav-text">附录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
 
     </div>
   </aside>
-  
 
 
         
@@ -934,29 +717,32 @@ if(window.location.hash){
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-heart"></i>
+        <span class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<span class="post-meta-divider">|</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">一代天骄</span>
 
   
-
-  
-</div>
-
-
-
+</span>
+<span class="post-meta-divider">|</span>
+<!--
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
 
 
-  <div class="footer-custom"><i class="fa fa-fw fa-pencil-square-o"></i>&nbsp;<a href="/admin" style="border-bottom: none" rel="noopener" target="_blank">文章</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp; <i class="fa fa-fw fa-comments"></i>&nbsp;<a href="https://bbramble.cn-e1.leanapp.cn" style="border-bottom: none" rel="noopener" target="_blank">评论</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp; <i class="fa fa-fw fa-cloud"></i>&nbsp;<a href="https://console.cloud.tencent.com" style="border-bottom: none" rel="noopener" target="_blank">图床</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp; <i class="fa fa-fw fa-bar-chart"></i>&nbsp;<a href="https://tongji.baidu.com" style="border-bottom: none" rel="noopener" target="_blank">统计</a></div>
 
+-->
 
+访问量  <span id="busuanzi_value_site_pv"></span>
+<span class="post-meta-divider">|</span>
+访问人数 <span id="busuanzi_value_site_uv"></span>人
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
         
-
 
 
 
@@ -977,14 +763,11 @@ if(window.location.hash){
 
     
 
-    
-
-    
   </div>
 
   
 
-<script>
+<script type="text/javascript">
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
@@ -996,18 +779,12 @@ if(window.location.hash){
 
 
 
-  
-
-
-
-
 
 
   
 
 
-
-
+  
 
 
 
@@ -1020,99 +797,63 @@ if(window.location.hash){
 
 
   
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
-
-
-  
-
-
-
-
-  <script src="/js/utils.js?v=7.1.0"></script>
-
-  <script src="/js/motion.js?v=7.1.0"></script>
-
-
 
   
   
-
-
-  <script src="/js/schemes/muse.js?v=7.1.0"></script>
-
-
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
   
-  <script src="/js/scrollspy.js?v=7.1.0"></script>
-<script src="/js/post-details.js?v=7.1.0"></script>
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
 
 
   
 
 
-  <script src="/js/next-boot.js?v=7.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
 
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
 
-  
-
-  
-
-  
-  
-  
-    
-  
-
-  
-
-  
-  
-  
 
 
   
   
 
-<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
 
-<script>
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail';
-  guest = guest.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'Cxl2X8JkPeVEHQFSBjBjkwFV-gzGzoHsz',
-    appKey: 'NnieEefIe5rFEEstMoesfedX',
-    placeholder: '留下邮箱，有回复时你将收到提醒，邮箱不会被公开。',
-    avatar: 'wavatar',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: 'zh-cn' || 'zh-cn'
-  });
-</script>
 
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -1120,7 +861,52 @@ if(window.location.hash){
 
 
   
-  <script>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'Cxl2X8JkPeVEHQFSBjBjkwFV-gzGzoHsz',
+        appKey: 'NnieEefIe5rFEEstMoesfedX',
+        placeholder: '期待你的回复',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -1169,8 +955,6 @@ if(window.location.hash){
         .css('overflow', 'hidden');
       $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
 
-      
-
       $.ajax({
         url: path,
         dataType: isXml ? "xml" : "json",
@@ -1204,9 +988,8 @@ if(window.location.hash){
                 var title = data.title.trim();
                 var titleInLowerCase = title.toLowerCase();
                 var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
                 var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var articleUrl = decodeURIComponent(data.url);
                 var indexOfTitle = [];
                 var indexOfContent = [];
                 // only match articles with not empty titles
@@ -1375,9 +1158,9 @@ if(window.location.hash){
               })
             };
             if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
             } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
             } else {
               resultItems.sort(function (resultLeft, resultRight) {
                 if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
@@ -1445,65 +1228,109 @@ if(window.location.hash){
 
 
   
-  
-  <script>
-    
-    function addCount(Counter) {
-      var $visitors = $('.leancloud_visitors');
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
 
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
-        .done(function({ results }) {
-          if (results.length > 0) {
-            var counter = results[0];
-            
-              var $element = $(document.getElementById(url));
-              $element.find('.leancloud-visitors-count').text(counter.time + 1);
-            
-            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
-            
-              .fail(function ({ responseJSON }) {
-                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
-              })
-          } else {
-            
-              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
-                .done(function() {
-                  var $element = $(document.getElementById(url));
-                  $element.find('.leancloud-visitors-count').text(1);
-                })
-                .fail(function() {
-                  console.log('Failed to create');
-                });
-            
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Cxl2X8JkPeVEHQFSBjBjkwFV-gzGzoHsz", "NnieEefIe5rFEEstMoesfedX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
           }
         })
-        .fail(function ({ responseJSON }) {
-          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
         });
     }
-    
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
 
     $(function() {
-      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'Cxl2X8JkPeVEHQFSBjBjkwFV-gzGzoHsz')
-        .done(function({ api_server }) {
-          var Counter = function(method, url, data) {
-            return $.ajax({
-              method: method,
-              url: 'https://' + api_server + '/1.1' + url,
-              headers: {
-                'X-LC-Id': 'Cxl2X8JkPeVEHQFSBjBjkwFV-gzGzoHsz',
-                'X-LC-Key': 'NnieEefIe5rFEEstMoesfedX',
-                'Content-Type': 'application/json',
-              },
-              data: data
-            });
-          };
-          
-            addCount(Counter);
-          
-        });
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
     });
   </script>
 
@@ -1512,30 +1339,8 @@ if(window.location.hash){
   
 
   
-  
 
   
-  
-
-  
-
-
-  
-
-  
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
   
 
   
@@ -1545,47 +1350,7 @@ if(window.location.hash){
   
 
   
-
-  
-<script>
-  $('.highlight').each(function(i, e) {
-    var $wrap = $('<div>').addClass('highlight-wrap');
-    $(e).after($wrap);
-    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
-      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
-        return $(e).text();
-      }).toArray().join('\n');
-      var ta = document.createElement('textarea');
-      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
-      ta.style.top = yPosition + 'px'; // Prevent page scroll
-      ta.style.position = 'absolute';
-      ta.style.opacity = '0';
-      ta.readOnly = true;
-      ta.value = code;
-      document.body.appendChild(ta);
-      ta.select();
-      ta.setSelectionRange(0, code.length);
-      ta.readOnly = false;
-      var result = document.execCommand('copy');
-      
-        if (result) $(this).text('复制成功');
-        else $(this).text('复制失败');
-      
-      ta.blur(); // For iOS
-      $(this).blur();
-    })).on('mouseleave', function(e) {
-      var $b = $(this).find('.copy-btn');
-      setTimeout(function() {
-        $b.text('复制');
-      }, 300);
-    }).append(e);
-  })
-</script>
-
-
-  
-
-  
-
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
 </body>
 </html>
