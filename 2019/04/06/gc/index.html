@@ -526,7 +526,7 @@
 <p>serial old， parallel old</p>
 </blockquote>
 <hr>
-<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><p>Parallel Scavenge收集器无法与CMS收集器配合工作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">最佳搭配：</span><br><span class="line">ParNew + CMS（GC停顿时间短），</span><br><span class="line">Parallel Scavenge+Parallel Old（吞吐量高）</span><br></pre></td></tr></table></figure></p>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><p>Parallel Scavenge收集器无法与CMS收集器配合工作<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">最佳搭配：</span><br><span class="line">ParNew + CMS（GC停顿时间短），</span><br><span class="line"><span class="keyword">Parallel</span> Scavenge+<span class="keyword">Parallel</span> <span class="keyword">Old</span>（吞吐量高）</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
