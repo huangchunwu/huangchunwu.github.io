@@ -186,7 +186,7 @@ if(window.location.hash){
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
 <meta property="og:description" content="为什么用线程池？ 节约省资源创建线程有损耗，销毁线程也有损耗 执行效率高充分利用多核CPU，并行处理。处理任务，不需要等待线程创建的过程立即执行。 管理线程线程是操作系统稀缺的资源，不可滥用。线程池可以做到统一分配，调优和监控。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-02T07:48:15.556Z">
+<meta property="og:updated_time" content="2019-05-02T08:34:03.255Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线程池容易被忽略的地方">
 <meta name="twitter:description" content="为什么用线程池？ 节约省资源创建线程有损耗，销毁线程也有损耗 执行效率高充分利用多核CPU，并行处理。处理任务，不需要等待线程创建的过程立即执行。 管理线程线程是操作系统稀缺的资源，不可滥用。线程池可以做到统一分配，调优和监控。">
@@ -565,7 +565,7 @@ if(window.location.hash){
 <h2 id="线程池的实现原理"><a href="#线程池的实现原理" class="headerlink" title="线程池的实现原理"></a>线程池的实现原理</h2><p>任务请求过来，当前线程数小于核心线程池线程数，创建线程执行；<br>当前线程数大于等于核心线程数，则放到队列等待空闲线程处理。<br>当任务队列满了，则创建线程，执行任务。<br>当线程池的最大线程数都繁忙，则走拒绝策略。</p>
 <p><strong>注意</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这里有个核心线程池，与线程池的概念</span><br><span class="line">核心线程池的线程没有初始化创建完，而不会用核心线程池空闲线程执行新来的任务，而是优先创建线程</span><br></pre></td></tr></table></figure></p>
 <p><strong>思考</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当线程池当前线程数已经大于核心线程数，这时候线程池也已经空闲了一段时候，非核心线程已经消亡，这个时候新请求过来一个任务，这时候线程池是新建一个线程处理，还是将线程放入队列中，又或者用核心线程去处理</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当线程池当前线程数已经大于核心线程数，这时候线程池也已经空闲了一段时候，非核心线程已经消亡，</span><br><span class="line">这个时候新请求过来一个任务，这时候线程池是新建一个线程处理，还是将线程放入队列中，又或者用核心线程去处理</span><br></pre></td></tr></table></figure>
 <h2 id="如何优雅关闭线程池"><a href="#如何优雅关闭线程池" class="headerlink" title="如何优雅关闭线程池"></a>如何优雅关闭线程池</h2><p>shutdown与shutdownNow，<strong>都无法保证100%关闭线程池的线程</strong>。<br><strong>shutdownNow将所有工作线程中断，并返回还没完成的任务集</strong><br>isShutDown()  当执行了上面二个命令，则返回true<br>isTerminaed() 判断线程是否全部终止，线程池完美关闭。</p>
 <h2 id="如何合理配置线程池"><a href="#如何合理配置线程池" class="headerlink" title="如何合理配置线程池"></a>如何合理配置线程池</h2><p>根据任务的特性分几个方面：</p>
 <ul>
