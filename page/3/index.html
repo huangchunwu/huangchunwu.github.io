@@ -559,13 +559,23 @@ if(window.location.hash){
 
       
         
-          <p>hexo搭建好博客后，需要给博客的装扮下，记录一下一些主题优化技巧<br>
-          <!--noindex-->
           
-          <!--/noindex-->
+            <p>hexo搭建好博客后，需要给博客的装扮下，记录一下一些主题优化技巧</p>
+<h2 id="安装文章计数插件WordCount"><a href="#安装文章计数插件WordCount" class="headerlink" title="安装文章计数插件WordCount"></a>安装文章计数插件WordCount</h2><p>第一步：在blog根目录下，执行以下命令<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> hexo-wordcount <span class="comment">--save</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>第二步：修改配置文件<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启字数统计</span></span><br><span class="line"><span class="attr">word_count:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>第三步：修改主题 swig 布局</p>
+<p>找到<code>themes/next/layout/_macro/post.swig</code>文件，修改【字数统计】，找到如下代码：<br><figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">title</span>=<span class="string">"</span></span></span><span class="template-variable">&#123;&#123; __('post.wordcount') &#125;&#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;&#123; wordcount(post.content) &#125;&#125;</span><span class="xml">字</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>同理，我们修改【阅读时长】，修改后如下：<br><figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">title</span>=<span class="string">"</span></span></span><span class="template-variable">&#123;&#123; __('post.min2read') &#125;&#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;&#123; min2read(post.content) &#125;&#125;</span><span class="xml"> 分钟</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="增加站内搜索"><a href="#增加站内搜索" class="headerlink" title="增加站内搜索"></a>增加站内搜索</h2><p>第一步：在blog根目录下，执行以下命令<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> hexo-generator-<span class="keyword">search</span> <span class="comment">--save</span></span><br></pre></td></tr></table></figure></p>
+<p>第二步：编辑站点配置文件，新增以下内容到任意位置：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">search:</span></span><br><span class="line"><span class="symbol">  path:</span> search.xml</span><br><span class="line"><span class="symbol">  field:</span> post</span><br><span class="line"><span class="symbol">  format:</span> html</span><br><span class="line"><span class="symbol">  limit:</span> <span class="number">10000</span></span><br></pre></td></tr></table></figure></p>
+<p>第三步：接着修改主题配置文件_config.yml为<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">local_search:</span></span><br><span class="line"><span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+
+          
         
       
-    </p></div>
+    </div>
 
     
 
@@ -944,15 +954,17 @@ if(window.location.hash){
 
       
         
-          <p>引用习大大的祝贺词中的一句”岁月不居，时节如流”，18年就这样过去了，总结一下这年的收获。</p>
+          
+            <p>引用习大大的祝贺词中的一句”岁月不居，时节如流”，18年就这样过去了，总结一下这年的收获。</p>
 <h3 id="关于读书，多读比不读好"><a href="#关于读书，多读比不读好" class="headerlink" title="关于读书，多读比不读好"></a>关于读书，多读比不读好</h3><p>这一年，很庆幸的是，我认识了很上进的同事，他对我的影响是让我开始认识到看书的重要性，开始学会在书里寻找价值与智慧。今年我看了32本书，我也不记得自己还记得几个句子，又或者对我带来多大的影响，知乎上也有人提到“<strong>经常看书的人和不看书的人有什么区别</strong>”，我当时是这样回答的：</p>
 <blockquote>
 <p>从我身边的例子来说，有位同事，大学不务正业，泡在金庸武侠世界里，连书中的某段武林秘籍口诀也能倒背如流,当然，他也涉及其它领域。跟他对话，他猛不丁get到一个念头，帮你把你的处境与书中某个人的遭遇相关联,并引出解决方案，这时候你就能领略到读书的用处了，书中记录的是过来人的生活经验，会帮助你解决目前的问题。</p>
 </blockquote>
 <p>就我的感受是自己读完一本本书后，内心很充实，生活中有些问题能从书中找到答案，思想变得更加豁达了，而没有像以前看问题那么局面，自然比以前少发牢骚了，生活也更积极了。</p>
-          <!--noindex-->
+<h3 id="关于工作：“凑合着”做，“凑合着”过，把自己也“凑合着”活了"><a href="#关于工作：“凑合着”做，“凑合着”过，把自己也“凑合着”活了" class="headerlink" title="关于工作：“凑合着”做，“凑合着”过，把自己也“凑合着”活了"></a>关于工作：“凑合着”做，“凑合着”过，把自己也“凑合着”活了</h3><p>刚工作那会，多加班一个小时，都觉得自己吃亏了，如果再对比下别人家的公司加班晚餐与加班费，心里戾气就更严重了，对待工作也消极，演变成了“凑合”。现在仔细想想，”凑合”在我生活中扮演的戏份真的很多，学业上凑合着，工作上凑合着，说到底是对自己凑合着。在公司的每一分一秒，都是自己参与，都属于自己“刻意练习”的机会，可以想成是公司提供的带薪培训的一个很好的平台。我觉得，思想转变了，态度自然就能转变，我就会往好的方向走。</p>
+<h3 id="关于生活：有想法，撸起袖子，去做；而想得多而畏惧不做"><a href="#关于生活：有想法，撸起袖子，去做；而想得多而畏惧不做" class="headerlink" title="关于生活：有想法，撸起袖子，去做；而想得多而畏惧不做"></a>关于生活：有想法，撸起袖子，去做；而想得多而畏惧不做</h3><p>现如今，逃离北上广的人太多了，18年这一年，在上海，作为外地人，我需要为自己留在上海做一些努力。儿子二岁了，面临上幼儿园的问题，外地人上本地幼儿园需要居住证积分，我办了居住证、辗转2次办成了积分。为了以后出行的方便，我把驾照也考了，就不提我苦逼的考了一年的经过了。</p>
+
           
-          <!--/noindex-->
         
       
     </div>
@@ -1134,12 +1146,17 @@ if(window.location.hash){
 
       
         
-          <p>从事开发这么多年，陆陆续续开发了N个系统了。对软件设计原则，一直没有认真深入的探讨过，当熟读这些原则，结合项目，发现很多违背设计的地方，作为优秀的研发，应该早点跟三字经一样熟读这些原则才对啊。下面我结合最近的项目谈谈自己的见解。</p>
+          
+            <p>从事开发这么多年，陆陆续续开发了N个系统了。对软件设计原则，一直没有认真深入的探讨过，当熟读这些原则，结合项目，发现很多违背设计的地方，作为优秀的研发，应该早点跟三字经一样熟读这些原则才对啊。下面我结合最近的项目谈谈自己的见解。</p>
 <h2 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h2><p>官方解释 对扩展是开放的，对修改是关闭的。<br>简单地说，就是你要提供这样的函数方法或者类，你可以进行重载，复写，但是不需要修改。例如，刚开始，火车票电子票出票流程，我在controller层调用business层提供的出票方法。设计的时候，预测到后期还有其他票种，我抽象出一个IOccupyBusiness接口，里面就一个请求占位方法，实现该接口新建实现类EticketOccupyBusiness，在occupy（）写电子票的业务。<br>过了不久，产品提了一个配送票的出票需求，我只需要添加一个实现IOccupyBusiness的实现类DeliveryOccupyBusiness，在occupy（）写配送票的业务，我并没有修改已有类，和方法，复合了开闭原则。</p>
 <h2 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h2><p>客户端不应该依赖它不需要的接口；<br>一个类对另一个类的依赖应该建立在最小的接口上。<br>简单说，不要给调用方暴露它不需要调用的方法。<br>还拿上述的例子，如果遵循单一职责原则，请求占位，与占位反馈，可以设计成同个接口的不同方法。如果需求是这样的，配送票的占位是虚占，不需要耗时的请求12306实占，所以可以占位接口设计成同步反馈结果，则没有异步反馈的方法。那么配送票的实现类就多暴露出一个占位反馈的方法，不符合接口隔离原则，于是我又将占位接口，粒度细化了，分占位请求接口，占位反馈接口。这样，占位的实现类就不会实现多余的接口了。</p>
-          <!--noindex-->
+<h2 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h2><p>官方定义：有且仅有一个让类变化的原因。<br>通俗地说，就是一个类只负责一个职责，比如上面我们谈到的，占位的类，不能同时有出票的功能。<br>单一职责与接口隔离原则有点类似，单一职责偏向于职能，接口隔离偏向于接口粒度。</p>
+<h2 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h2><p>官方定义：所以引用基类的地方必须透明的使用子类对象<br>通俗地说，就是子类可以扩展父类的功能，但不能改变父类的功能，即不能重载、复写父类的方法</p>
+<h2 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h2><p>官方定义：一个对象应该对其他对象保持最少的了解</p>
+<h2 id="依赖倒置原则"><a href="#依赖倒置原则" class="headerlink" title="依赖倒置原则"></a>依赖倒置原则</h2><p>官方定义 译文：<br>高层模块不应该依赖于低层模块，它们应该依赖于抽象。抽象不应该依赖于细节，细节应该依赖于抽象。</p>
+<p>基于以上学习，我在项目里面实现了这样类图<br><img src="https://upload-images.jianshu.io/upload_images/3666580-199028910dc13372.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="我的头像"></p>
+
           
-          <!--/noindex-->
         
       
     </div>
@@ -1321,14 +1338,39 @@ if(window.location.hash){
 
       
         
-          <h3 id="问题的背景"><a href="#问题的背景" class="headerlink" title="问题的背景"></a>问题的背景</h3><p>在途牛，庆幸的是遇到了几个很正面的人，我也是从阅读其中一位同事的博客才发现了spring声明式事务的这个坑，说实话，我平时开发很少用事务，因为不好控制粒度，事务也是高并发的绊脚石。</p>
+          
+            <h3 id="问题的背景"><a href="#问题的背景" class="headerlink" title="问题的背景"></a>问题的背景</h3><p>在途牛，庆幸的是遇到了几个很正面的人，我也是从阅读其中一位同事的博客才发现了spring声明式事务的这个坑，说实话，我平时开发很少用事务，因为不好控制粒度，事务也是高并发的绊脚石。</p>
 <hr>
 <h3 id="问题的现象"><a href="#问题的现象" class="headerlink" title="问题的现象"></a>问题的现象</h3><p>为了理解方便，下面我用伪代码说明问题详细<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Class exampleService&#123;</span><br><span class="line">    <span class="comment">//不加事务，本身不需要事务介入</span></span><br><span class="line">   public <span class="keyword">void</span> methodA（）&#123;</span><br><span class="line">      <span class="comment">//耗时操作</span></span><br><span class="line">      ······</span><br><span class="line">     <span class="comment">//调用B</span></span><br><span class="line">      methodB（）；</span><br><span class="line">      ······</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="comment">//声明了事务</span></span><br><span class="line">   @Transactional </span><br><span class="line">   public <span class="keyword">void</span> methodB（）&#123;</span><br><span class="line">      insert();</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"操作db失败"</span>)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>运行完代码后，现象是发现methodB的插入的数据没有回滚，像我一样不知道的同学就纳闷了，下面来具体分析下为啥出现事务无效的现象。</p>
 <hr>
-          <!--noindex-->
+<h3 id="问题的分析"><a href="#问题的分析" class="headerlink" title="问题的分析"></a>问题的分析</h3><p>这里来复习一下spring的声明式事务，无非就是spring的二大核心之一：AOP。</p>
+<blockquote>
+<p>AOP的实现原理是java的动态代理。</p>
+</blockquote>
+<blockquote>
+<p>spring实现动态代理有二种方式，其中一个就是cglib，另一个是jdk代理。</p>
+</blockquote>
+<blockquote>
+<p>cglib的原理是jvm调用native方法即ASM，操作class字节码另生成代理类。</p>
+</blockquote>
+<blockquote>
+<p>AOP注解的方法，生成的代理类，并在方法执行前，加入事务的开启，执行后加入事务提交操作</p>
+</blockquote>
+<p>基于这些认知，我们看spring的声明式事务为什么失效。<br>exampleService有二个方法：methodA 是普通方法，methodB是另一个声明了事务方法，class编译出了一个AOP代理类exampleServiceProxy,<br>上述出现问题的调用关系是：</p>
+<pre><code>exampleService.methodA（）调用的是内部方法exampleService.methodB().
+由此看出methodB并没有被Proxy类通知到。
+</code></pre><p>正确的调用关系是：</p>
+<pre><code>exampleServiceProxy.methodA()--&gt;exampleServiceProxy.methodB().
+</code></pre><hr>
+<h3 id="怎么避免此类问题"><a href="#怎么避免此类问题" class="headerlink" title="怎么避免此类问题"></a>怎么避免此类问题</h3><p>知道了原理，我们解决此类问题的方法，要么是新建一个类并将methodB移进来。<br>要么是用编程式事务。</p>
+<hr>
+<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><blockquote>
+<p>说下最近发生的事情，不喜跳过。这段时间工作比较忙，每天有6个小时的有效工作时间，在和南京总部的度假团队，一起开发火车票改签项目，说下这个项目的感受，又是一堆的CURD，这也是敲业务代码的弊端。我想避免温水煮青蛙，突破一下自己，改变了以往的开发习惯，先把以前大冰哥的改签代码，用Visio将业务流程画了一遍，我也不清楚这样有什么好处，有个“上海交大”的同事告诉我这样用处大，只能自己体会，我想人家那么优秀的学历说的话总归有点道理的。等我画完整个流程图后，渐渐的有了点启发，一边心里骂着之前代码结构的设计，一边寻思着开始代码的重构,目前正在紧张的开发中。回过头来想画流程图的好处，我就觉得，看代码的速度放慢了，思考空间也更大了些，于是启发就更多了些。</p>
+</blockquote>
+<p>参考资料：<br><a href="http://www.cnblogs.com/nnngu/p/8627662.html" target="_blank" rel="noopener">Spring的编程式事务和声明式事务</a><br><a href="https://www.cnblogs.com/lcngu/p/5339555.html" target="_blank" rel="noopener">Spring aop的实现原理</a><br><a href="https://www.cnblogs.com/flyingeagle/articles/7102282.html" target="_blank" rel="noopener">Java动态代理机制详解（JDK 和CGLIB，Javassist，ASM）</a></p>
+
           
-          <!--/noindex-->
         
       
     </div>
@@ -1698,15 +1740,15 @@ if(window.location.hash){
 
       
         
-          <p>最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，学会了新招，可以远程连接设备进行调试，即远程adb。</p>
+          
+            <p>最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，学会了新招，可以远程连接设备进行调试，即远程adb。</p>
 <hr>
 <p>前提条件：一台Android设备，并且ROOT</p>
 <hr>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">su</span><br><span class="line">setprop service.adb.tcp.port <span class="number">9999</span>  <span class="comment">#设置端口，默认是5555</span></span><br><span class="line">stop adbd</span><br><span class="line">start adbd</span><br><span class="line">netstat<span class="comment">#看下adb端口是否打开</span></span><br></pre></td></tr></table></figure>
 <p>最后在终端执行<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\AppData\Local\Android\Sdk\platform-tools&gt;adb connect <span class="number">192.168</span><span class="number">.2</span><span class="number">.104</span> <span class="number">9999</span>连接成功</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
+
           
-          <!--/noindex-->
         
       
     </div>
@@ -2075,7 +2117,8 @@ if(window.location.hash){
 
       
         
-          <hr>
+          
+            <hr>
 <p>做IT的没有一个自己的博客，不像话，于是现学现卖搭建了这个博客，记录下来，种下大树，便于后人乘凉</p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><blockquote>
 <ul>
@@ -2085,9 +2128,16 @@ if(window.location.hash){
 <li>申请GitHub </li>
 </ul>
 </blockquote>
-          <!--noindex-->
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>在我的电脑里面建一个文件夹blog<br>然后进入blog文件夹，右击选择“Git Bash”<br>输入命令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pm install -g cnpm --registry=https://registry.npm.taobao.org<span class="comment">#安装npm</span></span><br><span class="line">cnpm install -g hexo-cli</span><br><span class="line">cnpm install hexo --save</span><br><span class="line">hexo -v <span class="comment">#安装完成后，在输入命令，验证是否安装正确</span></span><br></pre></td></tr></table></figure>
+<h2 id="启动hexo"><a href="#启动hexo" class="headerlink" title="启动hexo"></a>启动hexo</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo init <span class="comment">#初始化hexo</span></span><br><span class="line">	</span><br><span class="line">cnpm install <span class="comment">#安装生成器</span></span><br><span class="line"></span><br><span class="line">hexo s -g <span class="comment">#运行hexo,以后要在本地运行博客只要输入该命令即可</span></span><br></pre></td></tr></table></figure>
+<p>打开浏览器，输入localhost:4000,就可以在本地看到你的个人博客了<br>停止运行<br>按住Ctrl+C键即可停止</p>
+<h2 id="配置博客"><a href="#配置博客" class="headerlink" title="配置博客"></a>配置博客</h2><p>使用notepad++编辑器打开blog/_config.yml文件，进行配置<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#博客名称</span></span><br><span class="line">title: 我的博客</span><br><span class="line"><span class="comment">#副标题</span></span><br><span class="line">subtitle: 一天进步一点</span><br><span class="line"><span class="comment">#简介</span></span><br><span class="line">description: 记录生活点滴</span><br><span class="line"><span class="comment">#博客作者</span></span><br><span class="line">author: John Doe</span><br><span class="line"><span class="comment">#博客语言</span></span><br><span class="line">language: zh-CN</span><br><span class="line"><span class="comment">#时区</span></span><br><span class="line">timezone:</span><br><span class="line"><span class="comment">#博客地址,与申请的GitHub一致</span></span><br><span class="line">url: http://elfwalk.github.io</span><br><span class="line">root: /</span><br><span class="line"><span class="comment">#博客链接格式</span></span><br><span class="line">permalink: :year/:month/:day/:title/</span><br><span class="line">permalink_defaults:</span><br><span class="line">source_dir: source</span><br><span class="line">public_dir: public</span><br><span class="line">tag_dir: tags</span><br><span class="line">archive_dir: archives</span><br><span class="line">category_dir: categories</span><br><span class="line">code_dir: downloads/code</span><br><span class="line">i18n_dir: :lang</span><br><span class="line">skip_render:</span><br><span class="line">new_post_name: :title.md <span class="comment"># File name of new posts</span></span><br><span class="line">default_layout: post</span><br><span class="line">titlecase: false <span class="comment"># Transform title into titlecase</span></span><br><span class="line">external_link: true <span class="comment"># Open external links in new tab</span></span><br><span class="line">filename_case: <span class="number">0</span></span><br><span class="line">render_drafts: false</span><br><span class="line">post_asset_folder: false</span><br><span class="line">relative_link: false</span><br><span class="line">future: true</span><br><span class="line">highlight:</span><br><span class="line">  enable: true</span><br><span class="line">  line_number: true</span><br><span class="line">  auto_detect: true</span><br><span class="line">  tab_replace:</span><br><span class="line">default_category: uncategorized</span><br><span class="line">category_map:</span><br><span class="line">tag_map:</span><br><span class="line"><span class="comment">#日期格式</span></span><br><span class="line">date_format: YYYY-MM-DD</span><br><span class="line">time_format: HH:mm:ss</span><br><span class="line"><span class="comment">#分页，每页文章数量</span></span><br><span class="line">per_page: <span class="number">10</span></span><br><span class="line">pagination_dir: page</span><br><span class="line"><span class="comment">#博客主题</span></span><br><span class="line">theme: landscape</span><br><span class="line"><span class="comment">#发布设置</span></span><br><span class="line">deploy: </span><br><span class="line">  type: git</span><br><span class="line">  <span class="comment">#elfwalk改为你的github用户名</span></span><br><span class="line">  repository: https://github.com/huangchunwu/huangchunwu.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<h2 id="编写文章"><a href="#编写文章" class="headerlink" title="编写文章"></a>编写文章</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">"new article"</span></span><br></pre></td></tr></table></figure>
+<p>之后在source/_posts目录下面，多了一个new-article.md的文件<br>打开之后我们会看到：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: new article</span><br><span class="line">date: <span class="number">2014</span><span class="number">-11</span><span class="number">-01</span> <span class="number">20</span>:<span class="number">10</span>:<span class="number">33</span></span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
+<p>文件的开头是属性，采用统一的yaml格式，用三条短横线分隔。下面是文章正文。<br>文章的正文支持markdown格式，建议你先学习一下它的语法。markdown不像html似的一大堆标签，很简单，只有几个符号。<br>新建、删除或修改文章后，不需要重启hexo server，刷新一下即可预览。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo clean <span class="comment"># 删除已经生成的静态页面</span></span><br><span class="line">hexo generate <span class="comment">#生成静态网页</span></span><br><span class="line">hexo deploy <span class="comment">#部署到GitHub</span></span><br><span class="line"></span><br><span class="line">hexo g -d <span class="comment">#也可简写为（一起执行上边两个命令）</span></span><br></pre></td></tr></table></figure></p>
+
           
-          <!--/noindex-->
         
       
     </div>

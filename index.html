@@ -960,15 +960,24 @@ if(window.location.hash){
 
       
         
-          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在互联网高并发的分布式系统中，我们需要对接口限流，我会用Redis的incr命令，如果是单机的话，用Guava的RateLimiter就可以了。</p>
+          
+            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在互联网高并发的分布式系统中，我们需要对接口限流，我会用Redis的incr命令，如果是单机的话，用Guava的RateLimiter就可以了。</p>
 <h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p>INCRBY key increment</p>
 <figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; <span class="keyword">SET</span> page_view <span class="comment">20</span></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">redis&gt; INCR <span class="comment">page_view</span></span><br><span class="line">(integer) 21</span><br><span class="line"></span><br><span class="line">redis&gt; GET <span class="comment">page_view    #</span> 数字值在<span class="comment"> Redis</span> 中以字符串的形式保存</span><br><span class="line"><span class="string">"21"</span></span><br></pre></td></tr></table></figure>
 <p>这里需要注意的是:<br>为键 key 储存的数字值加上增量 increment 。<br>如果键 key 不存在， 那么键 key 的值会先被初始化为 0 ， 然后再执行 INCRBY 命令。。</p>
 <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">redis</span>&gt; <span class="meta">TTL</span> key</span><br></pre></td></tr></table></figure>
 <p>当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以秒为单位，返回 key 的剩余生存时间。</p>
-          <!--noindex-->
+<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>我实现一个功能，限制一分钟内，接口的访问频率是100次，于是写出如下的代码</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Jedis redis = getRedis();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">Long</span> <span class="keyword">count</span> = redis.incrBy(key, <span class="number">1</span>);</span><br><span class="line">    redis.expire(key,<span class="number">60</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">count</span> &gt; maxAllowedTimes) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	   <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    redis.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里设置KEY过期时间为60s内，KEY由1开始递增，当KEY超过阈值，则请求不给通过，看起来，没有问题。其实这里的问题出在上一篇<a href="https://huangchunwu.github.io/2019/04/28/Redis%E6%89%A7%E8%A1%8Cexpire%E5%91%BD%E4%BB%A4%E5%A4%B1%E8%B4%A5%E5%BC%95%E5%8F%91%E7%9A%84%E5%9D%91/">Redis执行expire命令失败引发的坑</a>提到的，如果redis.expire(key,60)执行失败了，那么KEY就遗留在内存里面，失去了“60s内限流的作用”。</p>
+<p>网上Google了下“Redis 坑”，列举了好几页，redis要慎用啊。<br>比如：<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Jedis </span>redis = getRedis()<span class="comment">;</span></span><br><span class="line">try &#123;</span><br><span class="line">    redis<span class="meta">.set</span>(SafeEncoder.encode(key), SafeEncoder.encode(def + <span class="string">""</span>), <span class="string">"nx"</span>.getBytes(),</span><br><span class="line">    <span class="string">"ex"</span>.getBytes(), exp)<span class="comment">;</span></span><br><span class="line">    Long <span class="built_in">count</span> = redis.incrBy(key.getBytes(), val)<span class="comment">;</span></span><br><span class="line">&#125; finally &#123;</span><br><span class="line">    redis.<span class="keyword">close();</span></span><br><span class="line"><span class="keyword">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码，如果KEY在失效时间内执行set,发现KEY已经存在，则不设置过期时间，<br>刚好在执行set, incrBy 之间过期了，那么这个KEY就一直存在了。</p>
+<p>还有一位老兄这样写：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Jedis jedis = RedisUtils.getJedis();</span><br><span class="line">String requestKey = <span class="keyword">Times</span> + <span class="string">":"</span> + ID + <span class="string">":"</span> + getId();</span><br><span class="line"><span class="keyword">if</span> (jedis.exists(requestKey)) &#123;</span><br><span class="line">    <span class="comment">//如果这里KEY过期</span></span><br><span class="line">	jedis.incr(requestKey);</span><br><span class="line">	String <span class="keyword">times</span> = jedis.get(requestKey);</span><br><span class="line">	<span class="keyword">if</span> (StringUtil.strIsNotEmpty(<span class="keyword">times</span>))&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">Long</span>.parseLong(<span class="keyword">times</span>) &gt; maxAllowedTimes) &#123;</span><br><span class="line">			jedis.del(requestKey);</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	jedis.set(requestKey, <span class="string">"1"</span>);</span><br><span class="line">	jedis.pexpire(requestKey,REQUEST_EXIT_MILLISECONDS);</span><br></pre></td></tr></table></figure>
+<p>如果上述代码在KEY有效期执行，在标注的地方刚好失效，则执行incr，设置KEY为0，永久有效。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>TTL校验过期时间，如果没set expire成功重新重试6次，还是失败，则发给MQ，后续再做处理<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> (Jedis redis = getRedis()) &#123;</span><br><span class="line">	Long count = redis.incrBy(<span class="built_in">key</span>.getBytes(), val);</span><br><span class="line">	<span class="keyword">if</span> (count == val) &#123;</span><br><span class="line">             <span class="keyword">try</span>&#123;</span><br><span class="line">                 redis.expire(<span class="built_in">key</span>, <span class="built_in">exp</span>);</span><br><span class="line">              &#125;catche(Exception e)&#123; </span><br><span class="line">                  redis.expire(<span class="built_in">key</span>, <span class="built_in">exp</span>);</span><br><span class="line">              &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">                   <span class="keyword">if</span>(redis.ttl(<span class="built_in">key</span>)==<span class="number">-1</span>)&#123;</span><br><span class="line">                       <span class="keyword">try</span>&#123;   </span><br><span class="line">                         redis.expire(<span class="built_in">key</span>, <span class="built_in">exp</span>);</span><br><span class="line">                      &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">                          sendMQ(<span class="built_in">key</span>);##发送给MQ，接着消费处理</span><br><span class="line">                        &#125;</span><br><span class="line">                   &#125;</span><br><span class="line">              &#125;</span><br><span class="line">	   </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
           
-          <!--/noindex-->
         
       
     </div>
@@ -1150,12 +1159,34 @@ if(window.location.hash){
 
       
         
-          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在我们做系统开发的时候，遇到高并发的场景，我们对一些数据会直接借助Redis存储，又或者借助Redis实现分布式锁，它带给我们很多的好处，同时我们在使用的时候，会遇到很多的坑，接下来，是我面试的时候遇到的一个问题，我平时一直没意识到。</p>
+          
+            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在我们做系统开发的时候，遇到高并发的场景，我们对一些数据会直接借助Redis存储，又或者借助Redis实现分布式锁，它带给我们很多的好处，同时我们在使用的时候，会遇到很多的坑，接下来，是我面试的时候遇到的一个问题，我平时一直没意识到。</p>
 <p>给KEY设置过期时间，如下<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">EXPIRE key seconds</span></span><br></pre></td></tr></table></figure></p>
 <p>我们系统Redis通过集群，实现HA，可是也难免会因为网络抖动，又或者Redis达到瓶颈，EXPIRE/DELETE 这样的操作，可能会失败，导致的后果就是Redis残留无效KEY。那么日积月累。。。</p>
-          <!--noindex-->
+<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><ol>
+<li>给定 key 的剩余生存时间</li>
+</ol>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">redis</span>&gt; <span class="meta">TTL</span> key</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Redis分布式锁</li>
+</ol>
+<p>Redis分布式锁在2.6.12版本之后的实现方式比较简单，只需要使用一个命令即可：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">key</span> <span class="keyword">value</span> [EX seconds] [NX]</span><br></pre></td></tr></table></figure></p>
+<p>这个命令相当于2.6.12之前的setNx和expire两个命令的原子操作命令</p>
+<ol start="3">
+<li>GETSET key value</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; GETSET db mongodb    # 没有旧值，返回 <span class="literal">nil</span></span><br><span class="line">(<span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">redis&gt; <span class="builtin-name">GET</span> db</span><br><span class="line"><span class="string">"mongodb"</span></span><br><span class="line"></span><br><span class="line">redis&gt; GETSET db redis      # 返回旧值 mongodb</span><br><span class="line"><span class="string">"mongodb"</span></span><br><span class="line"></span><br><span class="line">redis&gt; <span class="builtin-name">GET</span> db</span><br><span class="line"><span class="string">"redis"</span></span><br></pre></td></tr></table></figure>
+<p>将键 key 的值设为 value ， 并返回键 key 在被设置之前的旧值</p>
+<h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><p>当时，因为知识体系里面没有这个东西，没有答出来。今天回头想想，翻了一下《Redis实战》，里面有提到这个，</p>
+<blockquote>
+<p>为了确保锁在客户端已经崩溃（客户端在执行介于SETNX与EXPIRE之间的时候崩溃是最糟糕的）的情况下仍然能够自动被释放，客户端会在尝试获取锁失败之后，检查锁的超时时间，并为未设置超时时间的锁设置超时时间。</p>
+</blockquote>
+<p>那么如果第二次EXPIRE又失败了，怎么办？<br>我想到的方案是，重试5次，还失败的话，将失败的KEY,放入MQ等待下次消费。</p>
+<h2 id="Redis分布式锁，如果EXPIRE失败，导致死锁"><a href="#Redis分布式锁，如果EXPIRE失败，导致死锁" class="headerlink" title="Redis分布式锁，如果EXPIRE失败，导致死锁"></a>Redis分布式锁，如果EXPIRE失败，导致死锁</h2><p>通过上面，我们也知道了不能依赖EXPIRE让KEY失效。Redis在分布式锁上，更不能依赖EXPIRE释放锁，网上借鉴来的比较稳妥的方法如下</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> booelan <span class="title">getLock</span>(<span class="params">String lockKey</span>)</span> &#123;</span><br><span class="line">    boolean <span class="keyword">lock</span> = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span> (!<span class="keyword">lock</span>) &#123;</span><br><span class="line">        String expireTime = String.valueOf(System.currentTimeMillis() + <span class="number">5000</span>);</span><br><span class="line">        <span class="comment">// (1)第一个获得锁的线程，将lockKey的值设置为当前时间+5000毫秒，后面会判断，如果5秒之后，获得锁的线程还没有执行完，会忽略之前获得锁的线程，而直接获取锁，所以这个时间需要根据自己业务的执行时间来设置长短。</span></span><br><span class="line">        <span class="keyword">lock</span> = shardedXCommands.setNX(lockKey, expireTime);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">lock</span>) &#123; <span class="comment">// 已经获取了这个锁 直接返回已经获得锁的标识</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">lock</span>;</span><br><span class="line">        &#125;</span><br><span class="line">         <span class="comment">// 没获得锁的线程可以执行到这里：从Redis获取老的时间戳</span></span><br><span class="line">        String oldTimeStr = shardedXCommands.<span class="keyword">get</span>(lockKey);</span><br><span class="line">        <span class="keyword">if</span> (oldTimeStr != <span class="literal">null</span> &amp;&amp; !<span class="string">""</span>.<span class="keyword">equals</span>(oldTimeStr.trim())) &#123;</span><br><span class="line">            Long oldTimeLong = Long.valueOf(oldTimeStr);</span><br><span class="line">            <span class="comment">// 当前的时间戳</span></span><br><span class="line">            Long currentTimeLong = System.currentTimeMillis();</span><br><span class="line">            <span class="comment">// (2)如果oldTimeLong小于当前时间了，说明之前持有锁的线程执行时间大于5秒了，就强制忽略该线程所持有的锁，重新设置自己的锁</span></span><br><span class="line">            <span class="keyword">if</span> (oldTimeLong &lt; currentTimeLong) &#123; </span><br><span class="line">                <span class="comment">// (3)调用getset方法获取之前的时间戳,注意这里会出现多个线程竞争，但肯定只会有一个线程会拿到第一次获取到锁时设置的expireTime</span></span><br><span class="line">                String oldTimeStr2 = shardedXCommands.getSet(lockKey, String.valueOf(System.currentTimeMillis() + <span class="number">5000</span>)); </span><br><span class="line">                <span class="comment">// (4)如果刚获取的时间戳和之前获取的时间戳一样的话,说明没有其他线程在占用这个锁,则此线程可以获取这个锁.</span></span><br><span class="line">                <span class="keyword">if</span> (oldTimeStr2 != <span class="literal">null</span> &amp;&amp; oldTimeStr.<span class="keyword">equals</span>(oldTimeStr2)) &#123; </span><br><span class="line">                    <span class="keyword">lock</span> = <span class="literal">true</span>; <span class="comment">// 获取锁标记</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 暂停50ms,重新循环</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">50</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            log.error(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">lock</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://tech.imdada.cn/2017/06/30/daojia-redis/" target="_blank" rel="noopener">Redis在京东到家的订单中的使用</a></p>
+
           
-          <!--/noindex-->
         
       
     </div>
@@ -1337,11 +1368,41 @@ if(window.location.hash){
 
       
         
-          <h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="为什么要有类图？"><a href="#为什么要有类图？" class="headerlink" title="为什么要有类图？"></a>为什么要有类图？</h3><p>类图(Class diagram)主要用于描述系统的结构化设计。类图也是最常用的UML图，用类图可以显示出类、接口以及它们之间的静态结构和关系。</p>
-<h3 id="领域UML类图-VS-实现UML类图"><a href="#领域UML类图-VS-实现UML类图" class="headerlink" title="领域UML类图 VS 实现UML类图"></a>领域UML类图 VS 实现UML类图</h3><p>通常在软件需求分析的时候，产品设计师需画一份领域UML类图，<br>设计阶段，研发会画一份实现UML类图，二者还是有区别的。</p>
-          <!--noindex-->
           
-          <!--/noindex-->
+            <h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="为什么要有类图？"><a href="#为什么要有类图？" class="headerlink" title="为什么要有类图？"></a>为什么要有类图？</h3><p>类图(Class diagram)主要用于描述系统的结构化设计。类图也是最常用的UML图，用类图可以显示出类、接口以及它们之间的静态结构和关系。</p>
+<h3 id="领域UML类图-VS-实现UML类图"><a href="#领域UML类图-VS-实现UML类图" class="headerlink" title="领域UML类图 VS 实现UML类图"></a>领域UML类图 VS 实现UML类图</h3><p>通常在软件需求分析的时候，产品设计师需画一份领域UML类图，<br>设计阶段，研发会画一份实现UML类图，二者还是有区别的。</p>
+<h2 id="读懂UML"><a href="#读懂UML" class="headerlink" title="读懂UML"></a>读懂UML</h2><ol>
+<li>类继承</li>
+</ol>
+<p><img src="/images/uml_generalization.jpg" alt="我的头像"></p>
+<ol start="3">
+<li>接口实现</li>
+</ol>
+<p><img src="/images/uml_realize.jpg" alt="我的头像"></p>
+<ol start="4">
+<li>聚合关系</li>
+</ol>
+<p><img src="/images/uml_aggregation.jpg" alt="我的头像"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WildGooseAggregate</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">List</span>&lt;WildGoose&gt; wideGooses;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>组合关系</li>
+</ol>
+<p><img src="/images/uml_composition.jpg" alt="我的头像"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bird</span> &#123;</span></span><br><span class="line">    <span class="keyword">private</span> Wing wing;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bird</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        wing = <span class="keyword">new</span> Wing();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>关联关系</li>
+</ol>
+<p><img src="/images/uml_association.jpg" alt="我的头像"></p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Penguin</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Climate climate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>体现2个类的关系，一般以成员变量体现。</p>
+<ol start="7">
+<li>依赖关系</li>
+</ol>
+<p><img src="/images/uml_dependency.jpg" alt="我的头像"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Programmer</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">work</span><span class="params">(Computer computer)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>指类与类之间的联接，依赖关系表示一个类依赖于另一个类的定义。一般而言，依赖关系在Java语言中体现为局域变量、方法的形参，或者对静态方法的调用。</p>
+
+          
         
       
     </div>
@@ -1734,11 +1795,40 @@ if(window.location.hash){
 
       
         
-          <h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="ACID是做什么的"><a href="#ACID是做什么的" class="headerlink" title="ACID是做什么的"></a>ACID是做什么的</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">简而言之，解释为</span><br><span class="line"></span><br><span class="line">    原子性（atomicity）</span><br><span class="line">    一致性（consistency）</span><br><span class="line">    隔离性（isolation）</span><br><span class="line">    持久性（durability）</span><br></pre></td></tr></table></figure>
-<p><strong>为保证数据库事务操作的正确性与可靠性</strong>，必须满足以上4个特性。</p>
-          <!--noindex-->
           
-          <!--/noindex-->
+            <h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="ACID是做什么的"><a href="#ACID是做什么的" class="headerlink" title="ACID是做什么的"></a>ACID是做什么的</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">简而言之，解释为</span><br><span class="line"></span><br><span class="line">    原子性（atomicity）</span><br><span class="line">    一致性（consistency）</span><br><span class="line">    隔离性（isolation）</span><br><span class="line">    持久性（durability）</span><br></pre></td></tr></table></figure>
+<p><strong>为保证数据库事务操作的正确性与可靠性</strong>，必须满足以上4个特性。</p>
+<hr>
+<h3 id="事务隔离级别跟ACID有啥关系"><a href="#事务隔离级别跟ACID有啥关系" class="headerlink" title="事务隔离级别跟ACID有啥关系"></a>事务隔离级别跟ACID有啥关系</h3><p>上面ACID的4个特性中，其他三个都是针对单一事务，当出现并行事务的时候，就会存在以下几个问题：</p>
+<ul>
+<li>脏读</li>
+<li>不可重复读</li>
+<li>幻读</li>
+</ul>
+<p>数据库是怎么解决这个问题的呢？<br>简而言之，加锁。数据库提供了自动锁的功能，只需要用户指定会话的事务隔离级别，数据库就会分析SQL然后给事务访问的资源加入合适的锁。</p>
+<p>事务隔离级别有以下</p>
+<ul>
+<li>读未提交(Read UnCommitted)</li>
+<li>读已提交(Read Commited，后面简称RC)</li>
+<li>可重复读(Repeatable Read，后面简称RR)</li>
+<li>序列化读(Serializable)</li>
+</ul>
+<hr>
+<h3 id="binlog的几种格式"><a href="#binlog的几种格式" class="headerlink" title="binlog的几种格式"></a>binlog的几种格式</h3><ul>
+<li>statement:记录的是修改SQL语句</li>
+<li>row：记录的是每行实际数据的变更 ，RC隔离级别下使用的binlog格式   </li>
+<li>mixed：statement和row模式的混合</li>
+</ul>
+<hr>
+<h2 id="MySQL事务默认隔离级别RR"><a href="#MySQL事务默认隔离级别RR" class="headerlink" title="MySQL事务默认隔离级别RR"></a>MySQL事务默认隔离级别RR</h2><p>我们知道，Oracal默认隔离级别是RC， Mysql默认隔离级别是RR，可不可以换成其他的？<br>数据库主从同步的方式是怎么样， 是通过binlog。<br>Mysql 5.0版本之前，binlog只支持STATEMENT这种格式。而这种格式<strong>在RC隔离级别下主从同步是有bug的。因此Mysql将RR作为默认的隔离级别！</strong></p>
+<hr>
+<h2 id="互联网项目中mysql应该选什么事务隔离级别？"><a href="#互联网项目中mysql应该选什么事务隔离级别？" class="headerlink" title="互联网项目中mysql应该选什么事务隔离级别？"></a>互联网项目中mysql应该选什么事务隔离级别？</h2><p>由上面我们知道了，mysql默认是可重复读的原因，那么我们可以升级Mysql到5,1即可以解决，<strong>互联网项目大部分用的是RC</strong>，为什么？</p>
+<ul>
+<li>可重复读存在GAP锁，死锁的概率相对读已提交大</li>
+<li>在RR隔离级别下，条件列未命中索引会锁表！而在RC隔离级别下，只锁行</li>
+</ul>
+
+          
         
       
     </div>
@@ -1920,15 +2010,17 @@ if(window.location.hash){
 
       
         
-          <p>SQL优化，离不开explain。这里记下explain的常用列，方便以后查询。</p>
+          
+            <p>SQL优化，离不开explain。这里记下explain的常用列，方便以后查询。</p>
 <p>这里提2个关键关于查询效率的列</p>
 <hr>
 <h3 id="type列"><a href="#type列" class="headerlink" title="type列"></a>type列</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">|  ALL              |  全表扫描</span><br><span class="line">|  index            |  索引全扫描</span><br><span class="line">|  range            |  索引范围扫描，常用语&lt;,&lt;=,&gt;=,between等操作</span><br><span class="line">|  ref                |  使用非唯一索引扫描或唯一索引前缀扫描，返回单条记录，常出现在关联查询中</span><br><span class="line">|  eq_ref           |  类似ref，区别在于使用的是唯一索引，使用主键的关联查询</span><br><span class="line">|  <span class="keyword">const</span>/system  |  匹配单条记录，系统会把匹配行中的其他列作为常数处理，如主键或唯一索引查询</span><br><span class="line">|  <span class="literal">null</span>                |  MySQL不访问任何表或索引，直接返回结果</span><br></pre></td></tr></table></figure>
 <p>sql效率从上到下逐渐增高</p>
 <hr>
-          <!--noindex-->
+<h3 id="Extra列"><a href="#Extra列" class="headerlink" title="Extra列"></a>Extra列</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">| Using index | 表示使用索引</span><br><span class="line"></span><br><span class="line">如果只有 Using index，说明他没有查询到数据表，只用索引表就完成了这个查询，这个叫覆盖索引。如果同时出现Using where，代表使用索引来查找读取记录，也是可以用到索引的，但是需要查询到数据表。</span><br><span class="line"></span><br><span class="line">| Using where | 表示条件查询</span><br><span class="line"></span><br><span class="line">不读取表的所有数据，或不是仅仅通过索引就可以获取所有需要的数据，则会出现 Using where。</span><br><span class="line"></span><br><span class="line">| Using filesort |  排序语句ORDER BY的时候，会出现该信息。  </span><br><span class="line"></span><br><span class="line">| Using temporary | 使用了临时表，多表联合查询，结果排序的场合。</span><br></pre></td></tr></table></figure>
+<p>sql效率从上到下逐渐增高</p>
+
           
-          <!--/noindex-->
         
       
     </div>
@@ -2110,12 +2202,12 @@ if(window.location.hash){
 
       
         
-          <h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p>JMM虚拟机线程内存模型<br>:   每个线程，都是在自己的工作内存里面操作，想与另外一个线程共享变量值，需要将工作内存的变量刷到主内存，其他线程从主内存复制一份到工作线程来取值。</p>
+          
+            <h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p>JMM虚拟机线程内存模型<br>:   每个线程，都是在自己的工作内存里面操作，想与另外一个线程共享变量值，需要将工作内存的变量刷到主内存，其他线程从主内存复制一份到工作线程来取值。</p>
 <h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span></span><br><span class="line">保证了线程之间的可见性和有序性,但不具备原子性。被<span class="keyword">volatile</span>修饰的变量，线程每次取值都会从主内存复制到工作内存。</span><br></pre></td></tr></table></figure>
 <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized </span></span><br><span class="line">解释成<span class="keyword">JVM指令码 </span>就是monitorenter 和 monitorexit控制线程同步</span><br><span class="line">保证了线程的可见性、有序性和原子性</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
+
           
-          <!--/noindex-->
         
       
     </div>
@@ -2297,15 +2389,68 @@ if(window.location.hash){
 
       
         
-          <p>其实，要不是读周志明的《深入理解java虚拟机》，垃圾回收器这个东西，我工作中是不需要接触到的。既然学习了，我就得沉淀点东西，以供后续复习。那么有这本书详细的描述了这块的知识，还需要我写点什么呢？恩，据我了解，周围同事读过这本书感受，都不是很流畅，读完有点懵，也记不住读过的内容，我要做的就是对知识的解剖的有条理性。肉是肉，骨头是骨头，码的整整齐齐。</p>
+          
+            <p>其实，要不是读周志明的《深入理解java虚拟机》，垃圾回收器这个东西，我工作中是不需要接触到的。既然学习了，我就得沉淀点东西，以供后续复习。那么有这本书详细的描述了这块的知识，还需要我写点什么呢？恩，据我了解，周围同事读过这本书感受，都不是很流畅，读完有点懵，也记不住读过的内容，我要做的就是对知识的解剖的有条理性。肉是肉，骨头是骨头，码的整整齐齐。</p>
 <hr>
 <h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p>吞吐量<br>:   CPU用于运行用户代码的时间与CPU总消耗时间的比值，即吞吐量=运行用户代码时间/（运行用户代码时间+垃圾收集时间），虚拟机总共运行了100分钟，其中垃圾收集花掉1分钟，那吞吐量就是99%。</p>
 <p>并行（Parallel）<br>:   指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。</p>
 <p>并发（Concurrent）<br>:   指用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替执行），用户程序在继续运行，而垃圾收集程序运行于另一个CPU上。</p>
 <hr>
-          <!--noindex-->
+<h2 id="垃圾回收器分类"><a href="#垃圾回收器分类" class="headerlink" title="垃圾回收器分类"></a>垃圾回收器分类</h2><h3 id="按照回收线程数分："><a href="#按照回收线程数分：" class="headerlink" title="按照回收线程数分："></a>按照回收线程数分：</h3><p>1、串行垃圾回收器</p>
+<blockquote>
+<p>serial 收集器，serial old 收集器</p>
+</blockquote>
+<p>2、并行垃圾回收器</p>
+<blockquote>
+<p>parNew收集器，Parallel Scavenge，parallel old</p>
+</blockquote>
+<hr>
+<h3 id="按照工作模式划分"><a href="#按照工作模式划分" class="headerlink" title="按照工作模式划分"></a>按照工作模式划分</h3><p>1、独占式垃圾回收器</p>
+<blockquote>
+<p>serial 收集器，serial old 收集器，parNew收集器，Parallel Scavenge，parallel old</p>
+</blockquote>
+<p>2、并发式垃圾回收器</p>
+<blockquote>
+<p>cms</p>
+</blockquote>
+<hr>
+<h3 id="按照工作的内存区间划分："><a href="#按照工作的内存区间划分：" class="headerlink" title="按照工作的内存区间划分："></a>按照工作的内存区间划分：</h3><p>1、新生代</p>
+<blockquote>
+<p>serial， parNew， Parallel Scavenge</p>
+</blockquote>
+<p>2、老生代</p>
+<blockquote>
+<p>serial old， parallel old， cms</p>
+</blockquote>
+<hr>
+<h3 id="按照碎片处理方式划分"><a href="#按照碎片处理方式划分" class="headerlink" title="按照碎片处理方式划分"></a>按照碎片处理方式划分</h3><p>压缩式垃圾回收器</p>
+<blockquote>
+<p>CMS收集器</p>
+</blockquote>
+<pre><code>CMS收集器提供了
+-XX:+UseCMSCompactAtFullCollection开启碎整理
+-XX:CMSFullGCsBeforeCompaction，设置执行多少次不压缩的FullGC后，跟着来一次带压缩的
+</code></pre><p>非压缩式垃圾回收器</p>
+<blockquote>
+<p>serial 收集器，serial old 收集器，parNew收集器，Parallel Scavenge，parallel old</p>
+</blockquote>
+<hr>
+<h3 id="按照回收算法"><a href="#按照回收算法" class="headerlink" title="按照回收算法"></a>按照回收算法</h3><p>1、标记 清除 </p>
+<blockquote>
+<p>cms</p>
+</blockquote>
+<p>2、复制</p>
+<blockquote>
+<p>serial ，parNew， parallel scavenger</p>
+</blockquote>
+<p>3、标记 整理</p>
+<blockquote>
+<p>serial old， parallel old</p>
+</blockquote>
+<hr>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><p>Parallel Scavenge收集器无法与CMS收集器配合工作<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">最佳搭配：</span><br><span class="line">ParNew + CMS（GC停顿时间短），</span><br><span class="line"><span class="keyword">Parallel</span> Scavenge+<span class="keyword">Parallel</span> <span class="keyword">Old</span>（吞吐量高）</span><br></pre></td></tr></table></figure></p>
+
           
-          <!--/noindex-->
         
       
     </div>

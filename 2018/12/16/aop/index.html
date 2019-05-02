@@ -186,7 +186,7 @@ if(window.location.hash){
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
 <meta property="og:description" content="问题的背景在途牛，庆幸的是遇到了几个很正面的人，我也是从阅读其中一位同事的博客才发现了spring声明式事务的这个坑，说实话，我平时开发很少用事务，因为不好控制粒度，事务也是高并发的绊脚石。  问题的现象为了理解方便，下面我用伪代码说明问题详细12345678910111213141516Class exampleService&amp;#123;    //不加事务，本身不需要事务介入   public">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-02T09:39:13.493Z">
+<meta property="og:updated_time" content="2019-05-02T11:25:03.861Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring声明式事务失效的分析过程">
 <meta name="twitter:description" content="问题的背景在途牛，庆幸的是遇到了几个很正面的人，我也是从阅读其中一位同事的博客才发现了spring声明式事务的这个坑，说实话，我平时开发很少用事务，因为不好控制粒度，事务也是高并发的绊脚石。  问题的现象为了理解方便，下面我用伪代码说明问题详细12345678910111213141516Class exampleService&amp;#123;    //不加事务，本身不需要事务介入   public">
@@ -561,7 +561,6 @@ if(window.location.hash){
 <h3 id="问题的现象"><a href="#问题的现象" class="headerlink" title="问题的现象"></a>问题的现象</h3><p>为了理解方便，下面我用伪代码说明问题详细<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Class exampleService&#123;</span><br><span class="line">    <span class="comment">//不加事务，本身不需要事务介入</span></span><br><span class="line">   public <span class="keyword">void</span> methodA（）&#123;</span><br><span class="line">      <span class="comment">//耗时操作</span></span><br><span class="line">      ······</span><br><span class="line">     <span class="comment">//调用B</span></span><br><span class="line">      methodB（）；</span><br><span class="line">      ······</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="comment">//声明了事务</span></span><br><span class="line">   @Transactional </span><br><span class="line">   public <span class="keyword">void</span> methodB（）&#123;</span><br><span class="line">      insert();</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"操作db失败"</span>)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>运行完代码后，现象是发现methodB的插入的数据没有回滚，像我一样不知道的同学就纳闷了，下面来具体分析下为啥出现事务无效的现象。</p>
 <hr>
-<a id="more"></a>
 <h3 id="问题的分析"><a href="#问题的分析" class="headerlink" title="问题的分析"></a>问题的分析</h3><p>这里来复习一下spring的声明式事务，无非就是spring的二大核心之一：AOP。</p>
 <blockquote>
 <p>AOP的实现原理是java的动态代理。</p>

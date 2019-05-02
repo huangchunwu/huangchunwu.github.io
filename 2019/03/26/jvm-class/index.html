@@ -186,7 +186,7 @@ if(window.location.hash){
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
 <meta property="og:description" content="今天读到周志明的《深入理解java虚拟机》中类加载机制与对象的实例化这块，这本书说实话，还是有点生涩难懂，不过老祖先有祖训：“书读百遍，其义自见”，这句话是对的，我也是时隔2年，重新拜读的。  前置知识点成员变量与静态变量的区别静态变量 别名 类变量；成员变量 别名 实例变量类的静态方法和静态变量属于类，作为类型数据保存在方法区，其生命周期取决于类，而实例方法和字段位于Java堆，其生命周期取决于">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-02T09:40:40.020Z">
+<meta property="og:updated_time" content="2019-05-02T11:26:04.493Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="类的加载机制与对象的实例化">
 <meta name="twitter:description" content="今天读到周志明的《深入理解java虚拟机》中类加载机制与对象的实例化这块，这本书说实话，还是有点生涩难懂，不过老祖先有祖训：“书读百遍，其义自见”，这句话是对的，我也是时隔2年，重新拜读的。  前置知识点成员变量与静态变量的区别静态变量 别名 类变量；成员变量 别名 实例变量类的静态方法和静态变量属于类，作为类型数据保存在方法区，其生命周期取决于类，而实例方法和字段位于Java堆，其生命周期取决于">
@@ -562,7 +562,6 @@ if(window.location.hash){
 <hr>
 <h3 id="类初始化与类实例化的区别"><a href="#类初始化与类实例化的区别" class="headerlink" title="类初始化与类实例化的区别"></a>类初始化与类实例化的区别</h3><p>类的初始化是指虚拟机加载CLASS文件到内存中，将Class文件解析成JVM理解的执行指令，将类变量指定初始值，和类的函数方法等存入方法区，将class文件的符号引用转成方法区的直接引用。<br>类初始化之后就可以访问类的静态字段和方法，而访问类的非静态(实例)字段和方法，就需要创建类的对象实例，故<strong>类的实例化是在类的初始化之后，是在堆上创建一个该类的对象</strong></p>
 <hr>
-<a id="more"></a>
 <h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><ul>
 <li>装载（加载class解释成虚拟机的方法区的运行期数据结构）</li>
 <li>验证（解析class文件合法性）</li>

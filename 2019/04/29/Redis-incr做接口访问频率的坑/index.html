@@ -186,7 +186,7 @@ if(window.location.hash){
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
 <meta property="og:description" content="背景在互联网高并发的分布式系统中，我们需要对接口限流，我会用Redis的incr命令，如果是单机的话，用Guava的RateLimiter就可以了。 前置知识INCRBY key increment 12345678redis&amp;gt; SET page_view 20OKredis&amp;gt; INCR page_view(integer) 21redis&amp;gt; GET page_view    #">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-02T09:42:03.634Z">
+<meta property="og:updated_time" content="2019-05-02T11:26:33.861Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis incr做接口访问频率的坑">
 <meta name="twitter:description" content="背景在互联网高并发的分布式系统中，我们需要对接口限流，我会用Redis的incr命令，如果是单机的话，用Guava的RateLimiter就可以了。 前置知识INCRBY key increment 12345678redis&amp;gt; SET page_view 20OKredis&amp;gt; INCR page_view(integer) 21redis&amp;gt; GET page_view    #">
@@ -562,7 +562,6 @@ if(window.location.hash){
 <p>这里需要注意的是:<br>为键 key 储存的数字值加上增量 increment 。<br>如果键 key 不存在， 那么键 key 的值会先被初始化为 0 ， 然后再执行 INCRBY 命令。。</p>
 <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">redis</span>&gt; <span class="meta">TTL</span> key</span><br></pre></td></tr></table></figure>
 <p>当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以秒为单位，返回 key 的剩余生存时间。</p>
-<a id="more"></a>
 <h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>我实现一个功能，限制一分钟内，接口的访问频率是100次，于是写出如下的代码</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Jedis redis = getRedis();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">Long</span> <span class="keyword">count</span> = redis.incrBy(key, <span class="number">1</span>);</span><br><span class="line">    redis.expire(key,<span class="number">60</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">count</span> &gt; maxAllowedTimes) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	   <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    redis.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里设置KEY过期时间为60s内，KEY由1开始递增，当KEY超过阈值，则请求不给通过，看起来，没有问题。其实这里的问题出在上一篇<a href="https://huangchunwu.github.io/2019/04/28/Redis%E6%89%A7%E8%A1%8Cexpire%E5%91%BD%E4%BB%A4%E5%A4%B1%E8%B4%A5%E5%BC%95%E5%8F%91%E7%9A%84%E5%9D%91/">Redis执行expire命令失败引发的坑</a>提到的，如果redis.expire(key,60)执行失败了，那么KEY就遗留在内存里面，失去了“60s内限流的作用”。</p>
