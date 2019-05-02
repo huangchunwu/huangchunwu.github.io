@@ -179,14 +179,14 @@ if(window.location.hash){
 </script>
 
   <meta name="description" content="基础知识32位的系统 进程内存限制最多2G？32 位寻址空间只有 4GB 大小，于是 32 位应用程序进程最大只能用到 4GB 的内存。然而，除了应用程序本身要用内存，操作系统内核也需要使用。应用程序使用的内存空间分为用户空间和内核空间，每个 32 位程序的用户空间可独享前 2GB 空间（指针值为正数），而内核空间为所有进程共享 2GB 空间（指针值为负数）。所以，32 位应用程序实际能够访问的内">
-<meta name="keywords" content="JVM调优">
+<meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM进程占用内存过高排查">
 <meta property="og:url" content="http://huangchunwu.github.io/2019/03/22/jvmerror/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
 <meta property="og:description" content="基础知识32位的系统 进程内存限制最多2G？32 位寻址空间只有 4GB 大小，于是 32 位应用程序进程最大只能用到 4GB 的内存。然而，除了应用程序本身要用内存，操作系统内核也需要使用。应用程序使用的内存空间分为用户空间和内核空间，每个 32 位程序的用户空间可独享前 2GB 空间（指针值为正数），而内核空间为所有进程共享 2GB 空间（指针值为负数）。所以，32 位应用程序实际能够访问的内">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-22T15:05:59.662Z">
+<meta property="og:updated_time" content="2019-05-02T09:40:50.813Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM进程占用内存过高排查">
 <meta name="twitter:description" content="基础知识32位的系统 进程内存限制最多2G？32 位寻址空间只有 4GB 大小，于是 32 位应用程序进程最大只能用到 4GB 的内存。然而，除了应用程序本身要用内存，操作系统内核也需要使用。应用程序使用的内存空间分为用户空间和内核空间，每个 32 位程序的用户空间可独享前 2GB 空间（指针值为正数），而内核空间为所有进程共享 2GB 空间（指针值为负数）。所以，32 位应用程序实际能够访问的内">
@@ -497,7 +497,7 @@ if(window.location.hash){
                 <span class="post-meta-item-text">专栏</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
 
                 
                 
@@ -603,7 +603,7 @@ if(window.location.hash){
       
         <div class="post-tags">
           
-            <a href="/tags/JVM调优/" rel="tag"><i class="fa fa-fw fa-tag"></i> JVM调优</a>
+            <a href="/tags/JVM/" rel="tag"><i class="fa fa-fw fa-tag"></i> JVM</a>
           
         </div>
       
@@ -694,7 +694,7 @@ if(window.location.hash){
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -721,23 +721,7 @@ if(window.location.hash){
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">专栏</span>
                   </a>
                 </div>
@@ -812,7 +796,9 @@ if(window.location.hash){
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -179,14 +179,14 @@ if(window.location.hash){
 </script>
 
   <meta name="description" content="其实，要不是读周志明的《深入理解java虚拟机》，垃圾回收器这个东西，我工作中是不需要接触到的。既然学习了，我就得沉淀点东西，以供后续复习。那么有这本书详细的描述了这块的知识，还需要我写点什么呢？恩，据我了解，周围同事读过这本书感受，都不是很流畅，读完有点懵，也记不住读过的内容，我要做的就是对知识的解剖的有条理性。肉是肉，骨头是骨头，码的整整齐齐。  前置知识吞吐量:   CPU用于运行用户代码的">
-<meta name="keywords" content="垃圾回收器">
+<meta name="keywords" content="GC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="垃圾回收器的选择">
 <meta property="og:url" content="http://huangchunwu.github.io/2019/04/06/gc/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
 <meta property="og:description" content="其实，要不是读周志明的《深入理解java虚拟机》，垃圾回收器这个东西，我工作中是不需要接触到的。既然学习了，我就得沉淀点东西，以供后续复习。那么有这本书详细的描述了这块的知识，还需要我写点什么呢？恩，据我了解，周围同事读过这本书感受，都不是很流畅，读完有点懵，也记不住读过的内容，我要做的就是对知识的解剖的有条理性。肉是肉，骨头是骨头，码的整整齐齐。  前置知识吞吐量:   CPU用于运行用户代码的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-06T11:52:53.799Z">
+<meta property="og:updated_time" content="2019-05-02T09:39:47.034Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="垃圾回收器的选择">
 <meta name="twitter:description" content="其实，要不是读周志明的《深入理解java虚拟机》，垃圾回收器这个东西，我工作中是不需要接触到的。既然学习了，我就得沉淀点东西，以供后续复习。那么有这本书详细的描述了这块的知识，还需要我写点什么呢？恩，据我了解，周围同事读过这本书感受，都不是很流畅，读完有点懵，也记不住读过的内容，我要做的就是对知识的解剖的有条理性。肉是肉，骨头是骨头，码的整整齐齐。  前置知识吞吐量:   CPU用于运行用户代码的">
@@ -497,7 +497,7 @@ if(window.location.hash){
                 <span class="post-meta-item-text">专栏</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
 
                 
                 
@@ -639,7 +639,7 @@ if(window.location.hash){
       
         <div class="post-tags">
           
-            <a href="/tags/垃圾回收器/" rel="tag"><i class="fa fa-fw fa-tag"></i> 垃圾回收器</a>
+            <a href="/tags/GC/" rel="tag"><i class="fa fa-fw fa-tag"></i> GC</a>
           
         </div>
       
@@ -730,7 +730,7 @@ if(window.location.hash){
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -757,23 +757,7 @@ if(window.location.hash){
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">专栏</span>
                   </a>
                 </div>
@@ -848,7 +832,9 @@ if(window.location.hash){
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
