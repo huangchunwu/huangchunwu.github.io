@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>缓存击穿</title>
+      <title>如何实现缓存击穿，只允许一条线程去DB更新数据</title>
       <link href="/2019/05/03/%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF/"/>
       <url>/2019/05/03/%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF/</url>
       

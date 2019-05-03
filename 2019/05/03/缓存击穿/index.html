@@ -181,14 +181,14 @@ if(window.location.hash){
   <meta name="description" content="场景使用redis控制缓存的时候，弊端是太依赖于网络与redis服务的稳定性。在高并发的场景下，如果某个KEY过期了，会有很多的GET该KEY的请求，直接会去查询DB，甚至导致DB瘫痪，那么有啥解决方案呢？ 解决方案利用互斥锁，只允许一个线程去DB查询，其他线程等待一段时间重试，当查询DB反馈结果后重新设置到缓存中，那么其他线程直接走缓存就可以了。这里的锁，可以选分布式锁，比如zookeeper锁">
 <meta name="keywords" content="缓存">
 <meta property="og:type" content="article">
-<meta property="og:title" content="缓存击穿">
+<meta property="og:title" content="如何实现缓存击穿，只允许一条线程去DB更新数据">
 <meta property="og:url" content="http://huangchunwu.github.io/2019/05/03/缓存击穿/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
 <meta property="og:description" content="场景使用redis控制缓存的时候，弊端是太依赖于网络与redis服务的稳定性。在高并发的场景下，如果某个KEY过期了，会有很多的GET该KEY的请求，直接会去查询DB，甚至导致DB瘫痪，那么有啥解决方案呢？ 解决方案利用互斥锁，只允许一个线程去DB查询，其他线程等待一段时间重试，当查询DB反馈结果后重新设置到缓存中，那么其他线程直接走缓存就可以了。这里的锁，可以选分布式锁，比如zookeeper锁">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-03T02:24:43.092Z">
+<meta property="og:updated_time" content="2019-05-03T02:38:02.093Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="缓存击穿">
+<meta name="twitter:title" content="如何实现缓存击穿，只允许一条线程去DB更新数据">
 <meta name="twitter:description" content="场景使用redis控制缓存的时候，弊端是太依赖于网络与redis服务的稳定性。在高并发的场景下，如果某个KEY过期了，会有很多的GET该KEY的请求，直接会去查询DB，甚至导致DB瘫痪，那么有啥解决方案呢？ 解决方案利用互斥锁，只允许一个线程去DB查询，其他线程等待一段时间重试，当查询DB反馈结果后重新设置到缓存中，那么其他线程直接走缓存就可以了。这里的锁，可以选分布式锁，比如zookeeper锁">
 
 
@@ -207,7 +207,7 @@ if(window.location.hash){
   };
 </script>
 
-  <title>缓存击穿 | 一代天骄's BLOG</title>
+  <title>如何实现缓存击穿，只允许一条线程去DB更新数据 | 一代天骄's BLOG</title>
   
 
 
@@ -466,7 +466,7 @@ if(window.location.hash){
 
         
         
-          <h2 class="post-title" itemprop="name headline">缓存击穿
+          <h2 class="post-title" itemprop="name headline">如何实现缓存击穿，只允许一条线程去DB更新数据
 
               
             
@@ -542,7 +542,7 @@ if(window.location.hash){
 
           
           
-            <span id="/2019/05/03/缓存击穿/" class="leancloud_visitors" data-flag-title="缓存击穿">
+            <span id="/2019/05/03/缓存击穿/" class="leancloud_visitors" data-flag-title="如何实现缓存击穿，只允许一条线程去DB更新数据">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
