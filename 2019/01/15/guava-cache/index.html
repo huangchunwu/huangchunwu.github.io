@@ -186,7 +186,7 @@ if(window.location.hash){
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
 <meta property="og:description" content="为什么使用Guava Cache？guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-02T11:25:42.386Z">
+<meta property="og:updated_time" content="2019-05-03T01:17:14.500Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Guava Cache 学习记录">
 <meta name="twitter:description" content="为什么使用Guava Cache？guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：1、设置缓存的过期时间,遵循LRU原则移除过期KEY2、缓存的定期刷新3、如何防止缓存穿透 如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现">
@@ -596,15 +596,19 @@ if(window.location.hash){
 <p>expireAfterAccess(long, TimeUnit) -&gt; KEY在一定时间内没有读写，则失效，下次读取直接load（）中取</p>
 <p>expireAfterWrite(long, TimeUnit) -&gt; 避免了缓存穿透的问题，保证了数据的实时性，牺牲的是性能，当数据expire的时候，大量get请求过来的时候，只有一个请求会去load（）数据，而没有更新完成之前，其他全部请求会被block（每个线程都要轮询的判断lock状态）</p>
 <p><code>基于引用回收</code> </p>
-<p>CacheBuilder.weakKeys()：使用弱引用存储键<br>               CacheBuilder.weakValues()：使用弱引用存储值<br>               CacheBuilder.softValues()：使用软引用存储值。</p>
-<hr>
-<h2 id="缓存刷新"><a href="#缓存刷新" class="headerlink" title="缓存刷新"></a>缓存刷新</h2><p>refreshAfterWrite(long, TimeUnit) -&gt; 机制是并非超时时间到就自动刷新，而是请求 get的时候才会触发refresh，默认refresh是同步请求新值，可以重新refresh方法改成异步。如果有大量并发请求的时候，只会有一个请求get-&gt;reload同步执行，其他线程返回旧值.</p>
+<pre><code>CacheBuilder.weakKeys()：使用弱引用存储键
+CacheBuilder.weakValues()：使用弱引用存储值
+CacheBuilder.softValues()：使用软引用存储值。
+</code></pre><hr>
+<h2 id="缓存刷新"><a href="#缓存刷新" class="headerlink" title="缓存刷新"></a>缓存刷新</h2><p>refreshAfterWrite(long, TimeUnit) -&gt; 机制是并非超时时间到就自动刷新，而是请求 get的时候才会触发refresh，默认refresh是同步请求新值，可以重写refresh方法改成异步。如果有大量并发请求的时候，只会有一个请求get-&gt;reload同步执行，其他线程返回旧值.</p>
 <ul>
 <li><p>弊端<br>吞吐量低的应用，在超过过期时间时，大量并发get请求时，大部分拿到的是很久前的旧值，导致数据脏读。</p>
 </li>
 <li><p>如何解决？<br>可以同时使用expireAfterWrite设置key过期时间，比如每2s刷新一次新值，设置expireAfterWrite为5s为过期时间，则当key值5s没有访问的话，则第5s的时候强制取load新值，解决了脏读问题，也同时避免了缓存穿透问题。</p>
 </li>
 </ul>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>Guava是如何实现，当缓存过期，只有一个请求去DB捞取数据的？</p>
+<p>在《JAVA并发编程的艺术》里面有提到过这个方案，使用concurrentHashMap与futureTask,<br>futureTask的特点就是 当一个线程需要等待某一个线程的计算结果的场景。</p>
 <hr>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://github.com/ben-manes/caffeine" target="_blank" rel="noopener">Caffeine github</a><br><a href="https://github.com/huangchunwu/own" target="_blank" rel="noopener">示例代码</a></p>
 
@@ -723,7 +727,7 @@ if(window.location.hash){
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
