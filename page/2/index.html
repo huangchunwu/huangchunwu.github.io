@@ -449,6 +449,193 @@ if(window.location.hash){
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/18/volatile与synchronized的区别/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Author">
+      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一代天骄's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/18/volatile与synchronized的区别/" class="post-title-link" itemprop="url">volatile与synchronized的区别</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-18 23:41:27" itemprop="dateCreated datePublished" datetime="2019-04-18T23:41:27+08:00">2019-04-18</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">专栏</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/04/18/volatile与synchronized的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/18/volatile与synchronized的区别/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/04/18/volatile与synchronized的区别/" class="leancloud_visitors" data-flag-title="volatile与synchronized的区别">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p>JMM虚拟机线程内存模型<br>:   每个线程，都是在自己的工作内存里面操作，想与另外一个线程共享变量值，需要将工作内存的变量刷到主内存，其他线程从主内存复制一份到工作线程来取值。</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span></span><br><span class="line">保证了线程之间的可见性和有序性,但不具备原子性。被<span class="keyword">volatile</span>修饰的变量，线程每次取值都会</span><br><span class="line">从主内存复制到工作内存。</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized </span></span><br><span class="line">解释成<span class="keyword">JVM指令码 </span>就是monitorenter 和 monitorexit控制线程同步</span><br><span class="line">保证了线程的可见性、有序性和原子性。<span class="keyword">synchronized的锁来自</span></span><br><span class="line"><span class="keyword">对象头的锁，即MarkWord存放的锁标志。</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/06/gc/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2293,214 +2480,11 @@ public <span class="class"><span class="keyword">class</span> <span class="title
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/01/25/forkjoin/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
-      <meta itemprop="image" content="/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一代天骄's BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/25/forkjoin/" class="post-title-link" itemprop="url">并行计算框架forkJoin框架</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-
-          
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-25 21:04:58" itemprop="dateCreated datePublished" datetime="2019-01-25T21:04:58+08:00">2019-01-25</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">专栏</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/01/25/forkjoin/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/01/25/forkjoin/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/2019/01/25/forkjoin/" class="leancloud_visitors" data-flag-title="并行计算框架forkJoin框架">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="框架思想"><a href="#框架思想" class="headerlink" title="框架思想"></a>框架思想</h2><p>当业务系统遇到要处理大任务的时候，可以拆分成小任务来执行，最后将小任务的执行结果汇总，返回给大任务，简称为“分而治之”，jdk7提供了forkJoin框架，Hadoop提供了MapReduce。</p>
-<hr>
-<h2 id="适合场景"><a href="#适合场景" class="headerlink" title="适合场景"></a>适合场景</h2><blockquote>
-<p>多核CPU服务器<br>CPU密集的应用，<br>并行计算的应用</p>
-</blockquote>
-<hr>
-<h2 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h2><h3 id="forkJoinTask-抽象类"><a href="#forkJoinTask-抽象类" class="headerlink" title="forkJoinTask 抽象类"></a>forkJoinTask 抽象类</h3><p>不直接使用，直接使用以下子类提供的fork与join方法</p>
-<blockquote>
-<p>RecursiveAction 无返回值<br>RecursiveTask 有返回值</p>
-</blockquote>
-<hr>
-<h3 id="forkJoinPool-线程池"><a href="#forkJoinPool-线程池" class="headerlink" title="forkJoinPool 线程池"></a>forkJoinPool 线程池</h3><p>提供了forkJoin线程池。每一个工作线程维护一份双端队列，队列里面存放待执行的任务，线程池内部使用“工作窃取算法”，即工作线程自己的队列任务处理完了，可以“窃取”其他线程的队列的任务去执行，提供的CPU利用率，所以工作线程不要用于IO流操作等超时任务。</p>
-<hr>
-<h3 id="工作窃取算法"><a href="#工作窃取算法" class="headerlink" title="工作窃取算法"></a>工作窃取算法</h3><p>每一个工作线程维护一份双端队列，当工作线程处理完自己的队列后，会窃取其他线程的队列帮忙处理，充分使用所有线程资源，直到处理完所有的队列，这才是特别的地方。</p>
-<hr>
-<h3 id="fork-Join框架基本模板"><a href="#fork-Join框架基本模板" class="headerlink" title="fork/Join框架基本模板"></a>fork/Join框架基本模板</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">if</span><span class="params">(任务足够小)</span></span>&#123;</span><br><span class="line">    进行计算；</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    将任务分为两个部分；</span><br><span class="line">    结合两个子任务结果；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">CountTask</span> <span class="keyword">extends</span> <span class="title">RecursiveTask</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 临界值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    private <span class="keyword">static</span> final int THRESHOLD = <span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line">    int start=<span class="number">0</span>;</span><br><span class="line">    int end=<span class="number">100000</span>;</span><br><span class="line">    int sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    public CountTask(int start,int end)&#123;</span><br><span class="line">        <span class="keyword">this</span>.start = start;</span><br><span class="line">        <span class="keyword">this</span>.end = end;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected Integer compute() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (end-start&lt;THRESHOLD)&#123;</span><br><span class="line">            <span class="keyword">for</span> (int i=start;i&lt;end;i++)&#123;</span><br><span class="line">                sum += i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            int middle = (start + end)/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">            RecursiveTask&lt;Integer&gt; left_task =  <span class="keyword">new</span> CountTask(start,middle);</span><br><span class="line">            RecursiveTask&lt;Integer&gt; right_task =  <span class="keyword">new</span> CountTask(middle,end);</span><br><span class="line"></span><br><span class="line">            invokeAll(left_task,right_task);</span><br><span class="line"></span><br><span class="line">            sum = left_task.join() + right_task.join();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 分而治之</span></span><br><span class="line"><span class="comment"> * forkjoin 线程池是双端队列，采用窃取算法</span></span><br><span class="line"><span class="comment"> * Created by huangchunwu on 2019/1/21.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ForkJoinTaskTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public  <span class="keyword">void</span> testInvokeForkPool()&#123;</span><br><span class="line">        <span class="comment">// 创建一个通用池，这个是jdk1.8提供的功能</span></span><br><span class="line">        ForkJoinPool pool = ForkJoinPool.commonPool();</span><br><span class="line"></span><br><span class="line">        long startTime = System.currentTimeMillis();</span><br><span class="line">        ForkJoinTask task = <span class="keyword">new</span> CountTask(<span class="number">1</span>,<span class="number">999999999</span>);</span><br><span class="line">        Integer result = (Integer) pool.invoke(task);</span><br><span class="line">        long endTime = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"Fork/join sum: "</span> + result + <span class="string">" in "</span> + (endTime - startTime) + <span class="string">" ms."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public  <span class="keyword">void</span> testsubmitForkPool()&#123;</span><br><span class="line">        <span class="comment">// 创建一个通用池，这个是jdk1.8提供的功能</span></span><br><span class="line">        ForkJoinPool pool = ForkJoinPool.commonPool();</span><br><span class="line"></span><br><span class="line">        long startTime = System.currentTimeMillis();</span><br><span class="line">        ForkJoinTask task = <span class="keyword">new</span> CountTask(<span class="number">1</span>,<span class="number">999999999</span>);</span><br><span class="line">        pool.submit(task);</span><br><span class="line">        Integer result =<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            result = (Integer) task.get();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        long endTime = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"Fork/join sum: "</span> + result + <span class="string">" in "</span> + (endTime - startTime) + <span class="string">" ms."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.cnblogs.com/jinggod/p/8490511.html" target="_blank" rel="noopener">Fork-Join分治编程介绍（一）</a><br><a href="https://github.com/huangchunwu/own" target="_blank" rel="noopener">示例源码</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2544,7 +2528,7 @@ public <span class="class"><span class="keyword">class</span> <span class="title
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
