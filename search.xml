@@ -5,8 +5,8 @@
     
     <entry>
       <title>高并发下，redis热点KEY的解决方案</title>
-      <link href="/2019/05/05/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%EF%BC%8Credis%E7%83%AD%E7%82%B9KEY%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-      <url>/2019/05/05/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%EF%BC%8Credis%E7%83%AD%E7%82%B9KEY%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+      <link href="/2019/05/05/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8Bredis%E7%83%AD%E7%82%B9KEY%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+      <url>/2019/05/05/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8Bredis%E7%83%AD%E7%82%B9KEY%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
       
         <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在高并发系统中，我们将多个KEY数据分片，hash均衡分布在redis集群中，如果遇到活动，或者明星的热点新闻，那这台存有热点的KEY的redis实例，遇到百万的流量，这台机器的网卡也恐怕撑不住了，那么redis基本就瘫痪了，服务器抓取不到redis的数据，直接去请求DB，那么db也就遭殃了，于是被领导拖到小黑屋…..<br>那么，有什么解决方案呢？</p><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>主要分2步</p><blockquote><ol><li>动态统计计算出KEY的请求次数，识别为热点数据</li><li>识别出热点数据，通过zookeeper通知服务器更新为本地缓存，Ehcache,又或者是static map，当然要注意防止本地内存溢出。</li></ol></blockquote><p>如何动态识别KEY为热点数据？</p><ul><li><p>客户端   </p><p>redis客户端发起redis请求的时候，为每个KEY计数,存在本地缓存，或数据库</p></li><li><p>代理层<br>redis集群架构加一层，Twemproxy、Codis代理，由代理统计。（推荐）</p></li><li><p>服务端<br>利用redis的monitor命令</p></li><li><p>机器TCP流量    </p></li></ul><p>参考资料<br>《Redis开发与运维》<br><a href="https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&amp;mid=2247484401&amp;idx=1&amp;sn=823cffa4a1aa73335bdfb7c02e8c85f0&amp;chksm=fba6ebf2ccd162e422b1b496f5790ebdf7f6d11adb8d2e00957ca371dcca0514a3fde09af521&amp;mpshare=1&amp;scene=23&amp;srcid=#rd" target="_blank" rel="noopener">如果20万用户同时访问一个热点缓存，如何优化你的缓存架构？</a></p>]]></content>
       
