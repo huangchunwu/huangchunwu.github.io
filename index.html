@@ -442,7 +442,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/06/分库分表技术储备/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -571,16 +571,13 @@ if(window.location.hash){
 <h2 id="是否需要分库分表？"><a href="#是否需要分库分表？" class="headerlink" title="是否需要分库分表？"></a>是否需要分库分表？</h2><p>当我们的表记录不超过百万级，不需要分库、分表。如果此时DB性能有问题，可以通过优化SQL，优化索引，增加DB服务器CPU/内存，读写分离。</p>
 <p>我们做数据库切分设计的时候，优先垂直切分，读写分离，如果还不行的话，不得不才水平分库分表，切记过度设计。</p>
 <h2 id="分库分表的方案"><a href="#分库分表的方案" class="headerlink" title="分库分表的方案"></a>分库分表的方案</h2><ul>
-<li>垂直拆分</li>
-</ul>
-<p>垂直分库：<br>如今微服务盛行，根据业务来划分系统，我们也跟着业务来划分数据库，比如订单库，用户库，这样解决了单机DB服务器的局限。缺点是做查询，聚合数据的时候，需要通过系统之间的接口，聚拢数据再做处理，系统复杂度高。</p>
-<p>垂直分表：<br>适合在做表设计的时候，表字段比较多，将一些不常用的，数据较大长度过长的字段拆到扩展表去。缺点就是不适合在运行中系统做拆分。</p>
-<ul>
-<li>水平拆分</li>
-</ul>
-<p>水平分表：<br>当表数据超过百万了，那么我们可以采取根据ID的hash到不同分表，但是还是在同个库里面做拆分。缺点就是还是没有摆脱单机的资源局限，所以一般不推荐。</p>
+<li><p>垂直拆分<br>垂直分库：<br>如今微服务盛行，根据业务来划分系统，我们也跟着业务来划分数据库，比如订单库，用户库，这样解决了单机DB服务器的局限。缺点是做查询，聚合数据的时候，需要通过系统之间的接口，聚拢数据再做处理，系统复杂度高。<br>垂直分表：<br>适合在做表设计的时候，表字段比较多，将一些不常用的，数据较大长度过长的字段拆到扩展表去。缺点就是不适合在运行中系统做拆分。</p>
+</li>
+<li><p>水平拆分<br>水平分表：<br>当表数据超过百万了，那么我们可以采取根据ID的hash到不同分表，但是还是在同个库里面做拆分。缺点就是还是没有摆脱单机的资源局限，所以一般不推荐。</p>
 <ul>
 <li>水平分库分表：<br>上面的方案，还是支撑不了我们的业务数据，我们才会采用，将单表的数据量切分到不同的服务器上，每台服务器都有相应的库与表，只是数据集合不同。</li>
+</ul>
+</li>
 </ul>
 <h2 id="水平分库分表的切分策略"><a href="#水平分库分表的切分策略" class="headerlink" title="水平分库分表的切分策略"></a>水平分库分表的切分策略</h2><ul>
 <li>根据ID或者时间范围切分，比如1-100000 A1库，100001-200000 A2库…</li>
@@ -661,7 +658,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/05/高并发下redis热点KEY的解决方案/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -866,7 +863,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/03/缓存击穿/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1061,7 +1058,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/02/如何减少上下文切换/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1273,7 +1270,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/30/线程池容易被忽略的地方/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1483,7 +1480,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/29/Redis-incr做接口访问频率的坑/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1682,7 +1679,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/28/Redis执行expire命令失败引发的坑/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1891,7 +1888,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/27/uml/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -2107,7 +2104,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/26/面试/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -2318,7 +2315,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/25/mysql隔离级别/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -2550,9 +2547,9 @@ if(window.location.hash){
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/img/avatar.png" alt="Author">
+              <img class="site-author-image" itemprop="image" src="/img/avatar.png" alt="Auteur">
             
-              <p class="site-author-name" itemprop="name">Author</p>
+              <p class="site-author-name" itemprop="name">Auteur</p>
               <div class="site-description motion-element" itemprop="description">吾尝终日而思，不如须臾之所学</div>
           </div>
 
