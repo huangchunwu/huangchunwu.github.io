@@ -439,10 +439,211 @@ if(window.location.hash){
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/02/02/threadlocal/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Auteur">
+      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一代天骄's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/02/threadlocal/" class="post-title-link" itemprop="url">ThreadLocal如何防止内存泄漏</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-02 16:51:15" itemprop="dateCreated datePublished" datetime="2019-02-02T16:51:15+08:00">2019-02-02</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">专栏</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/02/02/threadlocal/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/02/02/threadlocal/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/02/02/threadlocal/" class="leancloud_visitors" data-flag-title="ThreadLocal如何防止内存泄漏">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p> 工作五年了，对ThreadLocal原理还不是很清楚，o(<em>￣︶￣</em>)o。今天来分析下，使用threadLocal时候，导致内存泄漏的原理。</p>
+<hr>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
+<p>1、用于存放线程局部变量。<br>2、一个线程都会维护一个threadLocalMap,threadLocal包装成弱引用作       为key，线程局部变量作为value,装在entry数组里面。</p>
+</blockquote>
+<hr>
+<h2 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h2><blockquote>
+<p>set(T value) 存储线程局部变量值<br>get() 获取线程局部变量值<br>remove() 移除线程局部变量，即entry数组</p>
+</blockquote>
+<hr>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>1、ThreadLocal层面<br> 通常，线程结束了，threadLocal作为弱引用的key，此时key==null,Entry也就被GC了<br>2、ThreadLocalMap层面<br> 如果线程存活比较久，线程局部变量作为value的数量如果超过容量的2/3(没有扩大容量时是10个)，则会触发Entry的回收</p>
+<hr>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>内存泄露<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、如果使用线程池，要注意手动清理threadLocal</span><br><span class="line"><span class="number">2</span>、如果线程消亡了，threadLocal==null,此时entry还是被强引用的话，</span><br><span class="line">   threadLocalMap不会被回收，造成内存泄露</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>、可以用于单个线程的参数的存储，模板方法的上下文</span><br><span class="line"><span class="number">2</span>、Java7中的SimpleDateFormat不是线程安全的，可以用ThreadLocal来解决这个问题</span><br><span class="line"><span class="number">3</span>、InheritableThreadLocal可以跨线程共享ThreadLocal变量，用于将主线程的变量传递给子线程中例如用户标识（user <span class="built_in">id</span>）或事务标识（<span class="keyword">transaction</span> <span class="built_in">id</span>），但不能是有状态对象，例如 JDBC Connection</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://github.com/huangchunwu/own" target="_blank" rel="noopener">示例代码</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/02/02/swtools/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -628,7 +829,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/01/25/forkjoin/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -831,7 +1032,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/01/15/guava-cache/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1053,7 +1254,7 @@ CacheBuilder.softValues()：使用软引用存储值。
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/01/11/hexo-improve/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1248,7 +1449,7 @@ CacheBuilder.softValues()：使用软引用存储值。
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/01/11/springbatch/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1448,7 +1649,7 @@ CacheBuilder.softValues()：使用软引用存储值。
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/01/01/summary/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1640,7 +1841,7 @@ CacheBuilder.softValues()：使用软引用存储值。
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2018/12/20/softdesign/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1832,7 +2033,7 @@ CacheBuilder.softValues()：使用软引用存储值。
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2018/12/16/aop/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -2046,7 +2247,7 @@ CacheBuilder.softValues()：使用软引用存储值。
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2018/12/16/music/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -2216,196 +2417,6 @@ CacheBuilder.softValues()：使用软引用存储值。
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2018/12/02/adb/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
-      <meta itemprop="image" content="/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一代天骄's BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/02/adb/" class="post-title-link" itemprop="url">Android开发调试远程连接设备</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-
-          
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-02 23:45:16" itemprop="dateCreated datePublished" datetime="2018-12-02T23:45:16+08:00">2018-12-02</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">专栏</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/2018/12/02/adb/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/02/adb/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/2018/12/02/adb/" class="leancloud_visitors" data-flag-title="Android开发调试远程连接设备">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在做一个Android-PAD项目，之前本地调试，基本靠sdk模拟器，或者数据线连接手机，学会了新招，可以远程连接设备进行调试，即远程adb。</p>
-<hr>
-<p>前提条件：一台Android设备，并且ROOT</p>
-<hr>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">su</span><br><span class="line">setprop service.adb.tcp.port <span class="number">9999</span>  <span class="comment">#设置端口，默认是5555</span></span><br><span class="line">stop adbd</span><br><span class="line">start adbd</span><br><span class="line">netstat<span class="comment">#看下adb端口是否打开</span></span><br></pre></td></tr></table></figure>
-<p>最后在终端执行<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\AppData\Local\Android\Sdk\platform-tools&gt;adb connect <span class="number">192.168</span><span class="number">.2</span><span class="number">.104</span> <span class="number">9999</span>连接成功</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2441,9 +2452,9 @@ CacheBuilder.softValues()：使用软引用存储值。
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/img/avatar.png" alt="Author">
+              <img class="site-author-image" itemprop="image" src="/img/avatar.png" alt="Auteur">
             
-              <p class="site-author-name" itemprop="name">Author</p>
+              <p class="site-author-name" itemprop="name">Auteur</p>
               <div class="site-description motion-element" itemprop="description">吾尝终日而思，不如须臾之所学</div>
           </div>
 
@@ -2454,7 +2465,7 @@ CacheBuilder.softValues()：使用软引用存储值。
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
