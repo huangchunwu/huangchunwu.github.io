@@ -439,10 +439,221 @@ if(window.location.hash){
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/26/面试/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Auteur">
+      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一代天骄's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/26/面试/" class="post-title-link" itemprop="url">如何平滑数据迁移不影响服务的可用性</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 22:33:20" itemprop="dateCreated datePublished" datetime="2019-04-26T22:33:20+08:00">2019-04-26</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">专栏</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/架构/" itemprop="url" rel="index"><span itemprop="name">架构</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/04/26/面试/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/26/面试/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/04/26/面试/" class="leancloud_visitors" data-flag-title="如何平滑数据迁移不影响服务的可用性">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天去壹钱包面试，问了一些解决方案，被有道题目难住了。</p>
+<p>业务场景</p>
+<blockquote>
+<p>有个用户基础信息表，注册的时候，用户的手机号当前是明文保存在db，用户信息泄露的问题影响是不能容忍的，安全部要求把这个明文手机号改成密文，但是我们号称是24*7小时全天服务的公司，为保证系统可用性，请出个方案，平滑的将明文数据改成密文数据。</p>
+</blockquote>
+<p>初看这道题，觉得很简单。这里涉及到新老数据共存的问题。<br>我当时提出的方案是这样的：</p>
+<blockquote>
+<p>老用户数据加个是否加密的标示。新用户直接执行加密，存db。老用户查询的时候用明文，查询完，将明文转成秘文，更新到db并且标志位更新成秘文。<br>再加个补偿任务，降漏掉的明文改成秘文。</p>
+</blockquote>
+<p>无疑，太粗暴了。当系统发布的过程中，原逻辑代码的实例与加密的新实例，如果收到并发的2个同样手机的请求来，会导致重复手机号注册的问题。当时没有思绪，面试官让我回家想。。。</p>
+<p>后来回到家，经过跟瑞强讨论，拿到了如下的解决方案。</p>
+<p>时间换空间</p>
+<pre><code>分四步
+1：加另一张表，跟原来表结构一样，用于存密文。
+2：然后代码增加一个同步数据的功能，将明文转成密文同步到新表去。
+然后新代码发布的过程中，老代码的服务可能存在的情况就是没有把数据同步到新表去，
+新代码的数据 老表跟新表都有。
+3：然后等待系统发布稳定后，再写个脚本将旧表数据 加密同步到新表去。
+4：切换业务代码到新表，删除旧表
+</code></pre><p>   我回复了面试的答案，面试官说，也是一种思路。他用一句话总结：“两个表双写是一个思路，本质上就是新老不能混在一起，为达到这个目的手段可以有多个” </p>
+<hr>
+<p>2019/4/28   </p>
+<p>这二天，看了下架构方便的博客，看到了58沈剑的文章有提到这块关于<a href="http://www.10tiao.com/html/249/201703/2651959992/1.html" target="_blank" rel="noopener">“100亿数据平滑数据迁移,不影响服务”</a>的介绍,才明白，上面提到的解决方案，名叫“双写法”，这个方案是不完善的，体现在：<br><strong>数据迁移后，先写个校对数据校验工具保证新旧表的数据一致性，再切新表。</strong></p>
+<blockquote>
+<p>在一个极端的情况下，在数据迁移过程中，当提取旧表的某一条记录A，准备迁移到新表，这时候旧表进行了delete A的操作，这时候双写的时候，新表还没有A的记录，这就导致了新表多了一条数据，所以数据校对一致性工具还是必要的。</p>
+</blockquote>
+<p>另外学到了另外一套新的迁移方法，个人觉得比较麻烦。追日志法，可以看下这篇文章的介绍。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/25/mysql隔离级别/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -657,7 +868,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/20/SQL优化神器explain/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -849,7 +1060,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/18/volatile与synchronized的区别/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1036,7 +1247,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/06/gc/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1279,7 +1490,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/03/26/jvm-class/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1520,7 +1731,7 @@ public <span class="class"><span class="keyword">class</span> <span class="title
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/03/22/jvmerror/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1727,7 +1938,7 @@ public <span class="class"><span class="keyword">class</span> <span class="title
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/03/17/dingdingdev/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1934,7 +2145,7 @@ public <span class="class"><span class="keyword">class</span> <span class="title
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/03/16/myThink/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -2133,7 +2344,7 @@ public <span class="class"><span class="keyword">class</span> <span class="title
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/03/13/jsonutil/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -2301,195 +2512,6 @@ public <span class="class"><span class="keyword">class</span> <span class="title
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/03/09/exchanger/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
-      <meta itemprop="image" content="/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一代天骄's BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/09/exchanger/" class="post-title-link" itemprop="url">JUC工具类之exchanger</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-
-          
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-09 21:51:25" itemprop="dateCreated datePublished" datetime="2019-03-09T21:51:25+08:00">2019-03-09</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">专栏</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/03/09/exchanger/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/09/exchanger/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/2019/03/09/exchanger/" class="leancloud_visitors" data-flag-title="JUC工具类之exchanger">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>日常开发使用，JUC工具类里面的exchanger使用场景不多，既然看到了就学了一下记一下。</p>
-<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>exchanger 用于二个线程，规定一个交换点，当双方线程到达这个点后，相互交换数据的效果。</p>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>用于2个线程交互数据使用；经典生产消费者</p>
-<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * java concurrent 包</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 用于2个线程交互数据使用</span></span><br><span class="line"><span class="comment"> * 规定一个交换点，当双方线程到达这个点后，相互交换数据</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * Created by huangchunwu on 2019/3/4.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExchangeTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> Exchanger&lt;Integer&gt; exchanger = <span class="keyword">new</span> Exchanger&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Runnable r1 = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    System.out.print(Thread.currentThread().getName() + <span class="string">"get "</span> + exchanger.exchange(<span class="number">2019</span>));</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Runnable r2 = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    System.out.print(Thread.currentThread().getName() + <span class="string">"get "</span> + exchanger.exchange(<span class="number">2018</span>));</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(r1);</span><br><span class="line">        t1.setName(<span class="string">"A"</span>);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(r2);</span><br><span class="line">        t2.setName(<span class="string">"B"</span>);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.currentThread().sleep(<span class="number">1000000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://github.com/huangchunwu/own" target="_blank" rel="noopener">示例代码</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2525,9 +2547,9 @@ public <span class="class"><span class="keyword">class</span> <span class="title
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/img/avatar.png" alt="Author">
+              <img class="site-author-image" itemprop="image" src="/img/avatar.png" alt="Auteur">
             
-              <p class="site-author-name" itemprop="name">Author</p>
+              <p class="site-author-name" itemprop="name">Auteur</p>
               <div class="site-description motion-element" itemprop="description">吾尝终日而思，不如须臾之所学</div>
           </div>
 
@@ -2538,7 +2560,7 @@ public <span class="class"><span class="keyword">class</span> <span class="title
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -2644,7 +2666,9 @@ public <span class="class"><span class="keyword">class</span> <span class="title
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

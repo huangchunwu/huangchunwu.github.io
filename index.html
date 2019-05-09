@@ -439,10 +439,203 @@ if(window.location.hash){
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/09/HashMap的源码解析/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Auteur">
+      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一代天骄's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/09/HashMap的源码解析/" class="post-title-link" itemprop="url">HashMap的源码解析</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-09 21:04:58" itemprop="dateCreated datePublished" datetime="2019-05-09T21:04:58+08:00">2019-05-09</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">专栏</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/05/09/HashMap的源码解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/09/HashMap的源码解析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/05/09/HashMap的源码解析/" class="leancloud_visitors" data-flag-title="HashMap的源码解析">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近忙着面试，把学习的东西，通过博客沉淀下来，一方面加深自己的理解，另方面方便以后自己再次复习。HashMap 是面试喜欢问的问题，那么HashMap的原理是什么呢？</p>
+<hr>
+<h2 id="HashMap原理"><a href="#HashMap原理" class="headerlink" title="HashMap原理"></a>HashMap原理</h2><p>HashMap的数据结构是 数组+链表。 </p>
+<p>数组默认大小等于16，这个数组也称Hash桶。<br>链表是存放Hash冲突的entry对象的。这里该提到数据结构的hash冲突的几种解决方法，hashMap采用的是链地址法。</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hash冲突解决的常见办法：</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>开放定址法</span><br><span class="line"><span class="number">2.</span>再哈希法</span><br><span class="line"><span class="number">3.</span>链地址法</span><br><span class="line"><span class="number">4.</span>建立公共溢出区</span><br></pre></td></tr></table></figure>
+<h2 id="怎么处理hash冲突"><a href="#怎么处理hash冲突" class="headerlink" title="怎么处理hash冲突"></a>怎么处理hash冲突</h2><p>当我们向HashMap put一个KV时候，先对KEY做hashCode,为了减少hash冲撞的机会，还经过了扰动函数计算，让hash的更均匀。<strong>jdk7在这里扰动了4次而JDK8，做了简化。</strong></p>
+<p>计算出来的hashcode与数组的容量进行与运算代替模运算，  因为hash桶只有16个，因此出现hash冲撞的可能性会增大。通过位运算后的值即为key-value存放的位置。当出现hash冲撞的时候，hashmap会将新进来的值塞进链表的尾部，当hash冲撞的机会高的时候，链表的长度也会增大，我们知道链表的查询的时间复杂度是N，jdk8在这里做了改进，具体为当链表长度大于8的时候，会转为红黑树，红黑树的特点是平衡二叉树，查询的时间复杂度是logn. </p>
+<h2 id="怎么扩容呢？"><a href="#怎么扩容呢？" class="headerlink" title="怎么扩容呢？"></a>怎么扩容呢？</h2><p>当hashMap的数组容量超过自己的0.75的时候，也就是默认容量16*0.75=12个的时候，则会进行一次扩容，这里的0.75就是<strong>加载因子</strong>，12就是<strong>阈值</strong>。<br>扩容的复杂度很高，先扩容，再移动旧的数组的值到新的数组去，性能会很低,所以我们要减少hashmap的扩容次数，初始化的时候，尽量设置初始容量。接下来，我们看看扩容的过程，先复制一个原来2倍容量的数组，然后重新计算key<br>的hash值，将旧数据搬到新的数组中去，这时候如果有新的数据进来也会插入尾部，会出现争抢位置的并发问题，而HashMap是线程不安全的。</p>
+<h2 id="hashMap线程安全的实现方式"><a href="#hashMap线程安全的实现方式" class="headerlink" title="hashMap线程安全的实现方式"></a>hashMap线程安全的实现方式</h2><p>线程安全的hashMap，使用concurrentHashMap,这个类是基于分段锁。实现HashMap线程安全还有另外一种方法，Collections.synchronized(new HashMap()),但是这种是全部方法加锁的，跟hashtable一样，锁粒度大，效率不好。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/07/Spring多个AOP多注解执行顺序是怎么样的/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -632,7 +825,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/06/分库分表技术储备/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -847,7 +1040,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/05/高并发下redis热点KEY的解决方案/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1052,7 +1245,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/03/缓存击穿/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1247,7 +1440,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/02/如何减少上下文切换/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1459,7 +1652,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/30/线程池容易被忽略的地方/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1669,7 +1862,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/29/Redis-incr做接口访问频率的坑/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -1868,7 +2061,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/28/Redis执行expire命令失败引发的坑/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -2077,7 +2270,7 @@ if(window.location.hash){
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/27/uml/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
+      <meta itemprop="name" content="Auteur">
       <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
       <meta itemprop="image" content="/img/avatar.png">
     </span>
@@ -2275,217 +2468,6 @@ if(window.location.hash){
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/04/26/面试/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
-      <meta itemprop="image" content="/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一代天骄's BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/26/面试/" class="post-title-link" itemprop="url">如何平滑数据迁移不影响服务的可用性</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-
-          
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-26 22:33:20" itemprop="dateCreated datePublished" datetime="2019-04-26T22:33:20+08:00">2019-04-26</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">专栏</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/架构/" itemprop="url" rel="index"><span itemprop="name">架构</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/04/26/面试/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/26/面试/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/2019/04/26/面试/" class="leancloud_visitors" data-flag-title="如何平滑数据迁移不影响服务的可用性">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天去壹钱包面试，问了一些解决方案，被有道题目难住了。</p>
-<p>业务场景</p>
-<blockquote>
-<p>有个用户基础信息表，注册的时候，用户的手机号当前是明文保存在db，用户信息泄露的问题影响是不能容忍的，安全部要求把这个明文手机号改成密文，但是我们号称是24*7小时全天服务的公司，为保证系统可用性，请出个方案，平滑的将明文数据改成密文数据。</p>
-</blockquote>
-<p>初看这道题，觉得很简单。这里涉及到新老数据共存的问题。<br>我当时提出的方案是这样的：</p>
-<blockquote>
-<p>老用户数据加个是否加密的标示。新用户直接执行加密，存db。老用户查询的时候用明文，查询完，将明文转成秘文，更新到db并且标志位更新成秘文。<br>再加个补偿任务，降漏掉的明文改成秘文。</p>
-</blockquote>
-<p>无疑，太粗暴了。当系统发布的过程中，原逻辑代码的实例与加密的新实例，如果收到并发的2个同样手机的请求来，会导致重复手机号注册的问题。当时没有思绪，面试官让我回家想。。。</p>
-<p>后来回到家，经过跟瑞强讨论，拿到了如下的解决方案。</p>
-<p>时间换空间</p>
-<pre><code>分四步
-1：加另一张表，跟原来表结构一样，用于存密文。
-2：然后代码增加一个同步数据的功能，将明文转成密文同步到新表去。
-然后新代码发布的过程中，老代码的服务可能存在的情况就是没有把数据同步到新表去，
-新代码的数据 老表跟新表都有。
-3：然后等待系统发布稳定后，再写个脚本将旧表数据 加密同步到新表去。
-4：切换业务代码到新表，删除旧表
-</code></pre><p>   我回复了面试的答案，面试官说，也是一种思路。他用一句话总结：“两个表双写是一个思路，本质上就是新老不能混在一起，为达到这个目的手段可以有多个” </p>
-<hr>
-<p>2019/4/28   </p>
-<p>这二天，看了下架构方便的博客，看到了58沈剑的文章有提到这块关于<a href="http://www.10tiao.com/html/249/201703/2651959992/1.html" target="_blank" rel="noopener">“100亿数据平滑数据迁移,不影响服务”</a>的介绍,才明白，上面提到的解决方案，名叫“双写法”，这个方案是不完善的，体现在：<br><strong>数据迁移后，先写个校对数据校验工具保证新旧表的数据一致性，再切新表。</strong></p>
-<blockquote>
-<p>在一个极端的情况下，在数据迁移过程中，当提取旧表的某一条记录A，准备迁移到新表，这时候旧表进行了delete A的操作，这时候双写的时候，新表还没有A的记录，这就导致了新表多了一条数据，所以数据校对一致性工具还是必要的。</p>
-</blockquote>
-<p>另外学到了另外一套新的迁移方法，个人觉得比较麻烦。追日志法，可以看下这篇文章的介绍。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2521,9 +2503,9 @@ if(window.location.hash){
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/img/avatar.png" alt="Author">
+              <img class="site-author-image" itemprop="image" src="/img/avatar.png" alt="Auteur">
             
-              <p class="site-author-name" itemprop="name">Author</p>
+              <p class="site-author-name" itemprop="name">Auteur</p>
               <div class="site-description motion-element" itemprop="description">吾尝终日而思，不如须臾之所学</div>
           </div>
 
@@ -2534,7 +2516,7 @@ if(window.location.hash){
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -2640,7 +2622,9 @@ if(window.location.hash){
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

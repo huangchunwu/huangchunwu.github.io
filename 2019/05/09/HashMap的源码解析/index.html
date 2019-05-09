@@ -178,17 +178,18 @@ if(window.location.hash){
 	}
 </script>
 
-  <meta name="description" content="吾尝终日而思，不如须臾之所学">
-<meta name="keywords" content="IT男,java语言,java语言笔记,一代天骄,java,android,博客,软件架构,钉钉开发">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一代天骄&#39;s BLOG">
-<meta property="og:url" content="http://huangchunwu.github.io/tags/Spring/index.html">
+  <meta name="description" content="背景最近忙着面试，把学习的东西，通过博客沉淀下来，一方面加深自己的理解，另方面方便以后自己再次复习。HashMap 是面试喜欢问的问题，那么HashMap的原理是什么呢？  HashMap原理HashMap的数据结构是 数组+链表。  数组默认大小等于16，这个数组也称Hash桶。链表是存放Hash冲突的entry对象的。这里该提到数据结构的hash冲突的几种解决方法，hashMap采用的是链地址">
+<meta name="keywords" content="源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap的源码解析">
+<meta property="og:url" content="http://huangchunwu.github.io/2019/05/09/HashMap的源码解析/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="吾尝终日而思，不如须臾之所学">
+<meta property="og:description" content="背景最近忙着面试，把学习的东西，通过博客沉淀下来，一方面加深自己的理解，另方面方便以后自己再次复习。HashMap 是面试喜欢问的问题，那么HashMap的原理是什么呢？  HashMap原理HashMap的数据结构是 数组+链表。  数组默认大小等于16，这个数组也称Hash桶。链表是存放Hash冲突的entry对象的。这里该提到数据结构的hash冲突的几种解决方法，hashMap采用的是链地址">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-09T13:06:28.636Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一代天骄&#39;s BLOG">
-<meta name="twitter:description" content="吾尝终日而思，不如须臾之所学">
+<meta name="twitter:title" content="HashMap的源码解析">
+<meta name="twitter:description" content="背景最近忙着面试，把学习的东西，通过博客沉淀下来，一方面加深自己的理解，另方面方便以后自己再次复习。HashMap 是面试喜欢问的问题，那么HashMap的原理是什么呢？  HashMap原理HashMap的数据结构是 数组+链表。  数组默认大小等于16，这个数组也称Hash桶。链表是存放Hash冲突的entry对象的。这里该提到数据结构的hash冲突的几种解决方法，hashMap采用的是链地址">
 
 
 
@@ -196,7 +197,7 @@ if(window.location.hash){
 
   
   
-  <link rel="canonical" href="http://huangchunwu.github.io/tags/Spring/">
+  <link rel="canonical" href="http://huangchunwu.github.io/2019/05/09/HashMap的源码解析/">
 
 
 
@@ -206,7 +207,7 @@ if(window.location.hash){
   };
 </script>
 
-  <title>标签: Spring | 一代天骄's BLOG</title>
+  <title>HashMap的源码解析 | 一代天骄's BLOG</title>
   
 
 
@@ -254,7 +255,7 @@ if(window.location.hash){
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -377,25 +378,6 @@ if(window.location.hash){
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -441,109 +423,228 @@ if(window.location.hash){
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>Spring<small>标签</small>
-        </h2>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/09/HashMap的源码解析/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Auteur">
+      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一代天骄's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/05/07/Spring多个AOP多注解执行顺序是怎么样的/" itemprop="url">
-            
-              <span itemprop="name">Spring多个AOP多注解执行顺序是怎么样的</span>
-            
-          </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">HashMap的源码解析
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-07T18:31:22+08:00" content="2019-05-07">
-          2019-05-07
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
 
+          
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-09 21:04:58" itemprop="dateCreated datePublished" datetime="2019-05-09T21:04:58+08:00">2019-05-09</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">专栏</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/05/09/HashMap的源码解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/09/HashMap的源码解析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/05/09/HashMap的源码解析/" class="leancloud_visitors" data-flag-title="HashMap的源码解析">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/01/11/springbatch/" itemprop="url">
-            
-              <span itemprop="name">SpringBatch+MYSQL仓库+运维监控后台项目记录</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-11T21:30:18+08:00" content="2019-01-11">
-          2019-01-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2018/12/16/aop/" itemprop="url">
-            
-              <span itemprop="name">spring声明式事务失效的分析过程</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-16T19:56:40+08:00" content="2018-12-16">
-          2018-12-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近忙着面试，把学习的东西，通过博客沉淀下来，一方面加深自己的理解，另方面方便以后自己再次复习。HashMap 是面试喜欢问的问题，那么HashMap的原理是什么呢？</p>
+<hr>
+<h2 id="HashMap原理"><a href="#HashMap原理" class="headerlink" title="HashMap原理"></a>HashMap原理</h2><p>HashMap的数据结构是 数组+链表。 </p>
+<p>数组默认大小等于16，这个数组也称Hash桶。<br>链表是存放Hash冲突的entry对象的。这里该提到数据结构的hash冲突的几种解决方法，hashMap采用的是链地址法。</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hash冲突解决的常见办法：</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>开放定址法</span><br><span class="line"><span class="number">2.</span>再哈希法</span><br><span class="line"><span class="number">3.</span>链地址法</span><br><span class="line"><span class="number">4.</span>建立公共溢出区</span><br></pre></td></tr></table></figure>
+<h2 id="怎么处理hash冲突"><a href="#怎么处理hash冲突" class="headerlink" title="怎么处理hash冲突"></a>怎么处理hash冲突</h2><p>当我们向HashMap put一个KV时候，先对KEY做hashCode,为了减少hash冲撞的机会，还经过了扰动函数计算，让hash的更均匀。<strong>jdk7在这里扰动了4次而JDK8，做了简化。</strong></p>
+<p>计算出来的hashcode与数组的容量进行与运算代替模运算，  因为hash桶只有16个，因此出现hash冲撞的可能性会增大。通过位运算后的值即为key-value存放的位置。当出现hash冲撞的时候，hashmap会将新进来的值塞进链表的尾部，当hash冲撞的机会高的时候，链表的长度也会增大，我们知道链表的查询的时间复杂度是N，jdk8在这里做了改进，具体为当链表长度大于8的时候，会转为红黑树，红黑树的特点是平衡二叉树，查询的时间复杂度是logn. </p>
+<h2 id="怎么扩容呢？"><a href="#怎么扩容呢？" class="headerlink" title="怎么扩容呢？"></a>怎么扩容呢？</h2><p>当hashMap的数组容量超过自己的0.75的时候，也就是默认容量16*0.75=12个的时候，则会进行一次扩容，这里的0.75就是<strong>加载因子</strong>，12就是<strong>阈值</strong>。<br>扩容的复杂度很高，先扩容，再移动旧的数组的值到新的数组去，性能会很低,所以我们要减少hashmap的扩容次数，初始化的时候，尽量设置初始容量。接下来，我们看看扩容的过程，先复制一个原来2倍容量的数组，然后重新计算key<br>的hash值，将旧数据搬到新的数组中去，这时候如果有新的数据进来也会插入尾部，会出现争抢位置的并发问题，而HashMap是线程不安全的。</p>
+<h2 id="hashMap线程安全的实现方式"><a href="#hashMap线程安全的实现方式" class="headerlink" title="hashMap线程安全的实现方式"></a>hashMap线程安全的实现方式</h2><p>线程安全的hashMap，使用concurrentHashMap,这个类是基于分段锁。实现HashMap线程安全还有另外一种方法，Collections.synchronized(new HashMap()),但是这种是全部方法加锁的，跟hashtable一样，锁粒度大，效率不好。</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/源码/" rel="tag"><i class="fa fa-fw fa-tag"></i> 源码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/07/Spring多个AOP多注解执行顺序是怎么样的/" rel="next" title="Spring多个AOP多注解执行顺序是怎么样的">
+                Spring多个AOP多注解执行顺序是怎么样的 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -876,6 +977,10 @@ if(window.location.hash){
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
 
   
 
@@ -932,6 +1037,8 @@ if(window.location.hash){
 
 
 
+
+  
 
 
   
@@ -1263,38 +1370,35 @@ if(window.location.hash){
   
   <script>
     
-    function showTime(Counter) {
-      var entries = [];
+    function addCount(Counter) {
       var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
 
-      $visitors.each(function() {
-        entries.push( $(this).attr('id').trim() );
-      });
-
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url: { '$in': entries } }) })
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
         .done(function({ results }) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if (countSpan.text() == '') {
-              countSpan.text(0);
-            }
+          if (results.length > 0) {
+            var counter = results[0];
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
           }
         })
         .fail(function ({ responseJSON }) {
@@ -1319,9 +1423,7 @@ if(window.location.hash){
             });
           };
           
-            if ($('.post-title-link').length >= 1) {
-              showTime(Counter);
-            }
+            addCount(Counter);
           
         });
     });
