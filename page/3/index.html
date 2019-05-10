@@ -439,6 +439,192 @@ if(window.location.hash){
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/03/13/jsonutil/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Auteur">
+      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一代天骄's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/13/jsonutil/" class="post-title-link" itemprop="url">【在线工具】JSON字符串转为javaBean对象</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-13 23:36:54" itemprop="dateCreated datePublished" datetime="2019-03-13T23:36:54+08:00">2019-03-13</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">专栏</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/03/13/jsonutil/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/13/jsonutil/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/03/13/jsonutil/" class="leancloud_visitors" data-flag-title="【在线工具】JSON字符串转为javaBean对象">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一款免费的在线的JSON字符串转为javaBean对象工具，提高工作效率，记录一下</p>
+<p><a href="https://www.bejson.com/json2javapojo/new/" target="_blank" rel="noopener">JSON字符串转为javaBean对象在线工具</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/03/09/exchanger/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1347,6 +1533,7 @@ if(window.location.hash){
         
           
             <h2 id="为什么使用Guava-Cache？"><a href="#为什么使用Guava-Cache？" class="headerlink" title="为什么使用Guava Cache？"></a>为什么使用Guava Cache？</h2><p>guava cache属于JVM内存的缓存,其实JAVA本地缓存框架有ecache，简单点有HashMap作为缓存容器,那么，为什么推荐用guava cache呢,比如以下：<br>1、设置缓存的过期时间,遵循LRU原则移除过期KEY<br>2、缓存的定期刷新<br>3、如何防止缓存穿透</p>
+<p>LRU原则是指 Least Recently Used  最近最少使用,即活性不高的缓存会被淘汰掉</p>
 <p>如果自己实现起来难度较大，谷歌开发对缓存操作作了封装，方便研发的重心集中在业务处理，无需关心底层实现，无需重复造轮子。</p>
 <p>我们常用的是redis可以实现分布式缓存，为什么推荐用guava cache呢<br>1、同时造成了业务系统 强依赖于网络和redis服务器的稳定性<br>2、网络请求的效率远远没有本地内存快。</p>
 <hr>
@@ -2204,223 +2391,6 @@ CacheBuilder.softValues()：使用软引用存储值。
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2018/12/16/aop/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Auteur">
-      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
-      <meta itemprop="image" content="/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一代天骄's BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/16/aop/" class="post-title-link" itemprop="url">spring声明式事务失效的分析过程</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-
-          
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-16 19:56:40" itemprop="dateCreated datePublished" datetime="2018-12-16T19:56:40+08:00">2018-12-16</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">专栏</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/2018/12/16/aop/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/16/aop/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/2018/12/16/aop/" class="leancloud_visitors" data-flag-title="spring声明式事务失效的分析过程">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="问题的背景"><a href="#问题的背景" class="headerlink" title="问题的背景"></a>问题的背景</h3><p>在途牛，庆幸的是遇到了几个很正面的人，我也是从阅读其中一位同事的博客才发现了spring声明式事务的这个坑，说实话，我平时开发很少用事务，因为不好控制粒度，事务也是高并发的绊脚石。</p>
-<hr>
-<h3 id="问题的现象"><a href="#问题的现象" class="headerlink" title="问题的现象"></a>问题的现象</h3><p>为了理解方便，下面我用伪代码说明问题详细<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Class exampleService&#123;</span><br><span class="line">    <span class="comment">//不加事务，本身不需要事务介入</span></span><br><span class="line">   public <span class="keyword">void</span> methodA（）&#123;</span><br><span class="line">      <span class="comment">//耗时操作</span></span><br><span class="line">      ······</span><br><span class="line">     <span class="comment">//调用B</span></span><br><span class="line">      methodB（）；</span><br><span class="line">      ······</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="comment">//声明了事务</span></span><br><span class="line">   @Transactional </span><br><span class="line">   public <span class="keyword">void</span> methodB（）&#123;</span><br><span class="line">      insert();</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"操作db失败"</span>)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>运行完代码后，现象是发现methodB的插入的数据没有回滚，像我一样不知道的同学就纳闷了，下面来具体分析下为啥出现事务无效的现象。</p>
-<hr>
-<h3 id="问题的分析"><a href="#问题的分析" class="headerlink" title="问题的分析"></a>问题的分析</h3><p>这里来复习一下spring的声明式事务，无非就是spring的二大核心之一：AOP。</p>
-<blockquote>
-<p>AOP的实现原理是java的动态代理。</p>
-</blockquote>
-<blockquote>
-<p>spring实现动态代理有二种方式，其中一个就是cglib，另一个是jdk代理。</p>
-</blockquote>
-<blockquote>
-<p>cglib的原理是jvm调用native方法即ASM，操作class字节码另生成代理类。</p>
-</blockquote>
-<blockquote>
-<p>AOP注解的方法，生成的代理类，并在方法执行前，加入事务的开启，执行后加入事务提交操作</p>
-</blockquote>
-<p>基于这些认知，我们看spring的声明式事务为什么失效。<br>exampleService有二个方法：methodA 是普通方法，methodB是另一个声明了事务方法，class编译出了一个AOP代理类exampleServiceProxy,<br>上述出现问题的调用关系是：</p>
-<pre><code>exampleService.methodA（）调用的是内部方法exampleService.methodB().
-由此看出methodB并没有被Proxy类通知到。
-</code></pre><p>正确的调用关系是：</p>
-<pre><code>exampleServiceProxy.methodA()--&gt;exampleServiceProxy.methodB().
-</code></pre><hr>
-<h3 id="怎么避免此类问题"><a href="#怎么避免此类问题" class="headerlink" title="怎么避免此类问题"></a>怎么避免此类问题</h3><p>知道了原理，我们解决此类问题的方法，要么是新建一个类并将methodB移进来。<br>要么是用编程式事务。</p>
-<hr>
-<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><blockquote>
-<p>说下最近发生的事情，不喜跳过。这段时间工作比较忙，每天有6个小时的有效工作时间，在和南京总部的度假团队，一起开发火车票改签项目，说下这个项目的感受，又是一堆的CURD，这也是敲业务代码的弊端。我想避免温水煮青蛙，突破一下自己，改变了以往的开发习惯，先把以前大冰哥的改签代码，用Visio将业务流程画了一遍，我也不清楚这样有什么好处，有个“上海交大”的同事告诉我这样用处大，只能自己体会，我想人家那么优秀的学历说的话总归有点道理的。等我画完整个流程图后，渐渐的有了点启发，一边心里骂着之前代码结构的设计，一边寻思着开始代码的重构,目前正在紧张的开发中。回过头来想画流程图的好处，我就觉得，看代码的速度放慢了，思考空间也更大了些，于是启发就更多了些。</p>
-</blockquote>
-<hr>
-<p>5/8号<br>昨天面试的时候，被面试官问到这块知识，面试官问如果获取代理对象的目标对象？我不知道了，不过现在知道了。<br>像上面那类问题，另外一个解决方案就是，直接获取spring容器的代理对象：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Class exampleService&#123;</span><br><span class="line">    <span class="comment">//不加事务，本身不需要事务介入</span></span><br><span class="line">   public <span class="keyword">void</span> methodA（）&#123;</span><br><span class="line">      <span class="comment">//耗时操作</span></span><br><span class="line">      ······</span><br><span class="line">     <span class="comment">//调用B</span></span><br><span class="line">     ((BaseClass)SpringUtil.getBean(<span class="string">"exampleService"</span>)).methodB（）；</span><br><span class="line">      ······</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="comment">//声明了事务</span></span><br><span class="line">   @Transactional </span><br><span class="line">   public <span class="keyword">void</span> methodB（）&#123;</span><br><span class="line">      insert();</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"操作db失败"</span>)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>如果获取代理对象的目标对象？我不好用语言表达清楚，先贴个别人写的解答吧<br><a href="https://jinnianshilongnian.iteye.com/blog/1613222" target="_blank" rel="noopener">在spring中获取代理对象代理的目标对象工具类</a></p>
-<p>参考资料：<br><a href="http://www.cnblogs.com/nnngu/p/8627662.html" target="_blank" rel="noopener">Spring的编程式事务和声明式事务</a><br><a href="https://www.cnblogs.com/lcngu/p/5339555.html" target="_blank" rel="noopener">Spring aop的实现原理</a><br><a href="https://www.cnblogs.com/flyingeagle/articles/7102282.html" target="_blank" rel="noopener">Java动态代理机制详解（JDK 和CGLIB，Javassist，ASM）</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2469,7 +2439,7 @@ CacheBuilder.softValues()：使用软引用存储值。
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
