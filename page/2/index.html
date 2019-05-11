@@ -1293,7 +1293,7 @@ if(window.location.hash){
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/04/18/volatile与synchronized的区别/" class="post-title-link" itemprop="url">volatile与synchronized的区别</a>
+                <a href="/2019/04/18/volatile与synchronized的区别/" class="post-title-link" itemprop="url">volatile 必备知识</a>
               
             
           </h2>
@@ -1368,7 +1368,7 @@ if(window.location.hash){
 
           
           
-            <span id="/2019/04/18/volatile与synchronized的区别/" class="leancloud_visitors" data-flag-title="volatile与synchronized的区别">
+            <span id="/2019/04/18/volatile与synchronized的区别/" class="leancloud_visitors" data-flag-title="volatile 必备知识">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -1412,7 +1412,7 @@ if(window.location.hash){
 <li>线程在工作内存中，使用该变量的时候，需要从主内存刷新到工作内存去。</li>
 <li>线程修改了工作内存的变量值，需要刷新到主内存去，供其他线程使用。</li>
 </ol>
-<h2 id="为什么JVM将内存分为工作内存与主内存，即为什么有栈和堆"><a href="#为什么JVM将内存分为工作内存与主内存，即为什么有栈和堆" class="headerlink" title="为什么JVM将内存分为工作内存与主内存，即为什么有栈和堆"></a>为什么JVM将内存分为工作内存与主内存，即为什么有栈和堆</h2><p>工作内存即CPU的高速缓存，为了执行效率高。</p>
+<h2 id="为什么JVM将内存分为工作内存与主内存，即为什么有栈和堆"><a href="#为什么JVM将内存分为工作内存与主内存，即为什么有栈和堆" class="headerlink" title="为什么JVM将内存分为工作内存与主内存，即为什么有栈和堆"></a>为什么JVM将内存分为工作内存与主内存，即为什么有栈和堆</h2><p>主内存是线程共享的，不具有线程安全性，而工作内存是线程独有的，具有隔离性，线程安全<br>工作内存即CPU的高速缓存，为了执行效率高。</p>
 <h2 id="volatile有哪些场景的应用"><a href="#volatile有哪些场景的应用" class="headerlink" title="volatile有哪些场景的应用"></a>volatile有哪些场景的应用</h2><ol>
 <li>用于一些开关标识的场景（我只知道这个）</li>
 <li>用于缓存的更新的场景，比如缓存失效的时候，多个线程并发获取该缓存，只允许一个线程去DB，拉取数据后塞进缓存后，供其他线程可见使用。</li>
