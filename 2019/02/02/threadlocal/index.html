@@ -178,18 +178,18 @@ if(window.location.hash){
 	}
 </script>
 
-  <meta name="description" content="工作五年了，对ThreadLocal原理还不是很清楚，o(￣︶￣)o。今天来分析下，使用threadLocal时候，导致内存泄漏的原理。  概念 1、用于存放线程局部变量。2、一个线程都会维护一个threadLocalMap,threadLocal包装成弱引用作       为key，线程局部变量作为value,装在entry数组里面。   主要方法 set(T value) 存储线程局部变量值">
+  <meta name="description" content="工作五年了，对ThreadLocal原理还不是很清楚，o(￣︶￣)o。今天来分析下，使用threadLocal时候，导致内存泄漏的原理。  概念 1、用于存放线程局部变量。2、一个线程都会维护一个threadLocalMap,threadLocal包装成弱引用作为key，用户的值作为value,装在entry数组里面。   主要方法 set(T value) 存储线程局部变量值get() 获取线">
 <meta name="keywords" content="Threadlocal,并发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ThreadLocal如何防止内存泄漏">
 <meta property="og:url" content="http://huangchunwu.github.io/2019/02/02/threadlocal/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="工作五年了，对ThreadLocal原理还不是很清楚，o(￣︶￣)o。今天来分析下，使用threadLocal时候，导致内存泄漏的原理。  概念 1、用于存放线程局部变量。2、一个线程都会维护一个threadLocalMap,threadLocal包装成弱引用作       为key，线程局部变量作为value,装在entry数组里面。   主要方法 set(T value) 存储线程局部变量值">
+<meta property="og:description" content="工作五年了，对ThreadLocal原理还不是很清楚，o(￣︶￣)o。今天来分析下，使用threadLocal时候，导致内存泄漏的原理。  概念 1、用于存放线程局部变量。2、一个线程都会维护一个threadLocalMap,threadLocal包装成弱引用作为key，用户的值作为value,装在entry数组里面。   主要方法 set(T value) 存储线程局部变量值get() 获取线">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-02T09:43:17.809Z">
+<meta property="og:updated_time" content="2019-05-14T02:40:21.485Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ThreadLocal如何防止内存泄漏">
-<meta name="twitter:description" content="工作五年了，对ThreadLocal原理还不是很清楚，o(￣︶￣)o。今天来分析下，使用threadLocal时候，导致内存泄漏的原理。  概念 1、用于存放线程局部变量。2、一个线程都会维护一个threadLocalMap,threadLocal包装成弱引用作       为key，线程局部变量作为value,装在entry数组里面。   主要方法 set(T value) 存储线程局部变量值">
+<meta name="twitter:description" content="工作五年了，对ThreadLocal原理还不是很清楚，o(￣︶￣)o。今天来分析下，使用threadLocal时候，导致内存泄漏的原理。  概念 1、用于存放线程局部变量。2、一个线程都会维护一个threadLocalMap,threadLocal包装成弱引用作为key，用户的值作为value,装在entry数组里面。   主要方法 set(T value) 存储线程局部变量值get() 获取线">
 
 
 
@@ -566,7 +566,7 @@ if(window.location.hash){
         <p> 工作五年了，对ThreadLocal原理还不是很清楚，o(<em>￣︶￣</em>)o。今天来分析下，使用threadLocal时候，导致内存泄漏的原理。</p>
 <hr>
 <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
-<p>1、用于存放线程局部变量。<br>2、一个线程都会维护一个threadLocalMap,threadLocal包装成弱引用作       为key，线程局部变量作为value,装在entry数组里面。</p>
+<p>1、用于存放线程局部变量。<br>2、一个线程都会维护一个threadLocalMap,threadLocal包装成弱引用作为key，用户的值作为value,装在entry数组里面。</p>
 </blockquote>
 <hr>
 <h2 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h2><blockquote>
@@ -578,6 +578,8 @@ if(window.location.hash){
 <h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>内存泄露<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、如果使用线程池，要注意手动清理threadLocal</span><br><span class="line"><span class="number">2</span>、如果线程消亡了，threadLocal==null,此时entry还是被强引用的话，</span><br><span class="line">   threadLocalMap不会被回收，造成内存泄露</span><br></pre></td></tr></table></figure></p>
 <hr>
 <h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>、可以用于单个线程的参数的存储，模板方法的上下文</span><br><span class="line"><span class="number">2</span>、Java7中的SimpleDateFormat不是线程安全的，可以用ThreadLocal来解决这个问题</span><br><span class="line"><span class="number">3</span>、InheritableThreadLocal可以跨线程共享ThreadLocal变量，用于将主线程的变量传递给子线程中例如用户标识（user <span class="built_in">id</span>）或事务标识（<span class="keyword">transaction</span> <span class="built_in">id</span>），但不能是有状态对象，例如 JDBC Connection</span><br></pre></td></tr></table></figure>
+<p>ThreadLocalMap使用ThreadLocal的弱引用作为key，如果一个ThreadLocal没有外部强引用引用他，那么系统gc的时候，这个ThreadLocal势必会被回收，这样一来，ThreadLocalMap中就会出现key为null的Entry，就没有办法访问这些key为null的Entry的value，如果当前线程再迟迟不结束的话，这些key为null的Entry的value就会一直存在一条强引用链：<br>Thread Ref -&gt; Thread -&gt; ThreaLocalMap -&gt; Entry -&gt; value<br>永远无法回收，造成内存泄露。</p>
+<p>所以JDK建议将ThreadLocal变量定义成private static的，这样的话ThreadLocal的生命周期就更长，由于一直存在ThreadLocal的强引用，所以ThreadLocal也就不会被回收，也就能保证任何时候都能根据ThreadLocal的弱引用访问到Entry的value值，然后remove它，防止内存泄露。</p>
 <hr>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://github.com/huangchunwu/own" target="_blank" rel="noopener">示例代码</a></p>
 
@@ -696,7 +698,7 @@ if(window.location.hash){
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>

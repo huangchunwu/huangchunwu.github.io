@@ -178,17 +178,18 @@ if(window.location.hash){
 	}
 </script>
 
-  <meta name="description" content="吾尝终日而思，不如须臾之所学">
-<meta name="keywords" content="IT男,java语言,java语言笔记,一代天骄,java,android,博客,软件架构,钉钉开发">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一代天骄&#39;s BLOG">
-<meta property="og:url" content="http://huangchunwu.github.io/archives/2019/page/3/index.html">
+  <meta name="description" content="问渠那得清如许，为有源头活水来  这段时间没有更新博客了，不是因为找到工作了而繁忙了，也不是在忙于找工作，而是趁着有空在家带娃了,没有输入哪来的输出。面试的时候最喜欢问线程池了，我遇到的题目有：  线程池的工作原理 Executors 默认的队列为啥没有用arrayBlockingQueue 如何实现将任务不塞入队列中，直接用线程池的线程处理 如何暂停线程池中的工作线程  如何实现暂停线程池的工">
+<meta name="keywords" content="线程池">
+<meta property="og:type" content="article">
+<meta property="og:title" content="可以暂停的线程池">
+<meta property="og:url" content="http://huangchunwu.github.io/2019/05/21/可以暂停的线程池/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="吾尝终日而思，不如须臾之所学">
+<meta property="og:description" content="问渠那得清如许，为有源头活水来  这段时间没有更新博客了，不是因为找到工作了而繁忙了，也不是在忙于找工作，而是趁着有空在家带娃了,没有输入哪来的输出。面试的时候最喜欢问线程池了，我遇到的题目有：  线程池的工作原理 Executors 默认的队列为啥没有用arrayBlockingQueue 如何实现将任务不塞入队列中，直接用线程池的线程处理 如何暂停线程池中的工作线程  如何实现暂停线程池的工">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-21T07:57:32.309Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一代天骄&#39;s BLOG">
-<meta name="twitter:description" content="吾尝终日而思，不如须臾之所学">
+<meta name="twitter:title" content="可以暂停的线程池">
+<meta name="twitter:description" content="问渠那得清如许，为有源头活水来  这段时间没有更新博客了，不是因为找到工作了而繁忙了，也不是在忙于找工作，而是趁着有空在家带娃了,没有输入哪来的输出。面试的时候最喜欢问线程池了，我遇到的题目有：  线程池的工作原理 Executors 默认的队列为啥没有用arrayBlockingQueue 如何实现将任务不塞入队列中，直接用线程池的线程处理 如何暂停线程池中的工作线程  如何实现暂停线程池的工">
 
 
 
@@ -196,7 +197,7 @@ if(window.location.hash){
 
   
   
-  <link rel="canonical" href="http://huangchunwu.github.io/archives/2019/page/3/">
+  <link rel="canonical" href="http://huangchunwu.github.io/2019/05/21/可以暂停的线程池/">
 
 
 
@@ -206,7 +207,7 @@ if(window.location.hash){
   };
 </script>
 
-  <title>文章归档 | 一代天骄's BLOG</title>
+  <title>可以暂停的线程池 | 一代天骄's BLOG</title>
   
 
 
@@ -254,7 +255,7 @@ if(window.location.hash){
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -313,7 +314,7 @@ if(window.location.hash){
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -377,25 +378,6 @@ if(window.location.hash){
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -441,560 +423,230 @@ if(window.location.hash){
           <div id="content" class="content">
             
 
-  
-  
-  
   <div id="posts" class="posts-expand">
-  <div class="post-block page"> 
-    <div class="post-body">
-      <h2 class="post-title" style="border-left:none;padding-left:0;text-align:center;">文章归档</h2>
-      <div class="post-meta"></div>
-      <div class="category-all-page">
-        <div class="category-all-title">
-          
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-          <i class="fa fa-fw fa-th"></i> 目前共计 5 个专栏
-        </div>
-        <div class="category-all">
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/搭建博客/">搭建博客</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构/">架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">3</span></li></ul>
-        </div>
-      </div>
-      <hr>
-      <div class="tag-cloud">
-        <div class="tag-cloud-title">
-          
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-            
-              
-            
-          
-          <i class="fa fa-fw fa-tags"></i> 目前共计 32 个标签
-        </div><br>
-        <div class="tag-cloud-tags">
-          <a href="/tags/Android/" style="font-size: 12px; color: #ccc">Android</a> <a href="/tags/GC/" style="font-size: 21px; color: #6f6f6f">GC</a> <a href="/tags/Guava/" style="font-size: 12px; color: #ccc">Guava</a> <a href="/tags/JUC/" style="font-size: 12px; color: #ccc">JUC</a> <a href="/tags/JVM/" style="font-size: 12px; color: #ccc">JVM</a> <a href="/tags/Mysql/" style="font-size: 21px; color: #6f6f6f">Mysql</a> <a href="/tags/Redis/" style="font-size: 21px; color: #6f6f6f">Redis</a> <a href="/tags/Spring/" style="font-size: 30px; color: #111">Spring</a> <a href="/tags/SpringBatch/" style="font-size: 12px; color: #ccc">SpringBatch</a> <a href="/tags/Threadlocal/" style="font-size: 12px; color: #ccc">Threadlocal</a> <a href="/tags/UML/" style="font-size: 12px; color: #ccc">UML</a> <a href="/tags/forkJoin/" style="font-size: 12px; color: #ccc">forkJoin</a> <a href="/tags/hexo/" style="font-size: 21px; color: #6f6f6f">hexo</a> <a href="/tags/synchronized/" style="font-size: 12px; color: #ccc">synchronized</a> <a href="/tags/volatile/" style="font-size: 12px; color: #ccc">volatile</a> <a href="/tags/分库分表/" style="font-size: 12px; color: #ccc">分库分表</a> <a href="/tags/协程/" style="font-size: 12px; color: #ccc">协程</a> <a href="/tags/工具/" style="font-size: 30px; color: #111">工具</a> <a href="/tags/年度总结/" style="font-size: 12px; color: #ccc">年度总结</a> <a href="/tags/并发/" style="font-size: 12px; color: #ccc">并发</a> <a href="/tags/批处理/" style="font-size: 12px; color: #ccc">批处理</a> <a href="/tags/数据迁移/" style="font-size: 12px; color: #ccc">数据迁移</a> <a href="/tags/源码/" style="font-size: 12px; color: #ccc">源码</a> <a href="/tags/生活感悟/" style="font-size: 12px; color: #ccc">生活感悟</a> <a href="/tags/类的加载机制/" style="font-size: 12px; color: #ccc">类的加载机制</a> <a href="/tags/线程池/" style="font-size: 21px; color: #6f6f6f">线程池</a> <a href="/tags/缓存/" style="font-size: 30px; color: #111">缓存</a> <a href="/tags/软件设计原则/" style="font-size: 12px; color: #ccc">软件设计原则</a> <a href="/tags/钉钉/" style="font-size: 12px; color: #ccc">钉钉</a> <a href="/tags/隔离级别/" style="font-size: 12px; color: #ccc">隔离级别</a> <a href="/tags/面试/" style="font-size: 21px; color: #6f6f6f">面试</a> <a href="/tags/音乐/" style="font-size: 12px; color: #ccc">音乐</a>
-        </div>
-      </div>
+    
 
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/05/21/可以暂停的线程池/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Author">
+      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一代天骄's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">可以暂停的线程池
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-21 12:28:19" itemprop="dateCreated datePublished" datetime="2019-05-21T12:28:19+08:00">2019-05-21</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">专栏</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/05/21/可以暂停的线程池/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/21/可以暂停的线程池/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/05/21/可以暂停的线程池/" class="leancloud_visitors" data-flag-title="可以暂停的线程池">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>问渠那得清如许，为有源头活水来</p>
+</blockquote>
+<p>这段时间没有更新博客了，不是因为找到工作了而繁忙了，也不是在忙于找工作，而是趁着有空在家带娃了,没有输入哪来的输出。面试的时候最喜欢问线程池了，我遇到的题目有：</p>
+<ul>
+<li>线程池的工作原理</li>
+<li>Executors 默认的队列为啥没有用arrayBlockingQueue</li>
+<li>如何实现将任务不塞入队列中，直接用线程池的线程处理</li>
+<li>如何暂停线程池中的工作线程</li>
+</ul>
+<h2 id="如何实现暂停线程池的工作线程"><a href="#如何实现暂停线程池的工作线程" class="headerlink" title="如何实现暂停线程池的工作线程"></a>如何实现暂停线程池的工作线程</h2><p>其实这个在线程池源码里面有个例子，这里改造了一下，通过命令控制台输入命令控制线程池。原理是：<br>通过重载线程池提供的beforeExecute（），用lock+condition的wait（）使得工作线程暂停。另外提供一个恢复方法，使用的是lock+condition的signalAll唤醒暂停的工作线程。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PauseThreadPool</span> <span class="title">extends</span> <span class="title">ThreadPoolExecutor</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> boolean isPaused;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ReentrantLock pauseLock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> Condition unpaused = pauseLock.newCondition();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PauseThreadPool</span>(<span class="params"><span class="keyword">int</span> corePoolSize, <span class="keyword">int</span> maximumPoolSize, <span class="keyword">long</span> keepAliveTime, TimeUnit unit, BlockingQueue&lt;Runnable&gt; workQueue</span>)</span> &#123;</span><br><span class="line">        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//线程池执行任务之前</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">beforeExecute</span>(<span class="params">Thread t, Runnable r</span>)</span> &#123;</span><br><span class="line">        pauseLock.<span class="keyword">lock</span>();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (isPaused) &#123;</span><br><span class="line">                unpaused.<span class="keyword">await</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            pauseLock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pause</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        pauseLock.<span class="keyword">lock</span>();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            isPaused = <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            pauseLock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">resume</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        pauseLock.<span class="keyword">lock</span>();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            isPaused = <span class="literal">false</span>;</span><br><span class="line">            unpaused.signalAll();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            pauseLock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//线程池执行任务之前</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">afterExecute</span>(<span class="params">Runnable r, Throwable t</span>)</span> &#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"afterExecute  task:"</span> + Thread.currentThread().getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//线程池终止时候调用</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">terminated</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"terminated  task:"</span> + Thread.currentThread().getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span> &#123;</span><br><span class="line">        PauseThreadPool pool = <span class="keyword">new</span> PauseThreadPool(<span class="number">5</span>, <span class="number">10</span>, <span class="number">30</span>, TimeUnit.SECONDS, <span class="keyword">new</span> ArrayBlockingQueue&lt;Runnable&gt;(<span class="number">10</span>));</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.<span class="keyword">out</span>.print(<span class="string">"Enter a char :"</span>);</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">                Scanner sc = <span class="keyword">new</span> Scanner(System.<span class="keyword">in</span>);</span><br><span class="line">                <span class="keyword">int</span> val = sc.nextInt();</span><br><span class="line">                <span class="keyword">if</span> (val == <span class="number">13</span> || val == <span class="number">10</span>) &#123;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (val == <span class="number">1</span>) &#123;</span><br><span class="line">                    pool.pause();</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (val == <span class="number">2</span>) &#123;</span><br><span class="line">                    pool.resume();</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (val == <span class="number">0</span>) &#123;</span><br><span class="line">                    pool.submit(<span class="keyword">new</span> Callable&lt;Object&gt;() &#123;</span><br><span class="line">                        @Override</span><br><span class="line">                        <span class="function"><span class="keyword">public</span> Object <span class="title">call</span>(<span class="params"></span>) throws Exception</span> &#123;</span><br><span class="line">                            System.<span class="keyword">out</span>.println(<span class="string">"start  task:"</span> + Thread.currentThread().getName());</span><br><span class="line">                            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (val == <span class="number">3</span>)&#123;</span><br><span class="line">                    pool.shutdown();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/线程池/" rel="tag"><i class="fa fa-fw fa-tag"></i> 线程池</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/10/如何写一个程序频繁的FULL-GC/" rel="next" title="如何写一个程序频繁的FULL GC">
+                如何写一个程序频繁的FULL GC <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h2 class="archive-year" id="archive-year-2019">2019</h2>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/16/myThink/" itemprop="url">
-            
-              <span itemprop="name">最近的所思、所感</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-16T23:52:23+08:00" content="2019-03-16">
-          2019-03-16
-        </time>
-      </div>
-
-    </header>
   </article>
 
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/13/jsonutil/" itemprop="url">
-            
-              <span itemprop="name">【在线工具】JSON字符串转为javaBean对象</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-13T23:36:54+08:00" content="2019-03-13">
-          2019-03-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/09/exchanger/" itemprop="url">
-            
-              <span itemprop="name">JUC工具类之exchanger</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-09T21:51:25+08:00" content="2019-03-09">
-          2019-03-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/02/02/threadlocal/" itemprop="url">
-            
-              <span itemprop="name">ThreadLocal如何防止内存泄漏</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-02T16:51:15+08:00" content="2019-02-02">
-          2019-02-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/02/02/swtools/" itemprop="url">
-            
-              <span itemprop="name">思维导图在线工具</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-02T13:37:42+08:00" content="2019-02-02">
-          2019-02-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/01/25/forkjoin/" itemprop="url">
-            
-              <span itemprop="name">并行计算框架forkJoin框架</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-25T21:04:58+08:00" content="2019-01-25">
-          2019-01-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/01/15/guava-cache/" itemprop="url">
-            
-              <span itemprop="name">Guava Cache 学习记录</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-15T23:26:12+08:00" content="2019-01-15">
-          2019-01-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/01/11/hexo-improve/" itemprop="url">
-            
-              <span itemprop="name">hexo主题优化</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-11T22:58:44+08:00" content="2019-01-11">
-          2019-01-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/01/11/springbatch/" itemprop="url">
-            
-              <span itemprop="name">SpringBatch+MYSQL仓库+运维监控后台项目记录</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-11T21:30:18+08:00" content="2019-01-11">
-          2019-01-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/01/01/summary/" itemprop="url">
-            
-              <span itemprop="name">2018，这一年</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-01T10:21:19+08:00" content="2019-01-01">
-          2019-01-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-    </div>
   </div>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2019/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2019/">1</a><a class="page-number" href="/archives/2019/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
-
-
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -1204,7 +856,7 @@ if(window.location.hash){
 
         
       </div>
-    </div></main>
+    </main>
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
@@ -1327,6 +979,10 @@ if(window.location.hash){
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
 
   
 
@@ -1347,26 +1003,7 @@ if(window.location.hash){
   
 
   
-    
-      
-    
   
-  
-  
-    <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
-    <script>
-      
-        window.addEventListener('load', () => {
-      
-        quicklink({
-          timeout: 3000,
-          priority: true,
-          ignores: [uri => uri.includes('#'),uri => uri == 'http://huangchunwu.github.io/archives/2019/page/3/',]
-        });
-      
-        });
-      
-    </script>
   
 
 
@@ -1402,6 +1039,8 @@ if(window.location.hash){
 
 
 
+
+  
 
 
   
@@ -1733,38 +1372,35 @@ if(window.location.hash){
   
   <script>
     
-    function showTime(Counter) {
-      var entries = [];
+    function addCount(Counter) {
       var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
 
-      $visitors.each(function() {
-        entries.push( $(this).attr('id').trim() );
-      });
-
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url: { '$in': entries } }) })
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
         .done(function({ results }) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if (countSpan.text() == '') {
-              countSpan.text(0);
-            }
+          if (results.length > 0) {
+            var counter = results[0];
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
           }
         })
         .fail(function ({ responseJSON }) {
@@ -1789,9 +1425,7 @@ if(window.location.hash){
             });
           };
           
-            if ($('.post-title-link').length >= 1) {
-              showTime(Counter);
-            }
+            addCount(Counter);
           
         });
     });
