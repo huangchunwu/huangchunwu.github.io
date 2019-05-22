@@ -178,19 +178,19 @@ if(window.location.hash){
 	}
 </script>
 
-  <meta name="description" content="为解决单机系统的性能瓶颈，无论我们根据业务垂直拆分系统，还是水平分库分表，都会面临分布式事务的问题。解决此类分布式事务的场景，业内已经提出了一致性原理，如数据库单机的ACID，到后面提出的CAP和BASE定理，继而提出了一致性协议，如2PC,3PC,TCC，最后总结出实现最终一致性的方案。  查询模式 补偿模式 异步确保模式 定期校对模式  那么我做了三年的途牛火车票系统采用的是什么解决方案呢？我">
+  <meta name="description" content="为解决单机系统的性能瓶颈，无论我们根据业务垂直拆分系统，还是水平分库分表，都会面临分布式事务的问题。解决此类分布式事务的场景，业内已经提出了一致性原理，如数据库单机的ACID，到后面提出的CAP和BASE定理，继而提出了一致性协议，如2PC,3PC,TCC，最后总结出实现最终一致性的方案。  查询模式 补偿模式 异步确保模式 定期校对模式 支持事务的MQ  那么我做了三年的途牛火车票系统采用的是什">
 <meta name="keywords" content="分布式事务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从分布式事务理论，总结途牛火车票的解决方案">
 <meta property="og:url" content="http://huangchunwu.github.io/2019/05/22/从分布式事务理论，总结途牛火车票的解决方案/index.html">
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
-<meta property="og:description" content="为解决单机系统的性能瓶颈，无论我们根据业务垂直拆分系统，还是水平分库分表，都会面临分布式事务的问题。解决此类分布式事务的场景，业内已经提出了一致性原理，如数据库单机的ACID，到后面提出的CAP和BASE定理，继而提出了一致性协议，如2PC,3PC,TCC，最后总结出实现最终一致性的方案。  查询模式 补偿模式 异步确保模式 定期校对模式  那么我做了三年的途牛火车票系统采用的是什么解决方案呢？我">
+<meta property="og:description" content="为解决单机系统的性能瓶颈，无论我们根据业务垂直拆分系统，还是水平分库分表，都会面临分布式事务的问题。解决此类分布式事务的场景，业内已经提出了一致性原理，如数据库单机的ACID，到后面提出的CAP和BASE定理，继而提出了一致性协议，如2PC,3PC,TCC，最后总结出实现最终一致性的方案。  查询模式 补偿模式 异步确保模式 定期校对模式 支持事务的MQ  那么我做了三年的途牛火车票系统采用的是什">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://huangchunwu.github.io/images/分布式事务.png">
-<meta property="og:updated_time" content="2019-05-22T06:28:01.359Z">
+<meta property="og:updated_time" content="2019-05-22T06:30:16.353Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从分布式事务理论，总结途牛火车票的解决方案">
-<meta name="twitter:description" content="为解决单机系统的性能瓶颈，无论我们根据业务垂直拆分系统，还是水平分库分表，都会面临分布式事务的问题。解决此类分布式事务的场景，业内已经提出了一致性原理，如数据库单机的ACID，到后面提出的CAP和BASE定理，继而提出了一致性协议，如2PC,3PC,TCC，最后总结出实现最终一致性的方案。  查询模式 补偿模式 异步确保模式 定期校对模式  那么我做了三年的途牛火车票系统采用的是什么解决方案呢？我">
+<meta name="twitter:description" content="为解决单机系统的性能瓶颈，无论我们根据业务垂直拆分系统，还是水平分库分表，都会面临分布式事务的问题。解决此类分布式事务的场景，业内已经提出了一致性原理，如数据库单机的ACID，到后面提出的CAP和BASE定理，继而提出了一致性协议，如2PC,3PC,TCC，最后总结出实现最终一致性的方案。  查询模式 补偿模式 异步确保模式 定期校对模式 支持事务的MQ  那么我做了三年的途牛火车票系统采用的是什">
 <meta name="twitter:image" content="http://huangchunwu.github.io/images/分布式事务.png">
 
 
@@ -571,6 +571,7 @@ if(window.location.hash){
 <li>补偿模式</li>
 <li>异步确保模式</li>
 <li>定期校对模式</li>
+<li>支持事务的MQ</li>
 </ul>
 <p>那么我做了三年的途牛火车票系统采用的是什么解决方案呢？我们用的也是业界常用的<em>异步确保模式</em></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">异步确保模式核心理论是  将分布式事务转成本地事务处理，具体做法就是在每个业务系统维护一个本地消息记录表，</span><br><span class="line">每次发起请求，记录下请求消息状态，也就是将业务数据与消息表放在一个数据库事务中提交，</span><br><span class="line">系统之间可以使用MQ来传递消息，如果消费失败，或者消息没有发送出去，则通过消息表进行补偿。</span><br></pre></td></tr></table></figure>
