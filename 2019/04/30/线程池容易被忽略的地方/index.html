@@ -186,7 +186,7 @@ if(window.location.hash){
 <meta property="og:site_name" content="一代天骄&#39;s BLOG">
 <meta property="og:description" content="为什么用线程池？ 节约省资源创建线程有损耗，销毁线程也有损耗 执行效率高充分利用多核CPU，并行处理。处理任务，不需要等待线程创建的过程立即执行。 管理线程线程是操作系统稀缺的资源，不可滥用。线程池可以做到统一分配，调优和监控。  线程池的实现原理任务请求过来，当前线程数小于核心线程池线程数，创建线程执行；当前线程数大于等于核心线程数，则放到队列等待空闲线程处理。当任务队列满了，则创建线程，执行任">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-02T11:29:00.903Z">
+<meta property="og:updated_time" content="2019-05-21T13:28:44.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线程池容易被忽略的地方">
 <meta name="twitter:description" content="为什么用线程池？ 节约省资源创建线程有损耗，销毁线程也有损耗 执行效率高充分利用多核CPU，并行处理。处理任务，不需要等待线程创建的过程立即执行。 管理线程线程是操作系统稀缺的资源，不可滥用。线程池可以做到统一分配，调优和监控。  线程池的实现原理任务请求过来，当前线程数小于核心线程池线程数，创建线程执行；当前线程数大于等于核心线程数，则放到队列等待空闲线程处理。当任务队列满了，则创建线程，执行任">
@@ -588,7 +588,7 @@ if(window.location.hash){
 <p>思考：getPoolSize（）<br>线程池的线程数量。如果线程池不销毁的话，线程池里的线程不会自动销毁,所以这个大小只增不减。<br>这句话，没那么绝对。线程池中工作线程销毁的条件：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>)  参数allowCoreThreadTimeOut为true</span><br><span class="line"><span class="number">2</span>)  该线程在keepAliveTime时间内获取不到任务，即空闲这么长时间</span><br><span class="line"><span class="number">3</span>)  当前线程池大小 &gt; 核心线程池大小corePoolSize</span><br></pre></td></tr></table></figure></p>
 <p>long keepAliveTime<br>该线程池中非核心线程闲置超时时长<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">一个非核心线程，如果不干活<span class="comment">(闲置状态)</span>的时长超过这个参数所设定的时长，就会被销毁掉</span><br><span class="line">另外默认对非核心线程有效，若想核心线程也适用于这个机制，</span><br><span class="line">可以调用allowCoreThreadTimeOut<span class="comment">()</span>方法。这样的话就没有核心线程这一说了。</span><br></pre></td></tr></table></figure></p>
 <h2 id="线程池的队列"><a href="#线程池的队列" class="headerlink" title="线程池的队列"></a>线程池的队列</h2><p>ArrayBlockingQueue数组有界队列<br>LinkedBlockingQueue链表无界队列  Executors.newFixedThreadPool()<br>PriorityBlockingQueue优先级无界队列<br>SynchronousQueue不保留任务的队列    Executors.newCachedThreadPool<br>DelayQueue 延迟队列</p>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://zackku.com/java-thread-threadpoolexecutor/" target="_blank" rel="noopener">你真的懂ThreadPoolExecutor线程池技术吗？看了源码你会有全新的认识</a></p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://zackku.com/java-thread-threadpoolexecutor/" target="_blank" rel="noopener">你真的懂ThreadPoolExecutor线程池技术吗？看了源码你会有全新的认识</a><br><a href="https://juejin.im/post/5c8896be5188257ec828072f#heading-5" target="_blank" rel="noopener">深入理解线程池原理篇</a></p>
 
       
     </div>
@@ -703,7 +703,7 @@ if(window.location.hash){
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -811,7 +811,9 @@ if(window.location.hash){
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

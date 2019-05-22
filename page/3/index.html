@@ -439,6 +439,213 @@ if(window.location.hash){
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/03/17/dingdingdev/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Author">
+      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
+      <meta itemprop="image" content="/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一代天骄's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/17/dingdingdev/" class="post-title-link" itemprop="url">钉钉H5微应用开发总结</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-17 23:37:40" itemprop="dateCreated datePublished" datetime="2019-03-17T23:37:40+08:00">2019-03-17</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">专栏</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/03/17/dingdingdev/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/17/dingdingdev/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/03/17/dingdingdev/" class="leancloud_visitors" data-flag-title="钉钉H5微应用开发总结">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今年，我又做了一个钉钉微应用的项目，第一次接触钉钉，把踩过的坑，记录下来，为后人乘凉所用。</p>
+<hr>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>开放平台注册申请权限</li>
+<li>选择钉钉应用类型，创建应用，获取AppKey，AppSecret，CORP_ID，</li>
+<li>准备开发环境 静态页面、JS，CSS放在ngnix，本地接口用tomcat。</li>
+<li>内网穿透，用于开发时候调试钉钉应用</li>
+</ul>
+<blockquote>
+<p>减少代码耦合度，我采用前后端分离，没有采用freemaker等模板引擎工具，我将页面与接口放在不同服务器上，那么就有跨域问题，解决方案是ngnix，配置反向代理同个host不同端口，则可以解决JS跨域问题。</p>
+</blockquote>
+<blockquote>
+<p> 钉钉下，有E应用（不成熟），微应用（较成熟）。我用的是相对成熟的微应用。另外应用还分，第三方企业内部应用，企业内部应用，第三方个人应用，移动应用接入。由于我的业务方需求，我选择的企业内部应用，注意看对应的文档，钉钉功能太混杂容易混淆。</p>
+</blockquote>
+<h2 id="开发过程"><a href="#开发过程" class="headerlink" title="开发过程"></a>开发过程</h2><h3 id="引入JS"><a href="#引入JS" class="headerlink" title="引入JS"></a>引入JS</h3><p>common.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"//g.alicdn.com/dingding/dingtalk-jsapi/2.0.57/dingtalk.open.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="JSAPI免登授权码"><a href="#JSAPI免登授权码" class="headerlink" title="JSAPI免登授权码"></a>JSAPI免登授权码</h3><p>获取当前钉钉登录用户的账号信息，需要通过免登授权码换取</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取免登授权码</span></span><br><span class="line">  dd.ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      dd.runtime.permission.requestAuthCode(&#123;</span><br><span class="line">          corpId: _config.corpId,</span><br><span class="line">          onSuccess: <span class="function"><span class="keyword">function</span>(<span class="params">info</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">              <span class="keyword">var</span> _params = &#123;<span class="string">"code"</span>:info.code&#125;;</span><br><span class="line">              tools.getReqData(<span class="string">'/api/dd/getCurrentLoginUser'</span>, _params, getUserCall);<span class="comment">//通过免登授权码获取用户详细信息</span></span><br><span class="line">          &#125;,</span><br><span class="line">          onFail : <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">              alert(<span class="string">'fail: '</span> + <span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      dd.error(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</span><br><span class="line">          alert(<span class="string">'dd error: '</span> + <span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="JSAPI鉴权"><a href="#JSAPI鉴权" class="headerlink" title="JSAPI鉴权"></a>JSAPI鉴权</h3><p>需要用到钉钉的日历控件，组织机构多选弹出框等控件，所以需要鉴权<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//鉴权验证</span></span><br><span class="line">   dd.config(&#123;</span><br><span class="line">       agentId : _config.agentid,</span><br><span class="line">       corpId : _config.corpId,</span><br><span class="line">       timeStamp : _config.timeStamp,</span><br><span class="line">       nonceStr : _config.nonceStr,</span><br><span class="line">       signature : _config.signature,</span><br><span class="line">       jsApiList : [ <span class="string">'runtime.info'</span>, <span class="string">'biz.contact.choose'</span>,</span><br><span class="line">           <span class="string">'device.notification.confirm'</span>, <span class="string">'device.notification.alert'</span>,</span><br><span class="line">           <span class="string">'device.notification.prompt'</span>, <span class="string">'biz.ding.post'</span>,<span class="string">'biz.contact.complexPicker'</span>,</span><br><span class="line">           <span class="string">'biz.util.openLink'</span>,<span class="string">'biz.util.datepicker'</span> ]</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="获取TOKEN"><a href="#获取TOKEN" class="headerlink" title="获取TOKEN"></a>获取TOKEN</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 在此方法中，为了避免频繁获取access_token，</span></span><br><span class="line"><span class="comment"> * 在距离上一次获取access_token时间在两个小时之内的情况，</span></span><br><span class="line"><span class="comment"> * 将直接从持久化存储中读取access_token</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 因为access_token和jsapi_ticket的过期时间都是7200秒</span></span><br><span class="line"><span class="comment"> * 所以在获取access_token的同时也去获取了jsapi_ticket</span></span><br><span class="line"><span class="comment"> * 注：jsapi_ticket是在前端页面JSAPI做权限验证配置的时候需要使用的</span></span><br><span class="line"><span class="comment"> * 具体信息请查看开发者文档--权限验证配置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="keyword">static</span> <span class="built_in">String</span> getAccessToken() throws OApiException &#123;</span><br><span class="line">    long curTime = System.currentTimeMillis();</span><br><span class="line">    JSONObject accessTokenValue = (JSONObject) FileUtils.getValue(<span class="string">"accesstoken"</span>, Env.APP_KEY);</span><br><span class="line">    <span class="built_in">String</span> accToken = <span class="string">""</span>;</span><br><span class="line">    JSONObject jsontemp = <span class="keyword">new</span> JSONObject();</span><br><span class="line">    <span class="keyword">if</span> (accessTokenValue == <span class="literal">null</span> || curTime - accessTokenValue.getLong(<span class="string">"begin_time"</span>) &gt;= cacheTime) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ServiceFactory serviceFactory = ServiceFactory.getInstance();</span><br><span class="line">            CorpConnectionService corpConnectionService = serviceFactory.getOpenService(CorpConnectionService.class);</span><br><span class="line">            accToken = corpConnectionService.getCorpToken(Env.APP_KEY, Env.APP_SECRET);</span><br><span class="line">            <span class="comment">// save accessToken</span></span><br><span class="line">            JSONObject jsonAccess = <span class="keyword">new</span> JSONObject();</span><br><span class="line">            jsontemp.clear();</span><br><span class="line">            jsontemp.put(<span class="string">"access_token"</span>, accToken);</span><br><span class="line">            jsontemp.put(<span class="string">"begin_time"</span>, curTime);</span><br><span class="line">            jsonAccess.put(Env.APP_KEY, jsontemp);</span><br><span class="line">            <span class="comment">//真实项目中最好保存到数据库中</span></span><br><span class="line">            FileUtils.write2File(jsonAccess, <span class="string">"accesstoken"</span>);</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> accessTokenValue.getString(<span class="string">"access_token"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> accToken;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="获取当前用户信息"><a href="#获取当前用户信息" class="headerlink" title="获取当前用户信息"></a>获取当前用户信息</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据免登授权码查询免登用户userId</span></span><br><span class="line"><span class="comment"> * @param accessToken</span></span><br><span class="line"><span class="comment"> * @param code</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> * @throws Exception</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="keyword">static</span> CorpUserBaseInfo getUserInfo(<span class="built_in">String</span> accessToken, <span class="built_in">String</span> code) throws Exception &#123;</span><br><span class="line">    CorpUserService corpUserService = ServiceFactory.getInstance().getOpenService(CorpUserService.class);</span><br><span class="line">    <span class="keyword">return</span> corpUserService.getUserinfo(accessToken, code);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="钉钉日历控件"><a href="#钉钉日历控件" class="headerlink" title="钉钉日历控件"></a>钉钉日历控件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">   $(<span class="string">"#proBidOpent"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> t = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">var</span> curDate = (<span class="keyword">new</span> <span class="built_in">Date</span>().getFullYear()) + <span class="string">'-'</span> + (<span class="keyword">new</span> <span class="built_in">Date</span>().getMonth()) + <span class="string">'-'</span> + (<span class="keyword">new</span> <span class="built_in">Date</span>().getDay);</span><br><span class="line">    dd.biz.util.datepicker(&#123;</span><br><span class="line">        format: <span class="string">'yyyy-MM-dd'</span>,<span class="comment">//注意：format只支持android系统规范，即2015-03-31格式为yyyy-MM-dd</span></span><br><span class="line">        value: curDate, <span class="comment">//默认显示日期</span></span><br><span class="line">        onSuccess : <span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            $(t).val(result.value);</span><br><span class="line">            <span class="comment">//onSuccess将在点击完成之后回调</span></span><br><span class="line">            <span class="comment">/*&#123;</span></span><br><span class="line"><span class="comment">             value: "2015-02-10"</span></span><br><span class="line"><span class="comment">             &#125;</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">        &#125;,</span><br><span class="line">        onFail : <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            alert(<span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="钉钉滑动选择人员控件"><a href="#钉钉滑动选择人员控件" class="headerlink" title="钉钉滑动选择人员控件"></a>钉钉滑动选择人员控件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">  $(<span class="string">'#recorderName'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> tx = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    dd.biz.contact.complexPicker(&#123;</span><br><span class="line">        title:<span class="string">"备案人员"</span>,            <span class="comment">//标题</span></span><br><span class="line">        corpId:_config.corpId,              <span class="comment">//企业的corpId</span></span><br><span class="line">        multiple:<span class="literal">true</span>,            <span class="comment">//是否多选</span></span><br><span class="line">        limitTips:<span class="string">"超出了"</span>,          <span class="comment">//超过限定人数返回提示</span></span><br><span class="line">        maxUsers:<span class="number">100</span>,            <span class="comment">//最大可选人数</span></span><br><span class="line">        pickedUsers:[],            <span class="comment">//已选用户</span></span><br><span class="line">        pickedDepartments:[],          <span class="comment">//已选部门</span></span><br><span class="line">        disabledUsers:[],            <span class="comment">//不可选用户</span></span><br><span class="line">        disabledDepartments:[],        <span class="comment">//不可选部门</span></span><br><span class="line">        requiredUsers:[],            <span class="comment">//必选用户（不可取消选中状态）</span></span><br><span class="line">        requiredDepartments:[],        <span class="comment">//必选部门（不可取消选中状态）</span></span><br><span class="line">        appId:_config.agentid,              <span class="comment">//微应用的Id</span></span><br><span class="line">        permissionType:<span class="string">"xxx"</span>,          <span class="comment">//可添加权限校验，选人权限，目前只有GLOBAL这个参数</span></span><br><span class="line">        responseUserOnly:<span class="literal">true</span>,        <span class="comment">//返回人，或者返回人和部门</span></span><br><span class="line">        startWithDepartmentId:<span class="number">0</span> ,   <span class="comment">//仅支持0和-1</span></span><br><span class="line">        onSuccess: <span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(result.selectedCount&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">var</span> empIds = <span class="string">""</span>;</span><br><span class="line">                <span class="keyword">var</span> empNames = <span class="string">""</span>;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt; result.selectedCount;i++)&#123;</span><br><span class="line">                    empIds = empIds + result.users[i].emplId+<span class="string">","</span>;</span><br><span class="line">                    empNames = empNames + result.users[i].name+<span class="string">","</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                empIds = empIds.substring(<span class="number">0</span>,empIds.length<span class="number">-1</span>);</span><br><span class="line">                empNames = empNames.substring(<span class="number">0</span>,empNames.length<span class="number">-1</span>);</span><br><span class="line">                $(tx).val(empNames);</span><br><span class="line">                <span class="keyword">var</span> attr_hidden = $(tx).attr(<span class="string">"attr_hidden"</span>);</span><br><span class="line">                $(<span class="string">"#"</span>+attr_hidden).val(empIds);</span><br><span class="line">            &#125;</span><br><span class="line">           </span><br><span class="line">        &#125;,</span><br><span class="line">        onFail : <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            alert(<span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://github.com/huangchunwu/myDingding" target="_blank" rel="noopener">开源代码</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/03/16/myThink/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2208,198 +2415,6 @@ CacheBuilder.softValues()：使用软引用存储值。
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://huangchunwu.github.io/2019/01/01/summary/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="吾尝终日而思，不如须臾之所学">
-      <meta itemprop="image" content="/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一代天骄's BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/01/summary/" class="post-title-link" itemprop="url">2018，这一年</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-
-          
-          
-
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-01 10:21:19" itemprop="dateCreated datePublished" datetime="2019-01-01T10:21:19+08:00">2019-01-01</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">专栏</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/生活/" itemprop="url" rel="index"><span itemprop="name">生活</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/01/01/summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/01/01/summary/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/2019/01/01/summary/" class="leancloud_visitors" data-flag-title="2018，这一年">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>引用习大大的祝贺词中的一句”岁月不居，时节如流”，18年就这样过去了，总结一下这年的收获。</p>
-<h3 id="关于读书，多读比不读好"><a href="#关于读书，多读比不读好" class="headerlink" title="关于读书，多读比不读好"></a>关于读书，多读比不读好</h3><p>这一年，很庆幸的是，我认识了很上进的同事，他对我的影响是让我开始认识到看书的重要性，开始学会在书里寻找价值与智慧。今年我看了32本书，我也不记得自己还记得几个句子，又或者对我带来多大的影响，知乎上也有人提到“<strong>经常看书的人和不看书的人有什么区别</strong>”，我当时是这样回答的：</p>
-<blockquote>
-<p>从我身边的例子来说，有位同事，大学不务正业，泡在金庸武侠世界里，连书中的某段武林秘籍口诀也能倒背如流,当然，他也涉及其它领域。跟他对话，他猛不丁get到一个念头，帮你把你的处境与书中某个人的遭遇相关联,并引出解决方案，这时候你就能领略到读书的用处了，书中记录的是过来人的生活经验，会帮助你解决目前的问题。</p>
-</blockquote>
-<p>就我的感受是自己读完一本本书后，内心很充实，生活中有些问题能从书中找到答案，思想变得更加豁达了，而没有像以前看问题那么局面，自然比以前少发牢骚了，生活也更积极了。</p>
-<h3 id="关于工作：“凑合着”做，“凑合着”过，把自己也“凑合着”活了"><a href="#关于工作：“凑合着”做，“凑合着”过，把自己也“凑合着”活了" class="headerlink" title="关于工作：“凑合着”做，“凑合着”过，把自己也“凑合着”活了"></a>关于工作：“凑合着”做，“凑合着”过，把自己也“凑合着”活了</h3><p>刚工作那会，多加班一个小时，都觉得自己吃亏了，如果再对比下别人家的公司加班晚餐与加班费，心里戾气就更严重了，对待工作也消极，演变成了“凑合”。现在仔细想想，”凑合”在我生活中扮演的戏份真的很多，学业上凑合着，工作上凑合着，说到底是对自己凑合着。在公司的每一分一秒，都是自己参与，都属于自己“刻意练习”的机会，可以想成是公司提供的带薪培训的一个很好的平台。我觉得，思想转变了，态度自然就能转变，我就会往好的方向走。</p>
-<h3 id="关于生活：有想法，撸起袖子，去做；而想得多而畏惧不做"><a href="#关于生活：有想法，撸起袖子，去做；而想得多而畏惧不做" class="headerlink" title="关于生活：有想法，撸起袖子，去做；而想得多而畏惧不做"></a>关于生活：有想法，撸起袖子，去做；而想得多而畏惧不做</h3><p>现如今，逃离北上广的人太多了，18年这一年，在上海，作为外地人，我需要为自己留在上海做一些努力。儿子二岁了，面临上幼儿园的问题，外地人上本地幼儿园需要居住证积分，我办了居住证、辗转2次办成了积分。为了以后出行的方便，我把驾照也考了，就不提我苦逼的考了一年的经过了。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2448,7 +2463,7 @@ CacheBuilder.softValues()：使用软引用存储值。
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -2556,7 +2571,9 @@ CacheBuilder.softValues()：使用软引用存储值。
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
