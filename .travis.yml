@@ -11,18 +11,11 @@ cache:
 
 notifications:
   # 钉钉机器人消息推送部署结果
-  webhooks:
-    urls:
-      - https://oapi.dingtalk.com/robot/send?access_token=3ea2cb84a09ef03881b3842a600fe9f9aadabf9b439fc5490533de52569860db
-    on_success: change
-    on_failure: always
+  webhooks: https://oapi.dingtalk.com/robot/send?access_token=3ea2cb84a09ef03881b3842a600fe9f9aadabf9b439fc5490533de52569860db
+  
 
   # 邮件发送部署结果通知
-  email:
-    recipients:
-      - 951123033@qq.com
-    on_success: change
-    on_failure: always
+  email: 951123033@qq.com
 
 # S: Build Lifecycle
 before_install:
