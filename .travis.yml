@@ -17,11 +17,7 @@ notifications: #启用通知
 
 # S: Build Lifecycle
 
-before_install:
-  - sudo apt-get install libnotify-bin #支持linux桌面提醒库
 
-install:
-  - npm install  #安装依赖
 
 before_script:
   - export TZ='Asia/Shanghai' #设置时区
