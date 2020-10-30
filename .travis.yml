@@ -13,7 +13,7 @@ notifications:
   # 钉钉机器人消息推送部署结果
   webhooks:
     urls:
-      - ${webhooks}
+      - https://oapi.dingtalk.com/robot/send?access_token=${DINGDING_ACCESS_TOKEN}
     on_success: change
     on_failure: always
 
