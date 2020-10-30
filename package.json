@@ -17,7 +17,7 @@
   },
   "homepage": "https://huangchunwu.github.io",
   "hexo": {
-    "version": "3.8.0"
+    "version": "5.2.0"
   },
   "dependencies": {
     "ejs": "^2.6.1",
