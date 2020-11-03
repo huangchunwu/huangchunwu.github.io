@@ -50,4 +50,5 @@ branches:
     - save #需要监听部署的分支
 env:
   global:
-   - GH_REF: https://github.com/huangchunwu/huangchunwu.github.io.git #更改为自己git地址
+   - GH_REF: github.com/huangchunwu/huangchunwu.github.io.git #更改为自己git地址
+   - GH_TOKEN:
