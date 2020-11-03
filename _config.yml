@@ -78,7 +78,7 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 #博客主题
-theme: 3-hexo
+theme: hexo-theme-snippet
 
 
 search:
@@ -101,6 +101,5 @@ deploy:
   #elfwalk改为你的github用户名
   repository: 
             github: git@github.com:huangchunwu/huangchunwu.github.io.git
-            coding: git@git.dev.tencent.com:huangchunwu/huangchunwu.git
   branch: master
   

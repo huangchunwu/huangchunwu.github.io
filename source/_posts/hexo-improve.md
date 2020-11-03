@@ -2,7 +2,7 @@
 title: hexo主题优化
 date: 2019-01-11 22:58:44
 tags: hexo
-categories: 搭建博客
+categories: 技术
 ---
 
 hexo搭建好博客后，需要给博客的装扮下，记录一下一些主题优化技巧
