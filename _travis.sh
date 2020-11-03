@@ -45,14 +45,14 @@ Job NUM  | $TRAVIS_JOB_NUMBER |
 EOF
 
   git init
-  git config user.name "shenliyang"
-  git config user.email ""
+  git config user.name "huangchunwu"
+  git config user.email "951123033@qq.com"
   git add .
   git commit -m "Update Blog By TravisCI With Build $TRAVIS_BUILD_NUMBER"
   # Github Pages
   git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
   # Gitee Pages
-  git push --force --quiet "https://shenliyang:${GITEE_TOKEN}@${GITEE_REF}" master:master
+  git push --force --quiet "https://huangchunwu:${GITEE_TOKEN}@${GITEE_REF}" master:master
 
   # Create Tag
   git tag v1.2.$TRAVIS_BUILD_NUMBER -a -m "Auto Taged By TravisCI With Build $TRAVIS_BUILD_NUMBER"
