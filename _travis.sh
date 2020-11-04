@@ -45,12 +45,12 @@ Job NUM  | $TRAVIS_JOB_NUMBER |
 EOF
 
   git init
-  git config user.name "huangchunwu"
+  git config user.name "newhcw"
   git config user.email "951123033@qq.com"
   git add .
   git commit -m "Update Blog By TravisCI With Build $TRAVIS_BUILD_NUMBER"
   # Github Pages
-  git push --force --quiet "https://github.com/huangchunwu/huangchunwu.github.io.git" master:master
+  git push --force --quiet "git@github.com:huangchunwu/huangchunwu.github.io.git" master:master
 }
 
 case $1 in
