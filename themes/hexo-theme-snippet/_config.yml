@@ -61,13 +61,16 @@ notification: |-
             <p>
                 公众号：特立独行的猿
             </p>
+            <p><image src="/img/qrcode.jpg"></p>
 
 ## 社交设置
 social:
  - name: Github
    icon: git
    href: //github.com/huangchunwu
-
+- name: 邮箱
+   icon: envelope-o
+   href: mailto:951123033@qq.com
 
 ## 文章分类设置
 cate_config:
