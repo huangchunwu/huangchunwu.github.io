@@ -61,7 +61,7 @@ notification: |-
             <p>
                 公众号：特立独行的猿
             </p>
-            <p><image src="/img/qrcode.jpg"></p>
+            <p><img src="http://hasfun.cn/img/qrcode.jpg"/></p>
 
 ## 社交设置
 social:
@@ -108,7 +108,7 @@ branding:
 
 ## 设置banner背景图片
 banner:
-    img: http://snippet.shenliyang.com/img/banner.jpg
+    img: http://hasfun.cn/img/banner.jpg
 
 ## 首页列表底部面板
 homePanel: true
