@@ -4,10 +4,6 @@ node_js:
 
 sudo: false
 
-#cache
-cache:
-  directories:
-    - "node_modules"
 
 notifications:
   # 钉钉机器人消息推送部署结果
@@ -21,13 +17,13 @@ notifications:
 
 # S: Build Lifecycle
 before_install:
-  - sudo apt-get install libnotify-bin
   - git config user.name "newhcw"
   - git config user.email "951123033@qq.com"
   - sed -i'' "s~https://github.com/huangchunwu/huangchunwu.github.io.git~https://${GH_TOKEN}@github.com/huangchunwu/huangchunwu.github.io.git~" _config.yml
 
 
 install:
+  - npm install hexo-cli -g
   - npm install
 #  - gem install travis
 #  - travis login --pro --github-token ${GH_TOKEN}
@@ -37,7 +33,7 @@ before_script:
   - chmod +x _travis.sh
 
 script:
-  - hexo clean && hexo d -g
+  - npm run deploy
 
 after_success:
  # - LAST_BUILD_NUMBER=68
