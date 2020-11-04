@@ -19,7 +19,7 @@ notifications:
 before_install:
   - git config user.name "newhcw"
   - git config user.email "951123033@qq.com"
-  - sed -i'' "s~https://${GH_TOKEN}@github.com/huangchunwu/huangchunwu.github.io.git" _config.yml
+  - sed -i'' "s~https://${GH_TOKEN}@github.com/huangchunwu/huangchunwu.github.io.git~" _config.yml
 
 
 install:
