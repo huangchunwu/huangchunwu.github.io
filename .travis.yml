@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-    - "14"
+    - "10"
 
 notifications:
   # 钉钉机器人消息推送部署结果
