@@ -49,8 +49,8 @@ EOF
   git config user.email "951123033@qq.com"
   git add .
   git commit -m "Update Blog By TravisCI With Build $TRAVIS_BUILD_NUMBER"
-  # Github Pages
-  git push --force --quiet "git@github.com:huangchunwu/huangchunwu.github.io.git" master:master
+    # Github Pages
+  git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
 }
 
 case $1 in
