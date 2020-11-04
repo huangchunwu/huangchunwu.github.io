@@ -22,6 +22,10 @@ notifications:
 # S: Build Lifecycle
 before_install:
   - sudo apt-get install libnotify-bin
+  - git config user.name "newhcw"
+  - git config user.email "951123033@qq.com"
+  - sed -i'' "s~https://github.com/huangchunwu/huangchunwu.github.io.git~https://${GH_TOKEN}@github.com/huangchunwu/huangchunwu.github.io.git~" _config.yml
+
 
 install:
   - npm install
@@ -30,22 +34,16 @@ install:
 
 before_script:
   - export TZ='Asia/Shanghai'
-  - npm install -g gulp
   - chmod +x _travis.sh
 
 script:
-  - hexo clean && hexo g
-  - gulp
+  - hexo clean && hexo d -g
 
 after_success:
  # - LAST_BUILD_NUMBER=68
  # - for i in $(seq 1 $LAST_BUILD_NUMBER ); do  travis logs $i --delete --force ; done
 
 after_script:
-  -  git init
-  -  git config user.name "newhcw"
-  -  git config user.email "951123033@qq.com"
-  -  hexo deploy
   # - ./_travis.sh
 
 branches:
